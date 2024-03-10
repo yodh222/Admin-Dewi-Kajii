@@ -12,8 +12,4 @@ class MUser extends Model
     protected $table = 'tb_user';
     protected $primaryKey = 'id_user';
     protected $guarded = ['id_user'];
-    public function transaksis()
-    {
-        return $this->hasMany(MTransaksi::class);
-    }
 }

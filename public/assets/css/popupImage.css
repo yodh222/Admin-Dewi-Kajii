@@ -1,0 +1,44 @@
+.modal {
+    display: none; /* Sembunyikan modal secara default */
+    position: fixed; /* Tetapkan posisi */
+    z-index: 1; /* Atur z-index agar modals muncul di atas konten lain */
+    padding-top: 50px; /* Atur jarak atas */
+    left: 0;
+    top: 0;
+    width: 100%; /* Atur lebar modal */
+    height: 100%; /* Atur tinggi modal */
+    overflow: auto; /* Tambahkan scroll jika diperlukan */
+    background-color: rgb(0, 0, 0); /* Warna latar belakang hitam */
+    background-color: rgba(
+        0,
+        0,
+        0,
+        0.9
+    ); /* Warna latar belakang hitam dengan opacity */
+}
+
+/* Gambar dalam modal */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Tombol penutup */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}

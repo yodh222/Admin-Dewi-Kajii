@@ -8,6 +8,7 @@ use App\Models\MTransaksi;
 use App\Models\MUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client;
 
 class CTransaksi extends Controller
 {
@@ -27,25 +28,26 @@ class CTransaksi extends Controller
 
     }
 
-
-
     public function add(RTransaksi $request){
         try {
             // Validasi Bukti Pembayaran
             $file = $request->file('bukti_pembayaran');
-            if ($this->isImage($file)) {
-                return redirect()->back()->with('success','Input Bukti Pembayaran Berhasil');
-            } else {
-                return redirect()->back()->with('error','Kesalahan Input Bukti Pembayaran');
+            if (!$this->isImage($file)) {
+                return response()->json([
+                    'Status' => 'Error',
+                    'Message' => 'File yang anda kirimkan bukan sebuah gambar'
+                ], 400, [], JSON_PRETTY_PRINT);
             }
-            $destinationPath = public_path('uploads/bukti_pembayaran');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move($destinationPath, $fileName);
+            $uniq = uniqid();
+
+            // $destinationPath = public_path('uploads/bukti_pembayaran');
+            $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads/bukti_pembayaran/', $fileName);
             $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
 
 
             // Generate Invoice
-            $invoice = "INV/".date('dmY')."/".uniqid();
+            $invoice = "INV/".date('dmY')."/".$uniq;
 
             MTransaksi::create([
                 'id_user' => $request->input('id_user'),
@@ -58,7 +60,10 @@ class CTransaksi extends Controller
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
             ]);
-            return redirect()->back()->withSuccess('Transaksi berhasil ditambahkan.');
+            return response()->json([
+                'Status' => 'Success',
+                'Message' => 'Data Berhasil Ditambahkan'
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (QueryException $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan Transaksi. Error: ' . $e->getMessage());
         }
@@ -68,7 +73,7 @@ class CTransaksi extends Controller
         $file = $request->file('bukti_pembayaran');
         if (!$this->isImage($file)) {
             return response()->json([
-                'Type' => 'Error',
+                'Status' => 'Error',
                 'Message' => 'File yang anda kirimkan bukan sebuah gambar'
             ], 400, [], JSON_PRETTY_PRINT);
         }
@@ -83,22 +88,51 @@ class CTransaksi extends Controller
         // Generate Invoice
         $invoice = "INV/".date('dmY')."/".$uniq;
         return response()->json([
-            'Type' => 'Success',
+            'Status' => 'Success',
             'Invoice' => $invoice,
             'Path File' => $path_bukti,
             'Message' => "Berhasil di Upload"
     ],200,[],JSON_PRETTY_PRINT);
     }
 
-    private function isImage($file)
-{
-    if ($file !== null && $file instanceof \SplFileInfo) {
-        $extension = strtolower($file->getClientOriginalExtension());
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file gambar yang diizinkan
-        return in_array($extension, $allowedExtensions);
+    public function sendMessage(Request $request){
+
+        $client = new Client();
+
+        $token = 'qMZ+vU84E_mmu#uRkscp';
+        // $target = '088221629812';
+        $target = '082133753551';
+
+        $response = $client->post('https://api.fonnte.com/send', [
+            'headers' => [
+                'Authorization' => $token,
+            ],
+            'form_params' => [
+                'target' => $target,
+                'message' => 'Testing',
+                'url' => 'https://md.fonnte.com/images/wa-logo.png',
+                'countryCode' => '62',
+            ],
+        ]);
+
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true);
+        return response()->json([
+            'Status' => 'Success',
+            'Message' => 'Pesan berhasil terkirimm ke'.$target,
+            'Response' => $data
+        ],200,[],JSON_PRETTY_PRINT);
     }
-    return false;
-}
+
+    private function isImage($file)
+    {
+        if ($file !== null && $file instanceof \SplFileInfo) {
+            $extension = strtolower($file->getClientOriginalExtension());
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file gambar yang diizinkan
+            return in_array($extension, $allowedExtensions);
+        }
+        return false;
+    }
 
 
 

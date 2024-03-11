@@ -15,4 +15,3 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [CTransaksi::class, 'index'])->name('dashboard');
-Route::get('/send', [CTransaksi::class, 'sendMessage'])->name('mes');

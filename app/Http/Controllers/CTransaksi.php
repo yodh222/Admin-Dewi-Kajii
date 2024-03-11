@@ -17,15 +17,15 @@ class CTransaksi extends Controller
 
         return view('Test/test',['Transaksi' => $this->get("none"), 'User' => MUser::all()]);
     }
+
+    // CRUD
     public function get($req = "json"){
 
         $data = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')->select('id_transaksi', 'nama','no_telp','id_jenis','code_invoice','bukti_pembayaran','check_in','total_pembayaran','dibayarkan','status')->get();
-
         if ($req == "none") {
             return $data;
         }
         return response()->json(['Data'=>$data],200,[],JSON_PRETTY_PRINT);
-
     }
 
     public function add(RTransaksi $request){
@@ -39,12 +39,9 @@ class CTransaksi extends Controller
                 ], 400, [], JSON_PRETTY_PRINT);
             }
             $uniq = uniqid();
-
-            // $destinationPath = public_path('uploads/bukti_pembayaran');
             $fileName = $uniq . '.' . $file->getClientOriginalExtension();
             $file->move('uploads/bukti_pembayaran/', $fileName);
             $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
-
 
             // Generate Invoice
             $invoice = "INV/".date('dmY')."/".$uniq;
@@ -60,56 +57,64 @@ class CTransaksi extends Controller
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
             ]);
-            return response()->json([
-                'Status' => 'Success',
-                'Message' => 'Data Berhasil Ditambahkan'
-            ], 200, [], JSON_PRETTY_PRINT);
+            return redirect()->back()->with('success', 'Berhasil menambahkan transaksi');
         } catch (QueryException $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan Transaksi. Error: ' . $e->getMessage());
         }
     }
-    public function testUpload(Request $request){
-        // Validasi Bukti Pembayaran
-        $file = $request->file('bukti_pembayaran');
-        if (!$this->isImage($file)) {
-            return response()->json([
-                'Status' => 'Error',
-                'Message' => 'File yang anda kirimkan bukan sebuah gambar'
-            ], 400, [], JSON_PRETTY_PRINT);
+    public function edit(RTransaksi $request){
+        try {
+            // Validasi Bukti Pembayaran
+            $file = $request->file('bukti_pembayaran');
+            if (!$this->isImage($file)) {
+                return response()->json([
+                    'Status' => 'Error',
+                    'Message' => 'File yang anda kirimkan bukan sebuah gambar'
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+            $uniq = uniqid();
+            $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads/bukti_pembayaran/', $fileName);
+            $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
+
+            MTransaksi::update([
+                'id_user' => $request->input('id_user'),
+                'no_telp' => $request->input('no_telp'),
+                'id_jenis' => $request->input('id_jenis'),
+                'bukti_pembayaran' => $path_bukti,
+                'check_in' => $request->input('check_in'),
+                'total_pembayaran' => $request->input('total_pembayaran'),
+                'dibayarkan' => $request->input('dibayarkan'),
+                'status' => $request->input('status'),
+            ]);
+            return redirect()->back()->with('success', 'Berhasil mengedit transaksi');
+        } catch (QueryException $e) {
+            return redirect()->back()->with('error', 'Gagal mengedit Transaksi. Error: ' . $e->getMessage());
         }
-        $uniq = uniqid();
-
-        // $destinationPath = public_path('uploads/bukti_pembayaran');
-        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-        $file->move('uploads/bukti_pembayaran/', $fileName);
-        $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
-
-
-        // Generate Invoice
-        $invoice = "INV/".date('dmY')."/".$uniq;
-        return response()->json([
-            'Status' => 'Success',
-            'Invoice' => $invoice,
-            'Path File' => $path_bukti,
-            'Message' => "Berhasil di Upload"
-    ],200,[],JSON_PRETTY_PRINT);
     }
 
+
+
+
+    // Send Message WhatsApp
     public function sendMessage(Request $request){
+        if (!$request->has('no_telp') || !$request->has('message')) {
+            return response()->json([
+                'Status' => 'Error',
+                'Message' => 'Parameter tidak lengkap'
+            ]);
+        }
 
         $client = new Client();
-
         $token = 'qMZ+vU84E_mmu#uRkscp';
-        // $target = '088221629812';
-        $target = '082133753551';
-
+        $target = $request->input('no_telp');
         $response = $client->post('https://api.fonnte.com/send', [
             'headers' => [
                 'Authorization' => $token,
             ],
             'form_params' => [
                 'target' => $target,
-                'message' => 'Testing',
+                'message' => $request->input('message'),
                 'url' => 'https://md.fonnte.com/images/wa-logo.png',
                 'countryCode' => '62',
             ],

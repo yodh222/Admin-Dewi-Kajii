@@ -120,7 +120,7 @@
         </div>
     </div>
     <br><br><br><br>
-    <form action="{{route('upload')}}" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="bukti_pembayaran" accept="image/png, image/jpeg">
         <input type="submit" value="Kirim">
@@ -131,7 +131,7 @@
 $(document).ready(function() {
     var table = $('#table').DataTable({
         ajax: {
-            url: "{{ route('api') }}",
+            url: "{{ route('api',['method' => 'get']) }}",
             dataSrc: 'Data'
 
         },

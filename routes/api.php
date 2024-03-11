@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 Route::get('test', [CHomestay::class, 'index'])->name('a');
-Route::get('api', [CTransaksi::class, 'get'])->name('api');
+// Route::get('api', [CTransaksi::class, 'get'])->name('api');
+Route::get('transaksi/{method}', [CTransaksi::class, 'api'])->name('api');
 Route::get('/send', [CTransaksi::class, 'sendMessage'])->name('mes');

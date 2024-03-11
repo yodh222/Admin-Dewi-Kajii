@@ -9,6 +9,7 @@ use App\Models\MUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CTransaksi extends Controller
 {
@@ -19,13 +20,22 @@ class CTransaksi extends Controller
     }
 
     // CRUD
-    public function get($req = "json"){
+    public function get($req = null,$id = null){
+        $arr = [];
 
+        if ($id != null) {
+            $dataWId = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')->select('id_transaksi', 'nama','no_telp','id_jenis','code_invoice','bukti_pembayaran','check_in','total_pembayaran','dibayarkan','status')->where('id_transaksi',$id)->get();
+
+            $arr['Id'] = $dataWId;
+        }
         $data = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')->select('id_transaksi', 'nama','no_telp','id_jenis','code_invoice','bukti_pembayaran','check_in','total_pembayaran','dibayarkan','status')->get();
         if ($req == "none") {
             return $data;
         }
-        return response()->json(['Data'=>$data],200,[],JSON_PRETTY_PRINT);
+
+        $arr['Data'] = $data;
+
+        return $arr;
     }
 
     public function add(RTransaksi $request){
@@ -62,8 +72,12 @@ class CTransaksi extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan Transaksi. Error: ' . $e->getMessage());
         }
     }
-    public function edit(RTransaksi $request){
+
+    public function edit(RTransaksi $request, $id) {
         try {
+            // Temukan data transaksi berdasarkan ID
+            $transaksi = MTransaksi::findOrFail($id);
+
             // Validasi Bukti Pembayaran
             $file = $request->file('bukti_pembayaran');
             if (!$this->isImage($file)) {
@@ -77,7 +91,8 @@ class CTransaksi extends Controller
             $file->move('uploads/bukti_pembayaran/', $fileName);
             $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
 
-            MTransaksi::update([
+            // Update data transaksi
+            $transaksi->update([
                 'id_user' => $request->input('id_user'),
                 'no_telp' => $request->input('no_telp'),
                 'id_jenis' => $request->input('id_jenis'),
@@ -87,12 +102,48 @@ class CTransaksi extends Controller
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
             ]);
+
             return redirect()->back()->with('success', 'Berhasil mengedit transaksi');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan.');
         } catch (QueryException $e) {
             return redirect()->back()->with('error', 'Gagal mengedit Transaksi. Error: ' . $e->getMessage());
         }
     }
 
+    public function delete($id){
+        try {
+            $transaksi = MTransaksi::findOrFail($id);
+            $transaksi->delete();
+            return redirect()->back()->with('success', 'Berhasil menghapus transaksi');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan.');
+        }
+    }
+
+    // API
+    public function api(Request $request, $method = null){
+
+        if ($method != null) {
+            switch ($method) {
+                case 'get':
+                    if ($request->input('id') != null) {
+                        return response()->json($this->get("",$request->input('id')),200,[],JSON_PRETTY_PRINT);
+                    }
+                    return response()->json($this->get(),200,[],JSON_PRETTY_PRINT);
+                    break;
+                case 'edit':
+                    break;
+                case 'add':
+                    break;
+                case 'delete':
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
 
 
 

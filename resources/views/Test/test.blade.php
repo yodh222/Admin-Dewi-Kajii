@@ -119,6 +119,12 @@
             </div>
         </div>
     </div>
+    <br><br><br><br>
+    <form action="{{route('upload')}}" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="bukti_pembayaran" accept="image/png, image/jpeg">
+        <input type="submit" value="Kirim">
+    </form>
 </body>
 
 <script>
@@ -193,8 +199,8 @@ $(document).ready(function() {
     // Ketika gambar diklik, tampilkan modals
     $("#myImg").click(function() {
         console.log("fuck");
-        $("#myModal").show();
-        $("#preview").attr("src", $(this).attr("src")); // Set gambar dalam modals ke gambar yang diklik
+        $("#myModal").css("display", "block");
+        // $("#preview").attr("src", $(this).attr("src")); // Set gambar dalam modals ke gambar yang diklik
     });
 
     // Ketika tombol penutup diklik, sembunyikan modals

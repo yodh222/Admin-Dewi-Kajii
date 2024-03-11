@@ -63,10 +63,41 @@ class CTransaksi extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan Transaksi. Error: ' . $e->getMessage());
         }
     }
+    public function testUpload(Request $request){
+        // Validasi Bukti Pembayaran
+        $file = $request->file('bukti_pembayaran');
+        if (!$this->isImage($file)) {
+            return response()->json([
+                'Pesan' => 'File yang anda kirimkan bukan sebuah gambar'
+            ], 400, [], JSON_PRETTY_PRINT);
+        }
+        $uniq = uniqid();
+
+        // $destinationPath = public_path('uploads/bukti_pembayaran');
+        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+        $file->move('uploads/bukti_pembayaran/', $fileName);
+        $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
+
+
+        // Generate Invoice
+        $invoice = "INV/".date('dmY')."/".$uniq;
+        return response()->json([
+            'Invoice' => $invoice,
+            'Path File' => $path_bukti,
+            'Pesan' => "Berhasil di Upload"
+    ],200,[],JSON_PRETTY_PRINT);
+    }
 
     private function isImage($file)
-    {
-        $headers = exif_read_data($file->getPathname());
-        return isset($headers['FileType']) && strpos($headers['FileType'], 'image') === 0;
+{
+    if ($file !== null && $file instanceof \SplFileInfo) {
+        $extension = strtolower($file->getClientOriginalExtension());
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file gambar yang diizinkan
+        return in_array($extension, $allowedExtensions);
     }
+    return false;
+}
+
+
+
 }

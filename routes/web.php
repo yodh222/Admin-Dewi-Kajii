@@ -16,3 +16,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('Test/test');
 })->name('dashboard');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+Route::get('/artikel', function () {
+    return view('artikel');
+});
+Route::get('/hiburan', function () {
+    return view('hiburan');
+});
+Route::get('/homestay', function () {
+    return view('homestay');
+});
+Route::get('/katalog', function () {
+    return view('katalog');
+});
+Route::get('/kegiatan', function () {
+    return view('kegiatan');
+});
+Route::get('/paket', function () {
+    return view('paket');
+});
+Route::get('/tentang', function () {
+    return view('tentang');
+});
+Route::get('/transaksi', function () {
+    return view('transaksi');
+});
+Route::get('/ulasan', function () {
+    return view('ulasan');
+});

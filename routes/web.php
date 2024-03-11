@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CTransaksi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+<<<<<<< HEAD
 Route::get('/', function () {
     return view('Test/test');
 })->name('dashboard');
@@ -47,3 +49,6 @@ Route::get('/transaksi', function () {
 Route::get('/ulasan', function () {
     return view('ulasan');
 });
+=======
+Route::get('/', [CTransaksi::class, 'index'])->name('dashboard');
+>>>>>>> b9576da7cfc2856d3a23d571578de8688c93afe8

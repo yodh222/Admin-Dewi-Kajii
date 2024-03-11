@@ -6,6 +6,7 @@ use Illuminate\Database\QueryException;
 use App\Http\Requests\RTransaksi;
 use App\Models\MTransaksi;
 use App\Models\MUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client;
@@ -24,16 +25,24 @@ class CTransaksi extends Controller
         $arr = [];
 
         if ($id != null) {
-            $dataWId = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')->select('id_transaksi', 'nama','no_telp','id_jenis','code_invoice','bukti_pembayaran','check_in','total_pembayaran','dibayarkan','status')->where('id_transaksi',$id)->get();
-
+            $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user','tb_transaksi.id_user')
+                    ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis','tb_transaksi.id_jenis')
+                    ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_wisata.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status')
+                    ->where('tb_transaksi.id_transaksi', $id)
+                    ->first();
             $arr['Id'] = $dataWId;
         }
-        $data = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')->select('id_transaksi', 'nama','no_telp','id_jenis','code_invoice','bukti_pembayaran','check_in','total_pembayaran','dibayarkan','status')->get();
+
+        $data = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')
+        ->leftJoin('tb_jenis_wisata','tb_jenis_wisata.id_jenis','tb_transaksi.id_jenis')
+        ->select('id_transaksi', 'tb_user.nama','no_telp','tb_jenis_wisata.nama as jenis_wisata','code_invoice','bukti_pembayaran','check_in','harga','dibayarkan','status')
+        ->get();
         if ($req == "none") {
             return $data;
         }
-
         $arr['Data'] = $data;
+
+
 
         return $arr;
     }
@@ -63,7 +72,6 @@ class CTransaksi extends Controller
                 'code_invoide' => $invoice,
                 'bukti_pembayaran' => $path_bukti,
                 'check_in' => $request->input('check_in'),
-                'total_pembayaran' => $request->input('total_pembayaran'),
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
             ]);
@@ -98,7 +106,6 @@ class CTransaksi extends Controller
                 'id_jenis' => $request->input('id_jenis'),
                 'bukti_pembayaran' => $path_bukti,
                 'check_in' => $request->input('check_in'),
-                'total_pembayaran' => $request->input('total_pembayaran'),
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
             ]);
@@ -129,6 +136,9 @@ class CTransaksi extends Controller
                 case 'get':
                     if ($request->input('id') != null) {
                         return response()->json($this->get("",$request->input('id')),200,[],JSON_PRETTY_PRINT);
+                    }
+                    if ($request->input('type') == 'dash') {
+                        return response()->json($this->dashboard(),200,[],JSON_PRETTY_PRINT);
                     }
                     return response()->json($this->get(),200,[],JSON_PRETTY_PRINT);
                     break;
@@ -190,6 +200,24 @@ class CTransaksi extends Controller
         return false;
     }
 
+    private function dashboard(){
+        $tahunIni = Carbon::now()->year;
+        $process = MTransaksi::where('status', 'process')
+                    ->whereYear('created_at', $tahunIni)
+                    ->count();
+        $dp = MTransaksi::where('status', 'dp')
+                    ->whereYear('created_at', $tahunIni)
+                    ->count();
+        $batal = MTransaksi::where('status', 'batal')
+                    ->whereYear('created_at', $tahunIni)
+                    ->count();
 
+        // $keuntungan = MTransaksi::whereYear('created_at', $tahunIni)
+        return ['Dash' => [
+            'Process' => $process,
+            'Dp' => $dp,
+            'Batal' => $batal
+        ]];
+    }
 
 }

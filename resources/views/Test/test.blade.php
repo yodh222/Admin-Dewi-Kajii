@@ -147,13 +147,13 @@ $(document).ready(function() {
             }, {
                 data: 'no_telp'
             }, {
-                data: 'id_jenis'
+                data: 'jenis_wisata'
             }, {
                 data: 'code_invoice'
             }, {
                 data: 'check_in'
             }, {
-                data: 'total_pembayaran'
+                data: 'harga'
             }, {
                 data: 'bukti_pembayaran'
             }, {

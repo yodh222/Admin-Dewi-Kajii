@@ -30,6 +30,7 @@ class RTransaksi extends FormRequest
             'total_pembayaran' => 'required|number',
             'dibayarkan' => 'required|number',
             'status' => 'required|number',
+            
         ];
     }
 }

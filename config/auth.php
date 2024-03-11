@@ -59,6 +59,11 @@ return [
     |
     */
 
+    'api' => [
+        'driver' => 'jwt',
+        'provider' => 'users'
+    ],
+
     'providers' => [
         'users' => [
             'driver' => 'eloquent',

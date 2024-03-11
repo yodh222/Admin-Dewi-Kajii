@@ -14,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-<<<<<<< HEAD
-Route::get('/', function () {
-    return view('Test/test');
-})->name('dashboard');
+// Route::get('/', function () {
+//     return view('Test/test');
+// })->name('dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -49,6 +48,4 @@ Route::get('/transaksi', function () {
 Route::get('/ulasan', function () {
     return view('ulasan');
 });
-=======
-Route::get('/', [CTransaksi::class, 'index'])->name('dashboard');
->>>>>>> b9576da7cfc2856d3a23d571578de8688c93afe8
+Route::get('/', [CTransaksi::class,'index'])->name('dashboard');

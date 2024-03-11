@@ -68,7 +68,8 @@ class CTransaksi extends Controller
         $file = $request->file('bukti_pembayaran');
         if (!$this->isImage($file)) {
             return response()->json([
-                'Pesan' => 'File yang anda kirimkan bukan sebuah gambar'
+                'Type' => 'Error',
+                'Message' => 'File yang anda kirimkan bukan sebuah gambar'
             ], 400, [], JSON_PRETTY_PRINT);
         }
         $uniq = uniqid();
@@ -82,9 +83,10 @@ class CTransaksi extends Controller
         // Generate Invoice
         $invoice = "INV/".date('dmY')."/".$uniq;
         return response()->json([
+            'Type' => 'Success',
             'Invoice' => $invoice,
             'Path File' => $path_bukti,
-            'Pesan' => "Berhasil di Upload"
+            'Message' => "Berhasil di Upload"
     ],200,[],JSON_PRETTY_PRINT);
     }
 

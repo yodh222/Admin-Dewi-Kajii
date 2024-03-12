@@ -137,18 +137,19 @@ class CTransaksi extends Controller
                     if ($request->input('id') != null) {
                         return response()->json($this->get("",$request->input('id')),200,[],JSON_PRETTY_PRINT);
                     }
-                    if ($request->input('type') == 'dash') {
+                    if ($request->input('type') == 'dashboard') {
                         return response()->json($this->dashboard(),200,[],JSON_PRETTY_PRINT);
                     }
                     return response()->json($this->get(),200,[],JSON_PRETTY_PRINT);
                     break;
-                case 'edit':
-                    break;
-                case 'add':
-                    break;
-                case 'delete':
-                    break;
-                default:
+                case 'send':
+                    if (!$request->has('no_telp') || !$request->has('message')) {
+                        return response()->json([
+                            'Status' => 'Error',
+                            'Message' => 'Parameter tidak ditemukan'
+                        ],400,[],JSON_PRETTY_PRINT);
+                    }
+                    return response()->json($this->sendMessage($request->input('no_telp'),$request->input('message')),200,[],JSON_PRETTY_PRINT);
                     break;
             }
         }
@@ -156,10 +157,9 @@ class CTransaksi extends Controller
     }
 
 
-
     // Send Message WhatsApp
-    public function sendMessage(Request $request){
-        if (!$request->has('no_telp') || !$request->has('message')) {
+    private function sendMessage($no_telp = null, $message = null) {
+        if ($no_telp == null || $message == null) {
             return response()->json([
                 'Status' => 'Error',
                 'Message' => 'Parameter tidak lengkap'
@@ -168,14 +168,14 @@ class CTransaksi extends Controller
 
         $client = new Client();
         $token = 'qMZ+vU84E_mmu#uRkscp';
-        $target = $request->input('no_telp');
+        $target = $no_telp;
         $response = $client->post('https://api.fonnte.com/send', [
             'headers' => [
                 'Authorization' => $token,
             ],
             'form_params' => [
                 'target' => $target,
-                'message' => $request->input('message'),
+                'message' => $message,
                 'url' => 'https://md.fonnte.com/images/wa-logo.png',
                 'countryCode' => '62',
             ],
@@ -212,11 +212,31 @@ class CTransaksi extends Controller
                     ->whereYear('created_at', $tahunIni)
                     ->count();
 
-        // $keuntungan = MTransaksi::whereYear('created_at', $tahunIni)
-        return ['Dash' => [
+        // Loop untuk menghitung pendapatan dan penjualan paket wisata untuk tahun ini dan tahun sebelumnya
+        for ($i = 0; $i < 12; $i++) {
+            $pendapatan[$tahunIni][$i] = MTransaksi::whereMonth('created_at', $i + 1)
+                ->whereYear('created_at', $tahunIni)
+                ->sum('dibayarkan');
+
+            $pendapatan[$tahunIni - 1][$i] = MTransaksi::whereMonth('created_at', $i + 1)
+                ->whereYear('created_at', $tahunIni - 1)
+                ->sum('dibayarkan');
+
+            $wisata[$tahunIni][$i] = MTransaksi::whereMonth('created_at', $i + 1)
+                ->whereYear('created_at', $tahunIni)
+                ->sum('dibayarkan');
+
+            $wisata[$tahunIni - 1][$i] = MTransaksi::whereMonth('created_at', $i + 1)
+                ->whereYear('created_at', $tahunIni - 1)
+                ->sum('dibayarkan');
+        }
+
+        return ['Data' => [
             'Process' => $process,
             'Dp' => $dp,
-            'Batal' => $batal
+            'Batal' => $batal,
+            'Chart Pendapatan' => $pendapatan,
+            'Chart Penjualan Paket Wisata' => $wisata,
         ]];
     }
 

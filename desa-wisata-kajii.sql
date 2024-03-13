@@ -1,0 +1,469 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 13 Mar 2024 pada 18.46
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `desa-wisata-kajii`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_admin`
+--
+
+CREATE TABLE `tb_admin` (
+  `id_admin` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `no_telp` char(15) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_admin`
+--
+
+INSERT INTO `tb_admin` (`id_admin`, `nama`, `no_telp`, `email`, `alamat`, `password`) VALUES
+(7, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodj', '$2y$12$dH1.PAq63.bB3Co4WOk46uqmn57TIZlN1otWJU1B4Z3zko0orwtK.');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_artikel`
+--
+
+CREATE TABLE `tb_artikel` (
+  `id_artikel` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `dibuat` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_faq`
+--
+
+CREATE TABLE `tb_faq` (
+  `id_faq` int(11) NOT NULL,
+  `pertanyaan` text NOT NULL,
+  `jawaban` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_hiburan`
+--
+
+CREATE TABLE `tb_hiburan` (
+  `id_hiburan` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `gambar` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_homestay`
+--
+
+CREATE TABLE `tb_homestay` (
+  `id_homestay` int(11) NOT NULL,
+  `nama` varchar(115) NOT NULL,
+  `gambar` text NOT NULL,
+  `fasilitas` text NOT NULL,
+  `deskripsi` text NOT NULL,
+  `peraturan` text NOT NULL,
+  `harga` int(11) NOT NULL,
+  `promo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_homestay`
+--
+
+INSERT INTO `tb_homestay` (`id_homestay`, `nama`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`, `promo`) VALUES
+(1, 'Homestay 1', 'https://www.yogyes.com/id/yogyakarta-hotel/guest-house/athaya-homestay/1.jpg,https://www.yogyes.com/id/yogyakarta-hotel/guest-house/athaya-homestay/12.jpg,https://www.yogyes.com/id/yogyakarta-hotel/guest-house/handida-homestay/1.jpg,https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.brighton.co.id%2Fabout%2Farticles-all%2Finspirasi-desain-homestay-minimalis-untuk-ide-bisnis&psig=AOvVaw0a1Vro3OMlqzTLF9fgMAgM&ust=1710176507682000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCVt5KW6oQDFQAAAAAdAAAAABAS', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 10000, 1000000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_jenis_wisata`
+--
+
+CREATE TABLE `tb_jenis_wisata` (
+  `id_jenis` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_jenis_wisata`
+--
+
+INSERT INTO `tb_jenis_wisata` (`id_jenis`, `nama`, `harga`) VALUES
+(1, 'a', 11);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_kegiatan`
+--
+
+CREATE TABLE `tb_kegiatan` (
+  `id_kegiatan` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `gambar` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_paket_wisata`
+--
+
+CREATE TABLE `tb_paket_wisata` (
+  `id_paket_wisata` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `fasilitas` text NOT NULL,
+  `waktu` varchar(115) NOT NULL,
+  `harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_promo`
+--
+
+CREATE TABLE `tb_promo` (
+  `id_promo` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `gambar` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_tentang_kami`
+--
+
+CREATE TABLE `tb_tentang_kami` (
+  `deskripsi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_timeline`
+--
+
+CREATE TABLE `tb_timeline` (
+  `id_timeline` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `deskripsi` text NOT NULL,
+  `gambar` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_transaksi`
+--
+
+CREATE TABLE `tb_transaksi` (
+  `id_transaksi` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_jenis` int(11) NOT NULL,
+  `code_invoice` varchar(100) NOT NULL,
+  `bukti_pembayaran` text NOT NULL,
+  `check_in` date NOT NULL,
+  `dibayarkan` int(11) NOT NULL,
+  `status` enum('Lunas','DP','Process','Batal') NOT NULL,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id_transaksi`, `id_user`, `id_jenis`, `code_invoice`, `bukti_pembayaran`, `check_in`, `dibayarkan`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '', 'aaaaa', '2024-03-12', 1, 'Process', '2024-03-09', '0000-00-00'),
+(2, 1, 1, 'test', 'asd', '2024-03-12', 0, 'Process', '2024-03-09', '0000-00-00'),
+(3, 1, 1, 'asgh', 'sadfdg', '2024-03-21', 111, 'Process', '2024-03-12', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_ulasan`
+--
+
+CREATE TABLE `tb_ulasan` (
+  `id_ulasan` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `ulasan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_user`
+--
+
+CREATE TABLE `tb_user` (
+  `id_user` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `no_telp` char(11) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_user`
+--
+
+INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`) VALUES
+(1, 'aaa', 'a@gmail.com', '1111', 'aaa', 'a');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@gmeil.com', NULL, '$2y$12$nmEUYCIOWeFs0wUSfwcDJ.IDkhX4p5PwEVmLNuBLE1Hpl7JhUH6la', NULL, '2024-03-12 23:04:18', '2024-03-12 23:04:18'),
+(2, 'Administrator', 'admin@gmail.com', NULL, '$2y$12$tMl0ClBi895vUTe8g/fX3uB4IAeYXNHVRUGWRh0.Uz2zDv.jX6QFW', NULL, '2024-03-12 23:04:42', '2024-03-12 23:04:42');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `tb_admin`
+--
+ALTER TABLE `tb_admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indeks untuk tabel `tb_artikel`
+--
+ALTER TABLE `tb_artikel`
+  ADD PRIMARY KEY (`id_artikel`);
+
+--
+-- Indeks untuk tabel `tb_faq`
+--
+ALTER TABLE `tb_faq`
+  ADD PRIMARY KEY (`id_faq`);
+
+--
+-- Indeks untuk tabel `tb_hiburan`
+--
+ALTER TABLE `tb_hiburan`
+  ADD PRIMARY KEY (`id_hiburan`);
+
+--
+-- Indeks untuk tabel `tb_homestay`
+--
+ALTER TABLE `tb_homestay`
+  ADD PRIMARY KEY (`id_homestay`);
+
+--
+-- Indeks untuk tabel `tb_jenis_wisata`
+--
+ALTER TABLE `tb_jenis_wisata`
+  ADD PRIMARY KEY (`id_jenis`);
+
+--
+-- Indeks untuk tabel `tb_kegiatan`
+--
+ALTER TABLE `tb_kegiatan`
+  ADD PRIMARY KEY (`id_kegiatan`);
+
+--
+-- Indeks untuk tabel `tb_paket_wisata`
+--
+ALTER TABLE `tb_paket_wisata`
+  ADD PRIMARY KEY (`id_paket_wisata`);
+
+--
+-- Indeks untuk tabel `tb_promo`
+--
+ALTER TABLE `tb_promo`
+  ADD PRIMARY KEY (`id_promo`);
+
+--
+-- Indeks untuk tabel `tb_timeline`
+--
+ALTER TABLE `tb_timeline`
+  ADD PRIMARY KEY (`id_timeline`);
+
+--
+-- Indeks untuk tabel `tb_transaksi`
+--
+ALTER TABLE `tb_transaksi`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_user` (`id_user`,`id_jenis`),
+  ADD KEY `id_jenis` (`id_jenis`);
+
+--
+-- Indeks untuk tabel `tb_ulasan`
+--
+ALTER TABLE `tb_ulasan`
+  ADD PRIMARY KEY (`id_ulasan`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indeks untuk tabel `tb_user`
+--
+ALTER TABLE `tb_user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- Indeks untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_admin`
+--
+ALTER TABLE `tb_admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_artikel`
+--
+ALTER TABLE `tb_artikel`
+  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_faq`
+--
+ALTER TABLE `tb_faq`
+  MODIFY `id_faq` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_hiburan`
+--
+ALTER TABLE `tb_hiburan`
+  MODIFY `id_hiburan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_homestay`
+--
+ALTER TABLE `tb_homestay`
+  MODIFY `id_homestay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_jenis_wisata`
+--
+ALTER TABLE `tb_jenis_wisata`
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_kegiatan`
+--
+ALTER TABLE `tb_kegiatan`
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_paket_wisata`
+--
+ALTER TABLE `tb_paket_wisata`
+  MODIFY `id_paket_wisata` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_promo`
+--
+ALTER TABLE `tb_promo`
+  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_timeline`
+--
+ALTER TABLE `tb_timeline`
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_transaksi`
+--
+ALTER TABLE `tb_transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_ulasan`
+--
+ALTER TABLE `tb_ulasan`
+  MODIFY `id_ulasan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_user`
+--
+ALTER TABLE `tb_user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `tb_transaksi`
+--
+ALTER TABLE `tb_transaksi`
+  ADD CONSTRAINT `tb_transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`),
+  ADD CONSTRAINT `tb_transaksi_ibfk_2` FOREIGN KEY (`id_jenis`) REFERENCES `tb_jenis_wisata` (`id_jenis`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

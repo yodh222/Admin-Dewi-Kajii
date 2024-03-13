@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class MAdmin extends Model implements JWTSubject
+class MAdmin extends Model
 {
     use HasFactory;
     protected $table = 'tb_admin';
@@ -22,13 +21,4 @@ class MAdmin extends Model implements JWTSubject
         'email',
         'password'
     ];
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
 }

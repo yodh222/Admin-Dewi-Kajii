@@ -1,0 +1,30 @@
+use Illuminate\Http\Request;
+
+public function upload(Request $request)
+{
+    // Validasi request
+    $request->validate([
+        'files.*' => 'required|file|max:10240', // Max 10MB per file
+    ]);
+
+    // Array untuk menyimpan path file yang disimpan
+    $paths = [];
+
+    // Loop untuk memproses setiap file yang diunggah
+    foreach ($request->file('files') as $file) {
+        // Direktori tujuan untuk menyimpan file
+        $destinationPath = public_path('uploads');
+
+        // Membuat nama file yang unik
+        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        // Memindahkan file ke direktori tujuan dengan nama file yang telah ditentukan
+        $file->move($destinationPath, $fileName);
+
+        // Menyimpan path lengkap file yang disimpan
+        $paths[] = asset('uploads/' . $fileName);
+    }
+
+    // Mengembalikan array path file yang disimpan
+    return $paths;
+}

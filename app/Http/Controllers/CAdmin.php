@@ -18,7 +18,7 @@ class CAdmin extends Controller
     {
         $credentials = request(['nama', 'password']);
 
-        if (! $token = JWTAuth::guard('admin')->attempt($credentials)) {
+        if (!$token = JWTAuth::guard('admins')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

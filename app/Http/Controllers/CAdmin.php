@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\MAdmin;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 

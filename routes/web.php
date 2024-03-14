@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CTransaksi;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +49,10 @@ Route::get('/transaksi', function () {
 Route::get('/ulasan', function () {
     return view('ulasan');
 });
-Route::get('/', [CTransaksi::class,'index'])->name('dashboard');
+
+// Testing Route
+Route::get('/', [CTransaksi::class, 'index'])->name('dashboard');
+Route::get('/admlogin', [CAdmin::class, 'index'])->name('login');
+Route::post('login', [CAdmin::class, 'login'])->name('admin-login');
+Route::post('register', [CAdmin::class, 'register'])->name('admin-register');
+Route::get('/check', [CAdmin::class, 'check'])->name('test');

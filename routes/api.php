@@ -24,7 +24,5 @@ Route::get('test', [CHomestay::class, 'index'])->name('a');
 
 Route::get('transaksi/{method}', [CTransaksi::class, 'api'])->name('transaksi');
 
-Route::middleware('api')->prefix('admin')->group(function(){
-    Route::get('login',[CAdmin::class,'login'])->name('adm-login');
-    Route::get('register',[CAdmin::class,'register'])->name('adm-register');
-});
+
+// Route::get('/test', [CAdmin::class, 'cookie'])->name('test');

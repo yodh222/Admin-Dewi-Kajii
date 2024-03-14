@@ -16,6 +16,13 @@
         <input type="text" name="password" id=""><br><br>
         <input type="submit" value="kirim">
     </form>
+
+    @if(session('sessionError'))
+        <div class="alert alert-success">
+            {{ session('sessionError') }}
+        </div>
+    @endif
+
 </body>
 
 </html>

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\MAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class CAdmin extends Controller
@@ -14,10 +15,6 @@ class CAdmin extends Controller
     public function index()
     {
         return view('Test/admin');
-        // return response()->json([
-        //     'Encrypt' => $this->encrypt(['Data' => 'Simple', 'Data2' => 'Simple2'], 'admin'),
-        //     'Decrypt' => $this->decrypt($this->encrypt(['Data' => 'Simple', 'Data2' => 'Simple2'], 'admin'), 'admin')
-        // ], 200, [], JSON_PRETTY_PRINT);
     }
 
     public function login(Request $request)
@@ -30,18 +27,10 @@ class CAdmin extends Controller
             $request->session()->put([
                 'Auth' => $this->encrypt($user, 'DewiiKajiiSecret')
             ]);
-            // return response()->json([
-            //     'Status' => 'Success',
-            //     'Message' => 'Anda berhasil login',
-            //     'User' => $this->encrypt($user, 'DewiiKajiiSecret'),
-
-            // ], 200, [], JSON_PRETTY_PRINT);
+            return redirect('dashboard')->with('Success', 'Anda berhasil login');
         }
 
-        // return response()->json([
-        //     'Status' => 'Error',
-        //     'Message' => 'Anda gagal login'
-        // ], 400, [], JSON_PRETTY_PRINT);
+        return redirect('Login')->with('Error', 'Anda gagal login');
     }
     public function register(Request $request)
     {
@@ -64,6 +53,39 @@ class CAdmin extends Controller
             'alamat' => $request->get('alamat'),
         ]);
     }
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:tb_admin',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $admin = MAdmin::where('id_admin', $this->decrypt(Session::get('Auth'), 'DewiiKajiiSecret')['id_admin'])->first();
+        if (!$admin) {
+            return redirect()->back()->with('srror', 'Admin tidak ditemukan');
+        }
+
+        $admin->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'no_telp' => $request->no_telp,
+            'alamat' => $request->alamat,
+        ]);
+
+        return redirect()->back()->with('success', 'Admin berhasil diupdate');
+    }
+    public function logout(Request $request)
+    {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('Login')->with('Success', 'Anda berhasil logout');
+    }
 
 
     // How to set Cookie
@@ -74,20 +96,6 @@ class CAdmin extends Controller
     //         ->json(['Status' => 'Success', 'Cookie' => strval($request->cookie('Auth')), 'Aas'], 200, [], JSON_PRETTY_PRINT)
     //         ->withCookie($cookieValue);
     // }
-
-
-    private function findUser($request)
-    {
-
-        $user = MAdmin::where('email', $request->email)->first();
-
-        if (!$user || !password_verify($request->password, $user->password)) {
-            return false;
-        }
-
-        return $user;
-    }
-
     private function encrypt($value, $key)
     {
         // Konversi array menjadi string JSON
@@ -109,17 +117,13 @@ class CAdmin extends Controller
         $options = 0;
         $iv_length = openssl_cipher_iv_length($cipher);
 
-        // Dekode nilai yang dienkripsi
         $decodedValue = base64_decode($value);
 
-        // Pisahkan IV dari nilai terenkripsi
         $iv = substr($decodedValue, 0, $iv_length);
         $encrypted = substr($decodedValue, $iv_length);
 
-        // Dekripsi nilai
         $decrypted = openssl_decrypt($encrypted, $cipher, $key, $options, $iv);
 
-        // Konversi kembali string JSON menjadi array
         return json_decode($decrypted, true);
     }
 }

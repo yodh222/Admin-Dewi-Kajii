@@ -17,37 +17,36 @@ class CTransaksi extends Controller
     public function index()
     {
 
-        return view('Test/test',['Transaksi' => $this->get("none"), 'User' => MUser::all()]);
+        return view('Test/test', ['Transaksi' => $this->get("none"), 'User' => MUser::all()]);
     }
 
     // CRUD
-    public function get($req = null,$id = null){
+    public function get($req = null, $id = null)
+    {
         $arr = [];
 
         if ($id != null) {
-            $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user','tb_transaksi.id_user')
-                    ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis','tb_transaksi.id_jenis')
-                    ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_wisata.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status')
-                    ->where('tb_transaksi.id_transaksi', $id)
-                    ->first();
+            $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
+                ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_wisata.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status')
+                ->where('tb_transaksi.id_transaksi', $id)
+                ->first();
             $arr['Id'] = $dataWId;
         }
 
-        $data = MTransaksi::leftJoin('tb_user','tb_user.id_user','tb_transaksi.id_user')
-        ->leftJoin('tb_jenis_wisata','tb_jenis_wisata.id_jenis','tb_transaksi.id_jenis')
-        ->select('id_transaksi', 'tb_user.nama','no_telp','tb_jenis_wisata.nama as jenis_wisata','code_invoice','bukti_pembayaran','check_in','harga','dibayarkan','status')
-        ->get();
+        $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
+            ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
+            ->select('id_transaksi', 'tb_user.nama', 'no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'code_invoice', 'bukti_pembayaran', 'check_in', 'harga', 'dibayarkan', 'status')
+            ->get();
         if ($req == "none") {
             return $data;
         }
         $arr['Data'] = $data;
-
-
-
         return $arr;
     }
 
-    public function add(RTransaksi $request){
+    public function add(RTransaksi $request)
+    {
         try {
             // Validasi Bukti Pembayaran
             $file = $request->file('bukti_pembayaran');
@@ -63,7 +62,7 @@ class CTransaksi extends Controller
             $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
 
             // Generate Invoice
-            $invoice = "INV/".date('dmY')."/".$uniq;
+            $invoice = "INV/" . date('dmY') . "/" . $uniq;
 
             MTransaksi::create([
                 'id_user' => $request->input('id_user'),
@@ -81,7 +80,8 @@ class CTransaksi extends Controller
         }
     }
 
-    public function edit(RTransaksi $request, $id) {
+    public function edit(RTransaksi $request, $id)
+    {
         try {
             // Temukan data transaksi berdasarkan ID
             $transaksi = MTransaksi::findOrFail($id);
@@ -118,7 +118,8 @@ class CTransaksi extends Controller
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $transaksi = MTransaksi::findOrFail($id);
             $transaksi->delete();
@@ -129,36 +130,37 @@ class CTransaksi extends Controller
     }
 
     // API
-    public function api(Request $request, $method = null){
+    public function api(Request $request, $method = null)
+    {
 
         if ($method != null) {
             switch ($method) {
                 case 'get':
                     if ($request->input('id') != null) {
-                        return response()->json($this->get("",$request->input('id')),200,[],JSON_PRETTY_PRINT);
+                        return response()->json($this->get("", $request->input('id')), 200, [], JSON_PRETTY_PRINT);
                     }
-                    if ($request->input('type') == 'dashboard') {
-                        return response()->json($this->dashboard(),200,[],JSON_PRETTY_PRINT);
+                    if ($request->input('data') == 'dashboard') {
+                        return response()->json($this->dashboard(), 200, [], JSON_PRETTY_PRINT);
                     }
-                    return response()->json($this->get(),200,[],JSON_PRETTY_PRINT);
+                    return response()->json($this->get(), 200, [], JSON_PRETTY_PRINT);
                     break;
                 case 'send':
                     if (!$request->has('no_telp') || !$request->has('message')) {
                         return response()->json([
                             'Status' => 'Error',
                             'Message' => 'Parameter tidak ditemukan'
-                        ],400,[],JSON_PRETTY_PRINT);
+                        ], 400, [], JSON_PRETTY_PRINT);
                     }
-                    return response()->json($this->sendMessage($request->input('no_telp'),$request->input('message')),200,[],JSON_PRETTY_PRINT);
+                    return response()->json($this->sendMessage($request->input('no_telp'), $request->input('message')), 200, [], JSON_PRETTY_PRINT);
                     break;
             }
         }
-
     }
 
 
     // Send Message WhatsApp
-    private function sendMessage($no_telp = null, $message = null) {
+    private function sendMessage($no_telp = null, $message = null)
+    {
         if ($no_telp == null || $message == null) {
             return response()->json([
                 'Status' => 'Error',
@@ -185,9 +187,9 @@ class CTransaksi extends Controller
         $data = json_decode($body, true);
         return response()->json([
             'Status' => 'Success',
-            'Message' => 'Pesan berhasil terkirimm ke'.$target,
+            'Message' => 'Pesan berhasil terkirimm ke' . $target,
             'Response' => $data
-        ],200,[],JSON_PRETTY_PRINT);
+        ], 200, [], JSON_PRETTY_PRINT);
     }
 
     private function isImage($file)
@@ -200,17 +202,18 @@ class CTransaksi extends Controller
         return false;
     }
 
-    private function dashboard(){
+    private function dashboard()
+    {
         $tahunIni = Carbon::now()->year;
         $process = MTransaksi::where('status', 'process')
-                    ->whereYear('created_at', $tahunIni)
-                    ->count();
+            ->whereYear('created_at', $tahunIni)
+            ->count();
         $dp = MTransaksi::where('status', 'dp')
-                    ->whereYear('created_at', $tahunIni)
-                    ->count();
+            ->whereYear('created_at', $tahunIni)
+            ->count();
         $batal = MTransaksi::where('status', 'batal')
-                    ->whereYear('created_at', $tahunIni)
-                    ->count();
+            ->whereYear('created_at', $tahunIni)
+            ->count();
 
         // Loop untuk menghitung pendapatan dan penjualan paket wisata untuk tahun ini dan tahun sebelumnya
         for ($i = 0; $i < 12; $i++) {
@@ -239,5 +242,4 @@ class CTransaksi extends Controller
             'Chart Penjualan Paket Wisata' => $wisata,
         ]];
     }
-
 }

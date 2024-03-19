@@ -17,6 +17,7 @@
     .logintitle {
         font-size: 30px;
         text-align: center;
+        font-weight: bolder;
     }
 
     .container {
@@ -28,16 +29,13 @@
 
     form {
         width: 400px;
-        margin: 20px auto;
-        padding: 10px;
+        padding: 20px;
         border: 1px solid #ccc;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    form input[type="password"],
-    form input[type="text"],
-    form textarea {
+    form input{
         width: 395px;
         padding: 10px;
         margin-bottom: 15px;
@@ -48,37 +46,37 @@
     }
 
     form button {
-        background-color: #097804;
+        font-weight: bolder;
+        background-color: #22861d;
         color: white;
         padding: 10px 15px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
         margin-top: 20px;
-        position: relative;
+        /* position: relative; */
         width: 100%;
-        display: flex;
+        /* display: flex;
         justify-content: center;
-        align-items: center;
-        font-style: bold;
+        align-items: center; */
     }
 
     form button:hover {
         background-color: #ffffff;
-        color: #097804;
-        padding: 10px 15px;
-        border: 1px solid #097804;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-bottom: 5px;
-        font-style: bold;
+        color: #22861d;
+        /* padding: 10px 15px; */
+        border: 1px solid #22861d;
+        /* border-radius: 8px; */
+        /* cursor: pointer; */
+        /* margin-bottom: 5px; */
+        font-weight: bolder;
     }
 
     label {
         font-size: 15px;
     }
 
-    form a {
+    /* form a {
         text-decoration: none;
         background-color: #1640D6;
         color: white;
@@ -90,7 +88,7 @@
 
     form a:hover {
         background-color: #001B79;
-    }
+    } */
     </style>
 </head>
 
@@ -100,7 +98,7 @@
             @csrf
             <table>
                 <tr>
-                    <div class="logintitle"> LOGIN ADMIN </div>
+                    <div class="logintitle">LOGIN ADMIN</div>
                 </tr>
                 <tr>
                     <td><label for="email">Email</label></td>
@@ -113,23 +111,14 @@
                     <td><label for="password">Password</label></td>
                 </tr>
                 <tr>
-                    <td><input type="text" name="password" id="" required><br></td>
+                    <td><input type="password" name="password" id="" required><br></td>
                 </tr>
                 <tr>
-                    <td><button type="submit" value="kirim">LOGIN</td>
+                    <td><button type="submit" value="kirim">Log In</td>
                 </tr>
             </table>
         </form>
     </div>
-
-    <!-- <form action="{{route('admin-login')}}" method="post">
-        @csrf
-        <label for="email">Email</label><br>
-        <input type="text" name="email" id=""><br>
-        <label for="password">Password</label><br>
-        <input type="text" name="password" id=""><br><br>
-        <input type="submit" value="kirim">
-    </form> -->
 
     @if(session('sessionError'))
     <div class="alert alert-success">

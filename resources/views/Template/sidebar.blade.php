@@ -52,7 +52,8 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <i class="fa-solid fa-user" style="font-size: 30px; color: white;"></i>
+                                <img src="{{asset('assets\image\kadal.jpg')}}" class="avatar img-fluid" alt=""
+                                    style="border-radius:50%; width: 70px; height: 70px;">
                             </a>
                             <div class=" dropdown-menu dropdown-menu-end">
                                 <a href="#" class="dropdown-item">Profile</a>

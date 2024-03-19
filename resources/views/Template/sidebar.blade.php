@@ -1,103 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-    /* Style untuk header */
-    header {
-        background-color: #097804;
-        color: white;
-        padding: 30px;
-        display: flex;
-        /* Menjadikan header sebagai flex container */
-        justify-content: space-between;
-        /* Menjadikan logo dan ikon di kedua sisi */
-        align-items: center;
-        /* Memusatkan vertikal konten dalam header */
-    }
-
-    /* Style untuk ikon */
-    .icons img {
-        height: 24px;
-        /* Sesuaikan ukuran ikon sesuai kebutuhan */
-        margin-left: 20px;
-        /* Memberi jarak antara ikon */
-    }
-
-    .sidebar {
-        background-color: #E0E0E0;
-        width: 200px;
-        position: fixed;
-        top: 87px;
-        /* Adjust based on your header height */
-        bottom: 0;
-        left: 0;
-        overflow-y: auto;
-    }
-
-    .sidebar ul {
-        list-style-type: none;
-        padding: 10px;
-    }
-
-    .sidebar ul li {
-        padding: 10px;
-    }
-
-    .sidebar ul li a {
-        text-decoration: none;
-        color: #333;
-    }
-
-    /* Style untuk konten utama */
-    .content {
-        margin-left: 250px;
-        /* Menggeser konten utama untuk memberi ruang bagi sidebar */
-        padding: 10px;
-    }
-    </style>
+    <title>Bootstrap Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-
-    <header>
-        <!-- Logo perusahaan di sebelah kiri header -->
-        <div class="logo">
-            <img src="" alt="Dewi Kajii">
+    <div class="wrapper">
+        <aside id="sidebar" class="sidebar.collapsed" style="background-color: #DDDDDD;">
+            <div class=" h-100 ">
+                <div class="sidebar-logo">
+                    <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" alt="Desa Wisata Kajii" width="50px"
+                        height="50px">
+                    <a href="" class="text-black">Admin Dewi Kajii</a>
+                    <hr>
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <?php
+                        $values = ['Dashboard', 'Transaksi', 'Tentang Kami', 'Kegiatan', 'Hiburan', 'Paket Wisata', 'Homestay','Ikan Hias','Artikel & Berita', 'Ulasan & FAQ'];
+                        $links = ['/dashboard', '/transaksi', '/tentang', '/kegiatan', '/hiburan', '/paket', '/homestay','/katalog','/artikel', '/ulasan'];
+                        $icons = ['fa-solid fa-home', 'fa-solid fa-exchange-alt', 'fa-solid fa-info-circle', 'fa-solid fa-calendar-alt', 'fa-solid fa-music', 'fa-solid fa-suitcase', 'fa-solid fa-home', 'fa-solid fa-fish', 'fa-solid fa-newspaper', 'fa-solid fa-question-circle'];
+                        $i = 0;
+                        foreach($values as $value) {
+                            $link = $links[$i];
+                            $icon = $icons[$i];
+                            echo '<a href="' . $link . '" class="sidebar-link text-black">';
+                            echo '<i class="' . $icon . ' pe-2"></i>';
+                            echo $value;
+                            echo '</a>';
+                            $i++;
+                        }
+                        ?>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom" style="background-color: green; height: 90px;">
+                <button class="btn" id="sidebar-toggle" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                <i class="fa-solid fa-user" style="font-size: 30px; color: white;"></i>
+                            </a>
+                            <div class=" dropdown-menu dropdown-menu-end">
+                                <a href="#" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item">Setting</a>
+                                <a href="#" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-2 bg-light">
+                <div class="container-fluid">
+                    <div class="mb-3 text-black">
+                        @yield('content')
+                    </div>
+                </div>
+            </main>
         </div>
-
-        <!-- Ikon notifikasi dan ikon person di sebelah kanan header -->
-        <div class="icons">
-            <img src="" alt="Notification Icon"> <!-- Ikon notifikasi -->
-            <img src="" alt="Person Icon"> <!-- Ikon person -->
-        </div>
-    </header>
-
-    <div class="sidebar">
-        <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/transaksi">Transaksi</a></li>
-            <li><a href="/tentang">Tentang Kami</a></li>
-            <li><a href="/kegiatan">Kegiatan</a></li>
-            <li><a href="/hiburan">Hiburan</a></li>
-            <li><a href="/paket">Paket Wisata</a></li>
-            <li><a href="/homestay">Homestay</a></li>
-            <li><a href="/katalog">Ikah Hias</a></li>
-            <li><a href="/artikel">Artikel & Berita</a></li>
-            <li><a href="/ulasan">Ulasan dan FAQ</a></li>
-        </ul>
     </div>
-
-    <!-- Content -->
-    <div class="content">
-        @yield('content')
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('assets/js/script.js')}}"></script>
 </body>
 
 </html>

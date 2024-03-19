@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CAdmin;
+use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CTransaksi;
 use Illuminate\Support\Facades\Route;
 
@@ -63,4 +64,6 @@ Route::post('Register', [CAdmin::class, 'register'])->name('register');
 Route::post('admin-login', [CAdmin::class, 'login'])->name('admin-login');
 
 
-// Route::get('check', [CAdmin::class, 'check'])->name('test');
+Route::get('check', [CProfile::class, 'index'])->name('test');
+
+// Route Profile

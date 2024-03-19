@@ -51,10 +51,7 @@ class CTransaksi extends Controller
             // Validasi Bukti Pembayaran
             $file = $request->file('bukti_pembayaran');
             if (!$this->isImage($file)) {
-                return response()->json([
-                    'Status' => 'Error',
-                    'Message' => 'File yang anda kirimkan bukan sebuah gambar'
-                ], 400, [], JSON_PRETTY_PRINT);
+                return redirect()->back()->with('imageError', 'File yang anda kirimkan bukan sebuah gambar');
             }
             $uniq = uniqid();
             $fileName = $uniq . '.' . $file->getClientOriginalExtension();
@@ -76,15 +73,15 @@ class CTransaksi extends Controller
             ]);
             return redirect()->back()->with('success', 'Berhasil menambahkan transaksi');
         } catch (QueryException $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan Transaksi. Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan Transaksi');
         }
     }
 
-    public function edit(RTransaksi $request, $id)
+    public function edit(RTransaksi $request)
     {
         try {
             // Temukan data transaksi berdasarkan ID
-            $transaksi = MTransaksi::findOrFail($id);
+            $transaksi = MTransaksi::findOrFail($request->id);
 
             // Validasi Bukti Pembayaran
             $file = $request->file('bukti_pembayaran');

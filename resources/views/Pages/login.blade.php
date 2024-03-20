@@ -54,41 +54,19 @@
         border-radius: 8px;
         cursor: pointer;
         margin-top: 20px;
-        /* position: relative; */
         width: 100%;
-        /* display: flex;
-        justify-content: center;
-        align-items: center; */
     }
 
     form button:hover {
         background-color: #ffffff;
         color: #22861d;
-        /* padding: 10px 15px; */
         border: 1px solid #22861d;
-        /* border-radius: 8px; */
-        /* cursor: pointer; */
-        /* margin-bottom: 5px; */
         font-weight: bolder;
     }
 
     label {
         font-size: 15px;
     }
-
-    /* form a {
-        text-decoration: none;
-        background-color: #1640D6;
-        color: white;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    form a:hover {
-        background-color: #001B79;
-    } */
     </style>
 </head>
 

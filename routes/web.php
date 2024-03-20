@@ -23,34 +23,34 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('Pages.dashboard');
     });
     Route::get('/artikel', function () {
-        return view('artikel');
+        return view('Pages.artikel');
     });
     Route::get('/hiburan', function () {
-        return view('hiburan');
+        return view('Pages.hiburan');
     });
     Route::get('/homestay', function () {
-        return view('homestay');
+        return view('Pages.homestay');
     });
     Route::get('/katalog', function () {
-        return view('katalog');
+        return view('Pages.katalog');
     });
     Route::get('/kegiatan', function () {
-        return view('kegiatan');
+        return view('Pages.kegiatan');
     });
     Route::get('/paket', function () {
-        return view('paket');
+        return view('Pages.paket');
     });
     Route::get('/tentang', function () {
-        return view('tentang');
+        return view('Pages.tentang');
     });
     Route::get('/transaksi', function () {
-        return view('transaksi');
+        return view('Pages.transaksi');
     });
     Route::get('/ulasan', function () {
-        return view('ulasan');
+        return view('Pages.ulasan');
     });
 });
 

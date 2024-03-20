@@ -14,7 +14,7 @@ class CAdmin extends Controller
 {
     public function index()
     {
-        return view('Test/admin');
+        return view('Pages.login');
     }
 
     public function login(Request $request)

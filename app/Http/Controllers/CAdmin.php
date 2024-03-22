@@ -100,14 +100,11 @@ class CAdmin extends Controller
     {
         // Konversi array menjadi string JSON
         $jsonValue = json_encode($value);
-
         $cipher = "AES-256-CBC";
         $options = 0;
         $iv_length = openssl_cipher_iv_length($cipher);
         $iv = openssl_random_pseudo_bytes($iv_length);
         $encrypted = openssl_encrypt($jsonValue, $cipher, $key, $options, $iv);
-
-        // Kembalikan hasil enkripsi beserta IV
         return base64_encode($iv . $encrypted);
     }
 
@@ -116,14 +113,10 @@ class CAdmin extends Controller
         $cipher = "AES-256-CBC";
         $options = 0;
         $iv_length = openssl_cipher_iv_length($cipher);
-
         $decodedValue = base64_decode($value);
-
         $iv = substr($decodedValue, 0, $iv_length);
         $encrypted = substr($decodedValue, $iv_length);
-
         $decrypted = openssl_decrypt($encrypted, $cipher, $key, $options, $iv);
-
         return json_decode($decrypted, true);
     }
 }

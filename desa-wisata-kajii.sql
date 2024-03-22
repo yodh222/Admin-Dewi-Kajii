@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Mar 2024 pada 18.46
+-- Waktu pembuatan: 22 Mar 2024 pada 08.38
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `tb_admin` (
 --
 
 INSERT INTO `tb_admin` (`id_admin`, `nama`, `no_telp`, `email`, `alamat`, `password`) VALUES
-(7, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodj', '$2y$12$dH1.PAq63.bB3Co4WOk46uqmn57TIZlN1otWJU1B4Z3zko0orwtK.');
+(8, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodj', '$2y$12$fkyJDWk8EY9Z8TSEFJNjHeXkaygBMPSchAJ8XqN28MP/hgcMi7ZlG');
 
 -- --------------------------------------------------------
 
@@ -52,9 +52,18 @@ INSERT INTO `tb_admin` (`id_admin`, `nama`, `no_telp`, `email`, `alamat`, `passw
 CREATE TABLE `tb_artikel` (
   `id_artikel` int(11) NOT NULL,
   `judul` varchar(255) NOT NULL,
+  `gambar` text NOT NULL,
   `deskripsi` text NOT NULL,
   `dibuat` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_artikel`
+--
+
+INSERT INTO `tb_artikel` (`id_artikel`, `judul`, `gambar`, `deskripsi`, `dibuat`) VALUES
+(1, 'Lerem Ipsum Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdghjgfxbcxswretyklo;\'/\'/;\'[;/.,mnbfdsaz', '2024-03-22'),
+(2, 'Lorem IpSum Ambatron Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdfbxfbgssgsfazaasdasdasdasdasdasd', '2024-03-22');
 
 -- --------------------------------------------------------
 
@@ -132,8 +141,18 @@ INSERT INTO `tb_jenis_wisata` (`id_jenis`, `nama`, `harga`) VALUES
 CREATE TABLE `tb_kegiatan` (
   `id_kegiatan` int(11) NOT NULL,
   `judul` varchar(255) NOT NULL,
-  `gambar` text NOT NULL
+  `gambar` text NOT NULL,
+  `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_kegiatan`
+--
+
+INSERT INTO `tb_kegiatan` (`id_kegiatan`, `judul`, `gambar`, `harga`) VALUES
+(1, 'Lorem Ipsum Ambatron', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 20000),
+(2, 'adasdadadasdadadasdads', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 30000),
+(3, 'dasdasdasd', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 40000);
 
 -- --------------------------------------------------------
 
@@ -168,8 +187,16 @@ CREATE TABLE `tb_promo` (
 --
 
 CREATE TABLE `tb_tentang_kami` (
+  `id` int(11) NOT NULL,
   `deskripsi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_tentang_kami`
+--
+
+INSERT INTO `tb_tentang_kami` (`id`, `deskripsi`) VALUES
+(1, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est ipsa illum fuga velit nam quam, optio, cupiditate labore aut ex assumenda a. Sequi repudiandae reprehenderit ipsam magnam dolor doloremque totam dolores quae, sed molestias hic eligendi nesciunt beatae iure labore qui mollitia odio alias eaque maxime voluptatum! Inventore nam ratione enim, facilis voluptas laudantium natus aspernatur, eius eligendi sint sed ullam, harum atque. Laudantium nam nostrum asperiores debitis laboriosam consectetur ipsum quisquam, inventore quam quas, possimus fugit sed iusto quo ratione rerum autem mollitia voluptates odio hic placeat dignissimos commodi rem? Possimus vel commodi optio deserunt. Omnis magni mollitia itaque!');
 
 -- --------------------------------------------------------
 
@@ -184,6 +211,13 @@ CREATE TABLE `tb_timeline` (
   `deskripsi` text NOT NULL,
   `gambar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_timeline`
+--
+
+INSERT INTO `tb_timeline` (`id_timeline`, `judul`, `tanggal`, `deskripsi`, `gambar`) VALUES
+(1, 'Pembukaan Desa Wisata Kajii ', '2024-03-09', 'DESKRIPSI SINGKAT. Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit.', '');
 
 -- --------------------------------------------------------
 
@@ -331,6 +365,12 @@ ALTER TABLE `tb_promo`
   ADD PRIMARY KEY (`id_promo`);
 
 --
+-- Indeks untuk tabel `tb_tentang_kami`
+--
+ALTER TABLE `tb_tentang_kami`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `tb_timeline`
 --
 ALTER TABLE `tb_timeline`
@@ -372,13 +412,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_artikel`
 --
 ALTER TABLE `tb_artikel`
-  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_faq`
@@ -408,7 +448,7 @@ ALTER TABLE `tb_jenis_wisata`
 -- AUTO_INCREMENT untuk tabel `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_paket_wisata`
@@ -423,10 +463,16 @@ ALTER TABLE `tb_promo`
   MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_tentang_kami`
+--
+ALTER TABLE `tb_tentang_kami`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_timeline`
 --
 ALTER TABLE `tb_timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_transaksi`

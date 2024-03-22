@@ -11,4 +11,5 @@ class MTimeline extends Model
 
     protected $table = 'tb_timeline';
     protected $primary = 'id_timeline';
+    protected $guarded = ['id_timeline'];
 }

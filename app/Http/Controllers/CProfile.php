@@ -14,11 +14,16 @@ class CProfile extends Controller
     {
         return response()->json([
             'message' => 'success',
-            'profile' => MProfile::all(),
-            'timeline' => MTimeline::all(),
+            'profile' => MProfile::find(1),
+            'timeline' => MTimeline::where('id_timeline', '1')->first(),
         ], 200, [], JSON_PRETTY_PRINT);
     }
 
+
+
+
+
+    // CRUD
     public function editProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -21,10 +21,18 @@ class CTransaksi extends Controller
     }
 
     // CRUD
-    public function get($req = null, $id = null)
+    public function get($req = null, $id = null, $user = null)
     {
         $arr = [];
 
+        if ($user != null) {
+            $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
+                ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_wisata.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status')
+                ->where('tb_user.id_user', $user)
+                ->get();
+            $arr['User'] = $dataWId;
+        }
         if ($id != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
                 ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
@@ -134,7 +142,10 @@ class CTransaksi extends Controller
             switch ($method) {
                 case 'get':
                     if ($request->input('id') != null) {
-                        return response()->json($this->get("", $request->input('id')), 200, [], JSON_PRETTY_PRINT);
+                        return response()->json($this->get('', $request->input('id')), 200, [], JSON_PRETTY_PRINT);
+                    }
+                    if ($request->input('user') != null) {
+                        return response()->json($this->get('', '', $request->input('user')), 200, [], JSON_PRETTY_PRINT);
                     }
                     if ($request->input('data') == 'dashboard') {
                         return response()->json($this->dashboard(), 200, [], JSON_PRETTY_PRINT);

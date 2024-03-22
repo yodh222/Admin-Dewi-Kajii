@@ -52,12 +52,12 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::get('/ulasan', function () {
         return view('Pages.ulasan');
     });
+    Route::get('', [CTransaksi::class, 'index']);
 });
 
 
 
 // Testing Route
-Route::get('', [CTransaksi::class, 'index']);
 Route::get('Login', [CAdmin::class, 'index'])->name('login');
 Route::get('Logout', [CAdmin::class, 'logout'])->name('logout');
 Route::post('Register', [CAdmin::class, 'register'])->name('register');

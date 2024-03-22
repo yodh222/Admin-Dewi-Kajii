@@ -128,10 +128,10 @@ a.sidebar-link {
     }
 }
 
-.card {
+/* .card {
     box-shadow: 0 0 0.875rem 0 rgba(34, 46, 60, 0.05);
     margin-bottom: 24px;
-}
+} */
 
 .illustration {
     background-color: var(--bs-primary-bg-subtle);

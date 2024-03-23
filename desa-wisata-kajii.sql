@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Mar 2024 pada 08.38
+-- Waktu pembuatan: 23 Mar 2024 pada 09.43
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -63,7 +63,10 @@ CREATE TABLE `tb_artikel` (
 
 INSERT INTO `tb_artikel` (`id_artikel`, `judul`, `gambar`, `deskripsi`, `dibuat`) VALUES
 (1, 'Lerem Ipsum Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdghjgfxbcxswretyklo;\'/\'/;\'[;/.,mnbfdsaz', '2024-03-22'),
-(2, 'Lorem IpSum Ambatron Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdfbxfbgssgsfazaasdasdasdasdasdasd', '2024-03-22');
+(2, 'Lorem IpSum Ambatron Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdfbxfbgssgsfazaasdasdasdasdasdasd', '2024-03-22'),
+(3, 'asdasd', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'as', '2024-03-22'),
+(4, 'asd', '/uploads/artikel/65fe8f3c29106.jpg', 'asd', '2024-03-23'),
+(5, 'ojiasndasdjksajkndjkasjndad', '/uploads/artikel/65fe8fa23447a.png', 'lasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidannlasndoijasidnasidann', '2024-03-23');
 
 -- --------------------------------------------------------
 
@@ -116,20 +119,20 @@ INSERT INTO `tb_homestay` (`id_homestay`, `nama`, `gambar`, `fasilitas`, `deskri
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_jenis_wisata`
+-- Struktur dari tabel `tb_jenis_booking`
 --
 
-CREATE TABLE `tb_jenis_wisata` (
+CREATE TABLE `tb_jenis_booking` (
   `id_jenis` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `tb_jenis_wisata`
+-- Dumping data untuk tabel `tb_jenis_booking`
 --
 
-INSERT INTO `tb_jenis_wisata` (`id_jenis`, `nama`, `harga`) VALUES
+INSERT INTO `tb_jenis_booking` (`id_jenis`, `nama`, `harga`) VALUES
 (1, 'a', 11);
 
 -- --------------------------------------------------------
@@ -341,9 +344,9 @@ ALTER TABLE `tb_homestay`
   ADD PRIMARY KEY (`id_homestay`);
 
 --
--- Indeks untuk tabel `tb_jenis_wisata`
+-- Indeks untuk tabel `tb_jenis_booking`
 --
-ALTER TABLE `tb_jenis_wisata`
+ALTER TABLE `tb_jenis_booking`
   ADD PRIMARY KEY (`id_jenis`);
 
 --
@@ -418,7 +421,7 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT untuk tabel `tb_artikel`
 --
 ALTER TABLE `tb_artikel`
-  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_faq`
@@ -439,9 +442,9 @@ ALTER TABLE `tb_homestay`
   MODIFY `id_homestay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_jenis_wisata`
+-- AUTO_INCREMENT untuk tabel `tb_jenis_booking`
 --
-ALTER TABLE `tb_jenis_wisata`
+ALTER TABLE `tb_jenis_booking`
   MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -507,7 +510,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `tb_transaksi`
   ADD CONSTRAINT `tb_transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`),
-  ADD CONSTRAINT `tb_transaksi_ibfk_2` FOREIGN KEY (`id_jenis`) REFERENCES `tb_jenis_wisata` (`id_jenis`);
+  ADD CONSTRAINT `tb_transaksi_ibfk_2` FOREIGN KEY (`id_jenis`) REFERENCES `tb_jenis_booking` (`id_jenis`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

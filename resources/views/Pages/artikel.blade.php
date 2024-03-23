@@ -14,36 +14,36 @@
             <h1 class="modal-title fs-5" id="ModalTambahLabel">Tambah Artikel</h1>
             {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
             </div>
+            <form action="{{route('artikel.add')}}" method="post" enctype="multipart/form-data">
             <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Judul Artikel/Berita</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="judul" aria-describedby="basic-addon3 basic-addon4">
+                            <input type="text" class="form-control" name="judul" aria-describedby="basic-addon3 basic-addon4" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Isi Artikel/Berita</label>
-                        <textarea class="form-control" name="deskripsi" aria-label="With textarea"></textarea>
+                        <textarea class="form-control" name="deskripsi" aria-label="With textarea" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Image Artikel/Berita</label>
                         <div class="input-group">
-                            <input type="file" class="form-control" name="gambar" accept="image/png, image/jpeg" aria-describedby="basic-addon3 basic-addon4">
+                            <input type="file" class="form-control" name="gambar" accept="image/png, image/jpeg" aria-describedby="basic-addon3 basic-addon4" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tanggal Artikel/Berita Dibuat</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" name="gambar" aria-describedby="basic-addon3 basic-addon4">
+                            <input type="date" class="form-control" name="tanggal" aria-describedby="basic-addon3 basic-addon4" required>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success">Simpan</button>
             </div>
         </div>
     </div>

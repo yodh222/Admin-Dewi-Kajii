@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CAdmin;
+use App\Http\Controllers\CArtikel;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CTransaksi;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::get('/artikel', function () {
         return view('Pages.artikel');
     });
+    Route::post('/artikel/add', [CArtikel::class, 'store'])->name('artikel.add');
+
     Route::get('/hiburan', function () {
         return view('Pages.hiburan');
     });
@@ -55,15 +58,10 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::get('', [CTransaksi::class, 'index']);
 });
 
-
-
-// Testing Route
 Route::get('Login', [CAdmin::class, 'index'])->name('login');
 Route::get('Logout', [CAdmin::class, 'logout'])->name('logout');
 Route::post('Register', [CAdmin::class, 'register'])->name('register');
+
 Route::post('admin-login', [CAdmin::class, 'login'])->name('admin-login');
 
-
-Route::get('check', [CProfile::class, 'index'])->name('test');
-
-// Route Profile
+// Route::get('check', [CProfile::class, 'index'])->name('test');

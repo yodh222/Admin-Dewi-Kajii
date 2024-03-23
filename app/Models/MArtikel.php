@@ -11,4 +11,5 @@ class MArtikel extends Model
     protected $table = 'tb_artikel';
     protected $primary = 'id_artikel';
     protected $guarded = ['id_artikel'];
+    public $timestamps = false;
 }

@@ -8,14 +8,17 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('vendor/datatable/css/dataTables.bootstrap5.min.css')}}">
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
-    <script src="{{asset('vendor\jquery\jquery-3.7.1.js')}}"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <script src="{{asset('vendor/jquery/jquery-3.7.1.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{asset('vendor/datatable/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('vendor/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
 </head>
 
-<body>
+<body data-bs-theme="light">
     <div class="wrapper">
-        <aside id="sidebar" class="sidebar.collapsed" style="background-color: #DDDDDD;">
+        <aside id="sidebar" class="sidebar.collapsed" style="background-color: #eeeeee;">
             <div class=" h-100 ">
                 <div class="sidebar-logo">
                     <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" alt="Desa Wisata Kajii" width="50px"
@@ -59,7 +62,7 @@
                             <div class=" dropdown-menu dropdown-menu-end">
                                 <a href="#" class="dropdown-item">Profile</a>
                                 <a href="#" class="dropdown-item">Setting</a>
-                                <a href="#" class="dropdown-item">Logout</a>
+                                <a href="/Logout" class="dropdown-item">Logout</a>
                             </div>
                         </li>
                     </ul>

@@ -73,7 +73,6 @@
                     </div>
                 </div>`;
 
-                // Tambahkan card ke dalam container artikel
                 $('#articleContainer').append(cardHtml);
             });
         });

@@ -27,24 +27,24 @@ class CTransaksi extends Controller
 
         if ($user != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
-                ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
-                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_wisata.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status')
+                ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
                 ->where('tb_user.id_user', $user)
                 ->get();
-            $arr['User'] = $dataWId;
+            return $dataWId;
         }
         if ($id != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
-                ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
-                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_wisata.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status')
+                ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama',  'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
                 ->where('tb_transaksi.id_transaksi', $id)
                 ->first();
-            $arr['Id'] = $dataWId;
+            return $dataWId;
         }
 
         $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
-            ->leftJoin('tb_jenis_wisata', 'tb_jenis_wisata.id_jenis', 'tb_transaksi.id_jenis')
-            ->select('id_transaksi', 'tb_user.nama', 'no_telp', 'tb_jenis_wisata.nama as jenis_wisata', 'code_invoice', 'bukti_pembayaran', 'check_in', 'harga', 'dibayarkan', 'status')
+            ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
+            ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'code_invoice', 'bukti_pembayaran', 'check_in', 'harga', 'dibayarkan', 'status', 'created_at')
             ->get();
         if ($req == "none") {
             return $data;
@@ -235,11 +235,13 @@ class CTransaksi extends Controller
 
             $wisata[$tahunIni][$i] = MTransaksi::whereMonth('created_at', $i + 1)
                 ->whereYear('created_at', $tahunIni)
-                ->sum('dibayarkan');
+                ->where('status', 'Lunas')
+                ->count();
 
             $wisata[$tahunIni - 1][$i] = MTransaksi::whereMonth('created_at', $i + 1)
                 ->whereYear('created_at', $tahunIni - 1)
-                ->sum('dibayarkan');
+                ->where('status', 'Lunas')
+                ->count();
         }
 
         return ['Data' => [

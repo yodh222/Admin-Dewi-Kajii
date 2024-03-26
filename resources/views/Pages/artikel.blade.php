@@ -12,9 +12,8 @@
         <div class="modal-content">
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="ModalTambahLabel">Tambah Artikel</h1>
-            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
             </div>
-            <form action="{{route('artikel.add')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('artikel.tambah')}}" method="post" enctype="multipart/form-data">
             <div class="modal-body">
                     @csrf
                     <div class="mb-3">

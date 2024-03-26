@@ -10,7 +10,7 @@ class MAdmin extends Authenticatable
 {
     use HasFactory;
     protected $table = 'tb_admin';
-    protected $primary = 'id_admin';
+    protected $primaryKey = 'id_admin';
     protected $guard = ['id_admin'];
 
     public $timestamps = false;

@@ -9,7 +9,7 @@ class MArtikel extends Model
 {
     use HasFactory;
     protected $table = 'tb_artikel';
-    protected $primary = 'id_artikel';
+    protected $primaryKey = 'id_artikel';
     protected $guarded = ['id_artikel'];
     public $timestamps = false;
 }

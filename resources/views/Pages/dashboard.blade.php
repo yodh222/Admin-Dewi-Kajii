@@ -1,6 +1,20 @@
 @extends('template.sidebar')
 @section('title','Dashboard')
 @section('content')
+
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{session('success')}}
+    <button type="button" class="btn-close" style="color: black" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{session('error')}}
+    <button type="button" class="btn-close" style="color: black" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
 <h1 class="fw-bold mt-4">Dashboard</h1>
 
 <div class="row mb-3">
@@ -64,8 +78,120 @@
     </div>
 </div>
 
+<h3 class="fw-bold mt-4">Banner Promo</h3>
+
+<button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah Promo</button>
+<div class="row" id="promoContainer">
+
+</div>
+
+
+{{-- Modal Add --}}
+<div data-bs-theme="light" class="modal fade" id="ModalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalTambahLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="ModalTambahLabel">Tambah Artikel</h1>
+            </div>
+            <form action="{{route('promo.tambah')}}" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Judul Promo</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="judul" aria-describedby="basic-addon3 basic-addon4" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image Artikel/Berita</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="gambar" accept="image/png, image/jpeg" aria-describedby="basic-addon3 basic-addon4" required>
+                        </div>
+                        <div class="form-text" id="basic-addon4">Disarankan rasio gambar adalah 16:9</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Modal Edit --}}
+<div data-bs-theme="light" class="modal fade" id="ModalEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="ModalEditLabel">Tambah Artikel</h1>
+            </div>
+            <form action="{{route('promo.tambah')}}" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Judul Promo</label>
+                        <div class="input-group">
+                            <input type="text" id="judul" class="form-control" name="judul" aria-describedby="basic-addon3 basic-addon4" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image Artikel/Berita</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="gambar" accept="image/png, image/jpeg" aria-describedby="basic-addon3 basic-addon4" required>
+                        </div>
+                        <div class="form-text" id="basic-addon4">Disarankan rasio gambar adalah 16:9</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Modal Hapus --}}
+<div data-bs-theme="light" class="modal fade" id="ModalHapus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalHapusLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="ModalHapusLabel">Tambah Artikel</h1>
+            </div>
+            <div class="modal-body">
+                Apakah anda yakin ingin menghapus promo ini?
+            </div>
+            <form action="" method="post" id="formHapus">
+                <div class="modal-footer">
+                    @csrf
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
+    function editData(id){
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: 'api/promo/'+id,
+            success:function(data){
+                $('#judul').val(data.promo.judul)
+            }
+        })
+    }
+
+    function hapusData(id){
+        $('#formHapus').attr('action', '/promo/hapus/'+id);
+    }
+
     $(document).ready(function(){
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true
+        });
         $.ajax({
             type: 'GET',
             url: 'api/transaksi/get?data=dashboard',
@@ -150,7 +276,31 @@
             }
         });
 
+        $.getJSON('api/promo', function(data){
+            $.each(data.promo, function(index, promo){
+                var cardHtml = `
+                <div class="col-6">
+                    <div class="p-2 shadow banner-promo">
+                        <span class="fs-3 fw-bolder">${promo.judul}</span>
+                        <a href="${promo.gambar}"  data-lightbox="Promo" data-title="Promo Image">
+                            <img src="${promo.gambar}" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body mt-2">
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalEdit" onclick='editData(${promo.id_promo})'>
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalHapus" onclick='hapusData(${promo.id_promo})'>
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
 
+                $('#promoContainer').append(cardHtml);
+            });
+        });
     })
 </script>
 @endsection

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
 use App\Http\Controllers\CProfile;
+use App\Http\Controllers\CPromo;
 use App\Http\Controllers\CTransaksi;
 use Illuminate\Support\Facades\Route;
 
@@ -29,8 +30,6 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::get('/artikel', function () {
         return view('Pages.artikel');
     });
-    Route::post('/artikel/add', [CArtikel::class, 'store'])->name('artikel.add');
-
     Route::get('/hiburan', function () {
         return view('Pages.hiburan');
     });
@@ -56,6 +55,11 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
         return view('Pages.ulasan');
     });
     Route::get('', [CTransaksi::class, 'index']);
+
+    Route::post('/artikel/add', [CArtikel::class, 'store'])->name('artikel.tambah');
+    // Promo
+    Route::post('/promo/tambah', [CPromo::class, 'store'])->name('promo.tambah');
+    Route::post('/promo/hapus/{id}', [CPromo::class, 'destroy'])->name('promo.hapus');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

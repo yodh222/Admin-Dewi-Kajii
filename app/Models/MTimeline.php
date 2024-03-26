@@ -10,6 +10,6 @@ class MTimeline extends Model
     use HasFactory;
 
     protected $table = 'tb_timeline';
-    protected $primary = 'id_timeline';
+    protected $primaryKey = 'id_timeline';
     protected $guarded = ['id_timeline'];
 }

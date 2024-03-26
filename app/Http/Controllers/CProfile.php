@@ -15,13 +15,9 @@ class CProfile extends Controller
         return response()->json([
             'message' => 'success',
             'profile' => MProfile::find(1),
-            'timeline' => MTimeline::where('id_timeline', '1')->first(),
+            'timeline' => MTimeline::all(),
         ], 200, [], JSON_PRETTY_PRINT);
     }
-
-
-
-
 
     // CRUD
     public function editProfile(Request $request)

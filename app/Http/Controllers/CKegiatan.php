@@ -11,8 +11,11 @@ class CKegiatan extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id = null)
     {
+        if ($id != null) {
+            return response()->json(MKegiatan::find($id), 200, [], JSON_PRETTY_PRINT);
+        }
         return response()->json([
             'message' => 'success',
             'kegiatan' => MKegiatan::all()

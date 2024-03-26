@@ -9,6 +9,6 @@ class MKegiatan extends Model
 {
     use HasFactory;
     protected $table = 'tb_kegiatan';
-    protected $primary = 'id_kegiatan';
+    protected $primaryKey = 'id_kegiatan';
     protected $guarded = ['id_kegiatan'];
 }

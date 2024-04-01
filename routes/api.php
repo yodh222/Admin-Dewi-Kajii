@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('test', [CHomestay::class, 'index'])->name('a');
 
+Route::post('transaksi/post', [CTransaksi::class, 'postData'])->name('transaksi');
+Route::post('transaksi/post/{id}', [CTransaksi::class, 'postDataPembayaran'])->name('transaksi');
 Route::get('transaksi/{method}', [CTransaksi::class, 'api'])->name('transaksi');
 Route::get('profile', [CProfile::class, 'index'])->name('profile');
 Route::get('kegiatan/{id?}', [CKegiatan::class, 'index'])->name('kegiatan');

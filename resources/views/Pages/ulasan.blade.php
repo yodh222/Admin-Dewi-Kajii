@@ -22,6 +22,10 @@
         <div class="col-sm-4">
             <div class="card mb-3 bg-light">
                 <div class="row no-gutters text-black">
+                    <div class="col-md-4">
+                        <img src="<?php echo $article['image']; ?>" class="card-img mt-2" alt="Penulis"
+                            style="width: 100px; height:auto; margin-left: 12px;">
+                    </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $article['title']; ?></h5>
@@ -29,10 +33,6 @@
                             <p class="card-text"><small>Penulis:
                                     <?php echo $article['author']; ?></small></p>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img src="<?php echo $article['image']; ?>" class="card-img mt-2" alt="Penulis"
-                            style="width: 100px; height:auto">
                     </div>
                 </div>
             </div>
@@ -43,21 +43,21 @@
         <div class="col-sm-4">
             <div class="card mb-3 bg-light">
                 <div class="row no-gutters text-black">
+                    <div class="col-md-4">
+                        <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" class="card-img mt-2" alt="Penulis"
+                            style="width: 100px; height:auto; margin-left: 12px;">
+                    </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">tanpa loop</h5>
                             <p class="card-text">sangat keren</p>
-                            <p class="card-text"><small>Penulis:
-                                    yusuf</small></p>
+                            <p class="card-text"><small>Penulis: yusuf</small></p>
                         </div>
-                    </div>
-                    <div class="col-md-4 ">
-                        <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" class="card-img mt-2" alt="Penulis"
-                            style="width: 100px; height:auto">
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

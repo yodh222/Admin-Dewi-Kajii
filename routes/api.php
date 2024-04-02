@@ -9,6 +9,7 @@ use App\Http\Controllers\CPaket;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CPromo;
 use App\Http\Controllers\CTransaksi;
+use App\Http\Controllers\CUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('test', [CHomestay::class, 'index'])->name('a');
+// Route::get('test', [CHomestay::class, 'index'])->name('a');
 
-Route::post('transaksi/post', [CTransaksi::class, 'postData'])->name('transaksi');
-Route::post('transaksi/post/{id}', [CTransaksi::class, 'postDataPembayaran'])->name('transaksi');
+
 Route::get('transaksi/{method}', [CTransaksi::class, 'api'])->name('transaksi');
 Route::get('profile', [CProfile::class, 'index'])->name('profile');
 Route::get('kegiatan/{id?}', [CKegiatan::class, 'index'])->name('kegiatan');
@@ -39,5 +39,10 @@ Route::get('hiburan/{id?}', [CHiburan::class, 'index'])->name('hiburan');
 Route::get('paket-wisata/{id?}', [CPaket::class, 'index'])->name('paket-wisata');
 Route::get('homestay/{id?}', [CHomestay::class, 'index'])->name('homstay');
 
+
+Route::post('user/register', [CUser::class, 'store'])->name('user.register');
+Route::post('user/update/{id}', [CUser::class, 'update'])->name('user.register');
+Route::post('transaksi/post', [CTransaksi::class, 'postData'])->name('transaksi.post');
+Route::post('transaksi/post/{id}', [CTransaksi::class, 'postDataPembayaran'])->name('transaksi.update');
 
 // Route::get('/test', [CAdmin::class, 'cookie'])->name('test');

@@ -42,7 +42,10 @@ class CAdmin extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Data yang anda masukkan tidak valid',
+            ], 400, [], JSON_PRETTY_PRINT);
         }
 
         $admin = MAdmin::create([
@@ -62,7 +65,10 @@ class CAdmin extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Data yang anda masukkan tidak valid',
+            ], 400, [], JSON_PRETTY_PRINT);
         }
 
         $admin = MAdmin::where('id_admin', $this->decrypt(Session::get('Auth'), 'DewiiKajiiSecret')['id_admin'])->first();

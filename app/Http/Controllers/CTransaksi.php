@@ -64,17 +64,17 @@ class CTransaksi extends Controller
             $uniq = uniqid();
             $fileName = $uniq . '.' . $file->getClientOriginalExtension();
             $file->move('uploads/bukti_pembayaran/', $fileName);
-            $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
+            $path_bukti = 'uploads/bukti_pembayaran/' . $fileName;
 
             // Generate Invoice
             $invoice = "INV/" . date('dmY') . "/" . $uniq;
 
             MTransaksi::create([
                 'id_user' => $request->input('id_user'),
-                'no_telp' => $request->input('no_telp'),
                 'id_jenis' => $request->input('id_jenis'),
-                'code_invoide' => $invoice,
+                'code_invoice' => $invoice,
                 'bukti_pembayaran' => $path_bukti,
+                'status_check_in' => $request->input('status_check_in'),
                 'check_in' => $request->input('check_in'),
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
@@ -102,14 +102,14 @@ class CTransaksi extends Controller
             $uniq = uniqid();
             $fileName = $uniq . '.' . $file->getClientOriginalExtension();
             $file->move('uploads/bukti_pembayaran/', $fileName);
-            $path_bukti = asset('uploads/bukti_pembayaran/' . $fileName);
+            $path_bukti = 'uploads/bukti_pembayaran/' . $fileName;
 
             // Update data transaksi
             $transaksi->update([
                 'id_user' => $request->input('id_user'),
-                'no_telp' => $request->input('no_telp'),
                 'id_jenis' => $request->input('id_jenis'),
                 'bukti_pembayaran' => $path_bukti,
+                'status_check_in' => $request->input('status_check_in'),
                 'check_in' => $request->input('check_in'),
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
@@ -135,6 +135,88 @@ class CTransaksi extends Controller
     }
 
     // API
+    public function postData(Request $request)
+    {
+        try {
+            if (!$request->input('id_user') || !$request->input('id_jenis') || !$request->input('check_in') || !$request->input('dibayarkan') || !$request->input('status')) {
+                return response()->json([
+                    'message' => 'Error',
+                    'info' => 'Parameter yang anda berikan tidak lengkap'
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            $invoice = "INV/" . date('dmY') . "/" . uniqid();
+
+            MTransaksi::create([
+                'id_user' => $request->input('id_user'),
+                'id_jenis' => $request->input('id_jenis'),
+                'code_invoice' => $invoice,
+                'bukti_pembayaran' => '',
+                'status_check_in' => 'Belum',
+                'check_in' => $request->input('check_in'),
+                'dibayarkan' => $request->input('dibayarkan'),
+                'status' => $request->input('status'),
+            ]);
+
+            return response()->json([
+                'message' => 'Success',
+                'info' => 'Transaksi berhasil ditambahkan'
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Terjadi kesalahan saat menambahkan transaksi: ' . $e->getMessage()
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function postDataPembayaran(Request $request, $id)
+    {
+        try {
+            $data = MTransaksi::where('id_transaksi', $id)->first();
+
+            if (!$data) {
+                return response()->json([
+                    'message' => 'Error',
+                    'info' => 'Transaksi tidak ditemukan'
+                ], 404, [], JSON_PRETTY_PRINT);
+            }
+
+            $uniq = explode('/', $data->code_invoice);
+            $uniq = end($uniq);
+
+            $file = $request->file('bukti_pembayaran');
+            if (!$file) {
+                return response()->json([
+                    'message' => 'Error',
+                    'info' => 'Tidak ada file bukti pembayaran yang diunggah'
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads/bukti_pembayaran/', $fileName);
+            $path_bukti = 'uploads/bukti_pembayaran/' . $fileName;
+
+            // Update data transaksi dengan menyediakan kriteria pencarian yang tepat
+            $data->update([
+                'bukti_pembayaran' => $path_bukti
+            ]);
+
+            return response()->json([
+                'message' => 'Success',
+                'info' => 'Transaksi berhasil diupdate'
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Terjadi kesalahan saat mengupdate transaksi: ' . $e->getMessage()
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+
+
+
     public function api(Request $request, $method = null)
     {
 

@@ -4,60 +4,39 @@
 <h1 class="fw-bold mt-4">Ulasan & FAQ</h1>
 <h3 class="fw-bold mt-5">Ulasan Konsumen</h3>
 <button type="button" class="btn btn-success mt-2">Tambah Ulasan</button>
-<!-- looping e isoh tapi path e ga iso ya potone, padahal nek ga nggo looping iso -->
-<!-- looping e isoh tapi path e ga iso ya potone, padahal nek ga nggo looping iso -->
-<!-- looping e isoh tapi path e ga iso ya potone, padahal nek ga nggo looping iso -->
-<!-- looping e isoh tapi path e ga iso ya potone, padahal nek ga nggo looping iso -->
 <div class="container">
     <div class="row mt-5">
         <?php
         $articles = [
-            ["title" => "nganggo asset", "description" => "Deskripsi artikel 1", "author" => "Penulis 1", "image" => "{{asset('assets\image\logo_dewi_kajii.png')}}"],
-            ["title" => "langsung path", "description" => "Deskripsi artikel 1", "author" => "Penulis 1", "image" => "public\assets\image\logo_dewi_kajii.png"]
-            
+            ["title" => "Nama User", "description" => "Ulasan", "image" => "assets\image\contoh.jpg"],
+            ["title" => "Nama User", "description" => "Ulasan", "image" => "assets\image\contoh.jpg"],
+            ["title" => "Nama User", "description" => "Ulasan", "image" => "assets\image\contoh.jpg"] 
         ];
 
         foreach ($articles as $article) {
             ?>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card mb-3 bg-light">
                 <div class="row no-gutters text-black">
-                    <div class="col-md-4">
-                        <img src="<?php echo $article['image']; ?>" class="card-img mt-2" alt="Penulis"
-                            style="width: 100px; height:auto; margin-left: 12px;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
+                    <div class="row-md-8 align-self-center">
+                        <div class="card-body text-center">
                             <h5 class="card-title"><?php echo $article['title']; ?></h5>
                             <p class="card-text"><?php echo $article['description']; ?></p>
-                            <p class="card-text"><small>Penulis:
-                                    <?php echo $article['author']; ?></small></p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <?php
-        }
-        ?>
-        <div class="col-sm-4">
-            <div class="card mb-3 bg-light">
-                <div class="row no-gutters text-black">
-                    <div class="col-md-4">
-                        <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" class="card-img mt-2" alt="Penulis"
-                            style="width: 100px; height:auto; margin-left: 12px;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">tanpa loop</h5>
-                            <p class="card-text">sangat keren</p>
-                            <p class="card-text"><small>Penulis: yusuf</small></p>
+                    <div class="row-md-4 align-self-center text-center">
+                        <div class="rounded-circle overflow-hidden mx-auto" style="width: 100px; height: 100px;">
+                            <img src="<?php echo $article['image']; ?>" class="card-img mb-2" alt="Penulis"
+                                style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <?php
+        }
+        ?>
     </div>
 </div>
 

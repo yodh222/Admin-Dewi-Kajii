@@ -1,7 +1,7 @@
 @extends('template.sidebar')
 @section('title','Ulasan')
 @section('content')
-<h2 class="fw-bold mt-4">Ulasan & FAQ</h2>
+<h1 class="fw-bold mt-4">Ulasan & FAQ</h1>
 <h3 class="fw-bold mt-5">Ulasan Konsumen</h3>
 <button type="button" class="btn btn-success mt-2">Tambah Ulasan</button>
 <!-- looping e isoh tapi path e ga iso ya potone, padahal nek ga nggo looping iso -->
@@ -51,7 +51,7 @@
                                     yusuf</small></p>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 ">
                         <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" class="card-img mt-2" alt="Penulis"
                             style="width: 100px; height:auto">
                     </div>

@@ -7,9 +7,9 @@
     <div class="row mt-5">
         <?php
         $homestays = [
-            ["title" => "Homestay 1", "description" => "Harga Homestay 1", "image" => "assets/image/kadal.jpg"],
-            ["title" => "Homestay 2", "description" => "Harga Homestay 2", "image" => "assets/image/kadal.jpg"],
-            ["title" => "Homestay 3", "description" => "Harga Homestay 3", "image" => "assets/image/kadal.jpg"]
+            ["title" => "Homestay 1", "description" => "Rp. 100.000", "image" => "assets/image/contoh.jpg"],
+            ["title" => "Homestay 2", "description" => "Rp. 200.000", "image" => "assets/image/contoh.jpg"],
+            ["title" => "Homestay 3", "description" => "Rp. 300.000", "image" => "assets/image/contoh.jpg"]
         ];
 
         foreach ($homestays as $homestay) {

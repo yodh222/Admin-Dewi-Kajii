@@ -1,7 +1,7 @@
 @extends('template.sidebar')
 @section('title','Ulasan')
 @section('content')
-<h1 class="fw-bold mt-4">Ini Halaman Ulasan</h1>
+<h2 class="fw-bold mt-4">Ulasan & FAQ</h2>
 <h3 class="fw-bold mt-5">Ulasan Konsumen</h3>
 <button type="button" class="btn btn-success mt-2">Tambah Ulasan</button>
 <!-- looping e isoh tapi path e ga iso ya potone, padahal nek ga nggo looping iso -->

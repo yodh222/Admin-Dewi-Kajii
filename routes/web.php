@@ -68,4 +68,8 @@ Route::post('Register', [CAdmin::class, 'register'])->name('register');
 
 Route::post('admin-login', [CAdmin::class, 'login'])->name('admin-login');
 
+Route::get('test', function () {
+    return view('Test.test');
+});
+
 // Route::get('check', [CProfile::class, 'index'])->name('test');

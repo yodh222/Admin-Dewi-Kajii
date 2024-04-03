@@ -13,10 +13,27 @@ class CUser extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id = null)
     {
-        //
+        if ($id != null) {
+            $user = MUser::find($id);
+            if ($user) {
+                return response()->json($user, 200, [], JSON_PRETTY_PRINT);
+            } else {
+                return response()->json([
+                    'message' => 'Error',
+                    'info' => 'User tidak ditemukan'
+                ], 404, [], JSON_PRETTY_PRINT);
+            }
+        } else {
+            $users = MUser::all();
+            return response()->json([
+                'message' => 'Success',
+                'users' => $users
+            ], 200, [], JSON_PRETTY_PRINT);
+        }
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -26,11 +43,17 @@ class CUser extends Controller
         $validation = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:tb_user',
+            'email' => 'required|string|lowercase|email|max:255|unique:tb_user',
             'no_telp' => 'required|string|max:255',
             'password' => 'required|string|max:255',
         ]);
 
+        if ($validation->fails() && $validation->errors()->has('email')) {
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Email yang anda masukkan sudah ada',
+            ], 400, [], JSON_PRETTY_PRINT);
+        }
         if ($validation->fails()) {
             return response()->json([
                 'message' => 'Error',
@@ -70,6 +93,7 @@ class CUser extends Controller
             'username' => 'required|string|max:255',
             'email' => [
                 'required',
+                'lowercase',
                 'string',
                 'email',
                 'max:255',
@@ -79,12 +103,19 @@ class CUser extends Controller
             'password' => 'required|string|max:255',
         ]);
 
+        if ($validation->fails() && $validation->errors()->has('email')) {
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Email yang anda masukkan sudah ada',
+            ], 400, [], JSON_PRETTY_PRINT);
+        }
         if ($validation->fails()) {
             return response()->json([
                 'message' => 'Error',
                 'info' => 'Data yang anda masukkan tidak valid',
             ], 400, [], JSON_PRETTY_PRINT);
         }
+
         $user = MUser::where('id_user', $id);
 
         $user->update([
@@ -107,5 +138,25 @@ class CUser extends Controller
     public function destroy(MUser $mUser)
     {
         //
+    }
+
+    public function login(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'email' => 'required|string|lowercase|email|max:255',
+            'password' => 'required|string|max:255',
+        ]);
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => 'Error',
+                'info' => 'Data yang anda masukkan tidak valid',
+            ], 200, [], JSON_PRETTY_PRINT);
+        }
+
+        $user = MUser::where('email', $request->input('email'))->first();
+
+        if ($user->password && Hash::check($request->input('password'), $user->password)) {
+            return response()->json([]);
+        }
     }
 }

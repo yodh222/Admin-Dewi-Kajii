@@ -24,9 +24,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 // Route::get('test', [CHomestay::class, 'index'])->name('a');
 
 
@@ -38,6 +38,7 @@ Route::get('promo/{id?}', [CPromo::class, 'index'])->name('promo');
 Route::get('hiburan/{id?}', [CHiburan::class, 'index'])->name('hiburan');
 Route::get('paket-wisata/{id?}', [CPaket::class, 'index'])->name('paket-wisata');
 Route::get('homestay/{id?}', [CHomestay::class, 'index'])->name('homstay');
+Route::get('user/{id?}', [CUser::class, 'index'])->name('user');
 
 
 Route::post('user/register', [CUser::class, 'store'])->name('user.register');

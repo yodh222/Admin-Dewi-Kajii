@@ -43,7 +43,7 @@
         </table>
     </div>
 
-    <div class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    {{-- <div class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="editDataLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -118,7 +118,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
     <br><br><br><br>
     <form action="" method="post" enctype="multipart/form-data">
         @csrf

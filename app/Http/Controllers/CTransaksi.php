@@ -21,22 +21,29 @@ class CTransaksi extends Controller
     }
 
     // CRUD
-    public function get($req = null, $id = null, $user = null)
+    public function get($id = null, $user = null)
     {
         $arr = [];
 
         if ($user != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
                 ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_transaksi.status_check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
                 ->where('tb_user.id_user', $user)
                 ->get();
+
+            // Mengubah format created_at
+            $dataWId->map(function ($item) {
+                $item->created_at = date('Y-m-d', strtotime($item->created_at));
+                return $item;
+            });
+
             return $dataWId;
         }
         if ($id != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
                 ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-                ->select('tb_transaksi.id_transaksi', 'tb_user.nama',  'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama',  'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_transaksi.status_check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
                 ->where('tb_transaksi.id_transaksi', $id)
                 ->first();
             return $dataWId;
@@ -44,11 +51,9 @@ class CTransaksi extends Controller
 
         $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
             ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-            ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'code_invoice', 'bukti_pembayaran', 'check_in', 'harga', 'dibayarkan', 'status', 'created_at')
+            ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'dibayarkan', 'status', 'created_at')
             ->get();
-        if ($req == "none") {
-            return $data;
-        }
+
         $arr['Data'] = $data;
         return $arr;
     }
@@ -224,10 +229,10 @@ class CTransaksi extends Controller
             switch ($method) {
                 case 'get':
                     if ($request->input('id') != null) {
-                        return response()->json($this->get('', $request->input('id')), 200, [], JSON_PRETTY_PRINT);
+                        return response()->json($this->get($request->input('id')), 200, [], JSON_PRETTY_PRINT);
                     }
                     if ($request->input('user') != null) {
-                        return response()->json($this->get('', '', $request->input('user')), 200, [], JSON_PRETTY_PRINT);
+                        return response()->json($this->get('', $request->input('user')), 200, [], JSON_PRETTY_PRINT);
                     }
                     if ($request->input('data') == 'dashboard') {
                         return response()->json($this->dashboard(), 200, [], JSON_PRETTY_PRINT);
@@ -237,8 +242,8 @@ class CTransaksi extends Controller
                 case 'send':
                     if (!$request->has('no_telp') || !$request->has('message')) {
                         return response()->json([
-                            'Status' => 'Error',
-                            'Message' => 'Parameter tidak ditemukan'
+                            'status' => 'Error',
+                            'info' => 'Parameter tidak lengkap'
                         ], 400, [], JSON_PRETTY_PRINT);
                     }
                     return response()->json($this->sendMessage($request->input('no_telp'), $request->input('message')), 200, [], JSON_PRETTY_PRINT);
@@ -251,12 +256,6 @@ class CTransaksi extends Controller
     // Send Message WhatsApp
     private function sendMessage($no_telp = null, $message = null)
     {
-        if ($no_telp == null || $message == null) {
-            return response()->json([
-                'Status' => 'Error',
-                'Message' => 'Parameter tidak lengkap'
-            ]);
-        }
 
         $client = new Client();
         $token = 'qMZ+vU84E_mmu#uRkscp';
@@ -276,9 +275,8 @@ class CTransaksi extends Controller
         $body = $response->getBody()->getContents();
         $data = json_decode($body, true);
         return response()->json([
-            'Status' => 'Success',
-            'Message' => 'Pesan berhasil terkirimm ke' . $target,
-            'Response' => $data
+            'status' => 'Error',
+            'info' => 'Pesan berhasil terkirim'
         ], 200, [], JSON_PRETTY_PRINT);
     }
 

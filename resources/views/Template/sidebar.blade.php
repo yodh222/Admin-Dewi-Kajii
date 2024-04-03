@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/datatable/css/dataTables.bootstrap5.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/lightbox/css/lightbox.min.css')}}">
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/vendor/datatable/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/vendor/lightbox/css/lightbox.min.css">
 
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
-    <script src="{{asset('vendor/jquery/jquery-3.7.1.js')}}"></script>
-    <script src="{{asset('vendor\lightbox\js\lightbox.min.js')}}"></script>
+    <script src="/vendor/jquery/jquery-3.7.1.js"></script>
+    <script src="/vendor/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/vendor\lightbox\js\lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{asset('vendor/datatable/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('vendor/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
 </head>
 
 <body data-bs-theme="light">
@@ -24,7 +24,7 @@
         <aside id="sidebar" class="sidebar.collapsed" style="background-color: #eeeeee;">
             <div class=" h-100 ">
                 <div class="sidebar-logo">
-                    <img src="{{asset('assets\image\logo_dewi_kajii.png')}}" alt="Desa Wisata Kajii" width="50px"
+                    <img src="/assets\image\logo_dewi_kajii.png" alt="Desa Wisata Kajii" width="50px"
                         height="50px">
                     <a href="" class="text-black">Admin Dewi Kajii</a>
                     <hr>
@@ -59,7 +59,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <img src="{{asset('assets\image\kadal.jpg')}}" class="avatar img-fluid" alt=""
+                                <img src="/assets\image\kadal.jpg" class="avatar img-fluid" alt=""
                                     style="border-radius:50%; width: 55px; height: 55px;">
                             </a>
                             <div class=" dropdown-menu dropdown-menu-end">
@@ -81,7 +81,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('assets/js/script.js')}}"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 
 </html>

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login Test</title>
 
-    <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css">
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
-    <script src="{{asset('vendor/jquery/jquery-3.7.1.js')}}"></script>
+    <script src="/vendor/jquery/jquery-3.7.1.js"></script>
 </head>
 
 <body style="height: 100vh;" class="d-flex justify-content-center align-items-center">

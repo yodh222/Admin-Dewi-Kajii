@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Mar 2024 pada 18.28
+-- Waktu pembuatan: 03 Apr 2024 pada 05.55
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -65,7 +65,8 @@ INSERT INTO `tb_artikel` (`id_artikel`, `judul`, `gambar`, `deskripsi`, `dibuat`
 (1, 'Lerem Ipsum Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdghjgfxbcxswretyklo;\'/\'/;\'[;/.,mnbfdsaz', '2024-03-22'),
 (2, 'Lorem IpSum Ambatron Ambatukam', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'asdfbxfbgssgsfazaasdasdasdasdasdasd', '2024-03-22'),
 (3, 'asdasd', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 'as', '2024-03-22'),
-(4, 'asd', '/uploads/artikel/65fe8f3c29106.jpg', 'asd', '2024-03-23');
+(4, 'asd', '/uploads/artikel/65fe8f3c29106.jpg', 'asd', '2024-03-23'),
+(6, 'asdasdaff', '/uploads/artikel/660cbb0f91080.png', 'asdasdasdasffafsfasd', '2024-04-08');
 
 -- --------------------------------------------------------
 
@@ -286,6 +287,7 @@ CREATE TABLE `tb_transaksi` (
   `id_jenis` int(11) NOT NULL,
   `code_invoice` varchar(100) NOT NULL,
   `bukti_pembayaran` text NOT NULL,
+  `status_check_in` enum('Sudah','Belum') NOT NULL,
   `check_in` date NOT NULL,
   `dibayarkan` int(11) NOT NULL,
   `status` enum('Lunas','DP','Process','Batal') NOT NULL,
@@ -297,10 +299,11 @@ CREATE TABLE `tb_transaksi` (
 -- Dumping data untuk tabel `tb_transaksi`
 --
 
-INSERT INTO `tb_transaksi` (`id_transaksi`, `id_user`, `id_jenis`, `code_invoice`, `bukti_pembayaran`, `check_in`, `dibayarkan`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '', 'aaaaa', '2024-03-12', 1, 'Process', '2024-03-09', '0000-00-00'),
-(2, 1, 1, 'test', 'asd', '2024-03-12', 0, 'Process', '2024-03-09', '0000-00-00'),
-(3, 1, 1, 'asgh', 'sadfdg', '2024-03-21', 111, 'Process', '2024-03-12', '0000-00-00');
+INSERT INTO `tb_transaksi` (`id_transaksi`, `id_user`, `id_jenis`, `code_invoice`, `bukti_pembayaran`, `status_check_in`, `check_in`, `dibayarkan`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '', 'aaaaa', 'Sudah', '2024-03-12', 1, 'Process', '2024-03-09', '0000-00-00'),
+(2, 1, 1, 'test', 'asd', 'Sudah', '2024-03-12', 0, 'Process', '2024-03-09', '0000-00-00'),
+(3, 1, 1, 'asgh', 'sadfdg', 'Sudah', '2024-03-21', 111, 'Process', '2024-03-12', '0000-00-00'),
+(4, 1, 1, 'INV/01042024/660a15281d725', '/uploads/bukti_pembayaran/660a15281d725.png', 'Belum', '2024-03-04', 111, 'Batal', '2024-04-01', '2024-04-01');
 
 -- --------------------------------------------------------
 
@@ -334,7 +337,8 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`) VALUES
-(1, 'aaa', 'a@gmail.com', '1111', 'aaa', 'a');
+(1, 'aaa', 'a@gmail.com', '1111', 'aaa', 'a'),
+(2, 'asd', 'aa@gmail.com', '123456', '$2y$12$cQzRKtQm7rxss2pnU8mKlOhcLI7d.oFicl.vOUSxDM8253Ea/y4u.', 'asdasd');
 
 --
 -- Indexes for dumped tables
@@ -453,7 +457,7 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT untuk tabel `tb_artikel`
 --
 ALTER TABLE `tb_artikel`
-  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_artikel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_faq`
@@ -525,7 +529,7 @@ ALTER TABLE `tb_timeline`
 -- AUTO_INCREMENT untuk tabel `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_ulasan`
@@ -537,7 +541,7 @@ ALTER TABLE `tb_ulasan`
 -- AUTO_INCREMENT untuk tabel `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

@@ -15,7 +15,7 @@
     <script src="/vendor/jquery/jquery-3.7.1.js"></script>
     <script src="/vendor/datatable/js/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatable/js/dataTables.bootstrap5.min.js"></script>
-    <script src="/vendor\lightbox\js\lightbox.min.js"></script>
+    <script src="/vendor/lightbox/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -24,7 +24,7 @@
         <aside id="sidebar" class="sidebar.collapsed" style="background-color: #eeeeee;">
             <div class=" h-100 ">
                 <div class="sidebar-logo">
-                    <img src="/assets\image\logo_dewi_kajii.png" alt="Desa Wisata Kajii" width="50px"
+                    <img src="/assets/image/logo_dewi_kajii.png" alt="Desa Wisata Kajii" width="50px"
                         height="50px">
                     <a href="" class="text-black">Admin Dewi Kajii</a>
                     <hr>
@@ -59,7 +59,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <img src="/assets\image\kadal.jpg" class="avatar img-fluid" alt=""
+                                <img src="/assets/image/kadal.jpg" class="avatar img-fluid" alt=""
                                     style="border-radius:50%; width: 55px; height: 55px;">
                             </a>
                             <div class=" dropdown-menu dropdown-menu-end">

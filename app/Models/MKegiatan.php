@@ -11,4 +11,5 @@ class MKegiatan extends Model
     protected $table = 'tb_kegiatan';
     protected $primaryKey = 'id_kegiatan';
     protected $guarded = ['id_kegiatan'];
+    public $timestamps = false;
 }

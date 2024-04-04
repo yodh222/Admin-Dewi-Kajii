@@ -65,7 +65,7 @@ class CTransaksi extends Controller
             // Validasi Bukti Pembayaran
             $file = $request->file('bukti_pembayaran');
             if (!$this->isImage($file)) {
-                return redirect()->back()->with('imageError', 'File yang anda kirimkan bukan sebuah gambar');
+                return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
             }
             $uniq = uniqid();
             $fileName = $uniq . '.' . $file->getClientOriginalExtension();

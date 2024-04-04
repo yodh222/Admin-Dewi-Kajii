@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
+use App\Http\Controllers\CKegiatan;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CPromo;
 use App\Http\Controllers\CTransaksi;
@@ -64,6 +65,11 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     // Transaksi
     Route::post('/transaksi/edit/{id}', [CTransaksi::class, 'edit'])->name('transaksi.edit');
     Route::post('/transaksi/tambah', [CTransaksi::class, 'add'])->name('transaksi.tambah');
+
+    // Kegiatan
+    Route::post('/kegiatan/tambah', [CKegiatan::class, 'store'])->name('kegiatan.tambah');
+    Route::post('/kegiatan/edit/{id}', [CKegiatan::class, 'update'])->name('kegiatan.edit');
+    Route::post('/kegiatan/hapus/{id}', [CKegiatan::class, 'destroy'])->name('kegiatan.hapus');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

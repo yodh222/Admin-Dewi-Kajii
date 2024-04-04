@@ -29,7 +29,7 @@ class CArtikel extends Controller
     {
         $file = $request->file('gambar');
         if (!$this->isImage($file)) {
-            return redirect()->back()->with('imageError', 'File yang anda kirimkan bukan sebuah gambar');
+            return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
         $uniq = uniqid();
         $fileName = $uniq . '.' . $file->getClientOriginalExtension();

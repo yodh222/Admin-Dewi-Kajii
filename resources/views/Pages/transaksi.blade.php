@@ -112,13 +112,13 @@
                     <div class="mb-3">
                         <label for="check_in" class="form-label">Tanggal Check-In</label>
                         <div class="input-group">
-                            <input type="date" name="check_in" class="form-control" id="check_in">
+                            <input type="date" name="check_in" class="form-control" id="check_in" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="jenis_pesanan" class="form-label">Jenis Pemesanan</label>
                         <div class="input-group">
-                            <select name="id_jenis" class="form-control selectJenis" id="jenis_pesanan">
+                            <select name="id_jenis" class="form-control selectJenis" id="jenis_pesanan" required>
                                 <option selected>Jenis Pesanan</option>
                             </select>
                         </div>
@@ -134,13 +134,13 @@
                         <label for="dibayarkan" class="form-label">Total yang dibayarkan</label>
                         <div class="input-group">
                             <span class="input-group-text">Rp.</span>
-                            <input type="number" name="dibayarkan" class="form-control" id="dibayarkan">
+                            <input type="number" name="dibayarkan" class="form-control" id="dibayarkan" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <div class="input-group">
-                            <select name="status" class="form-control" id="status">
+                            <select name="status" class="form-control" id="status" required>
                                 <option value="Lunas">Lunas</option>
                                 <option value="DP">DP</option>
                                 <option value="Process">Process</option>
@@ -151,7 +151,7 @@
                     <div class="mb-3">
                         <label for="status_check_in" class="form-label">Status Check-In</label>
                         <div class="input-group">
-                            <select name="status_check_in" class="form-control" id="status_check_in">
+                            <select name="status_check_in" class="form-control" id="status_check_in" required>
                                 <option value="Sudah">Sudah</option>
                                 <option value="Belum">Belum</option>
                             </select>
@@ -181,7 +181,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Pemesan</label>
                         <div class="input-group">
-                            <select name="id_user" class="form-control" id="id_user">
+                            <select name="id_user" class="form-control" id="id_user" required>
                                 <option selected>Nama Pemesan</option>
                             </select>
                         </div>
@@ -201,19 +201,19 @@
                     <div class="mb-3">
                         <label class="form-label">Bukti Pembayaran</label>
                         <div class="input-group">
-                            <input type="file" name="bukti_pembayaran" class="form-control">
+                            <input type="file" name="bukti_pembayaran" class="form-control" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tanggal Check-In</label>
                         <div class="input-group">
-                            <input type="date" name="check_in" class="form-control">
+                            <input type="date" name="check_in" class="form-control" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Jenis Pemesanan</label>
                         <div class="input-group">
-                            <select name="id_jenis" class="form-control selectJenis">
+                            <select name="id_jenis" class="form-control selectJenis" required>
                                 <option selected>Jenis Pesanan</option>
                             </select>
                         </div>
@@ -229,13 +229,13 @@
                         <label class="form-label">Total yang dibayarkan</label>
                         <div class="input-group">
                             <span class="input-group-text">Rp.</span>
-                            <input type="number" name="dibayarkan" class="form-control" >
+                            <input type="number" name="dibayarkan" class="form-control" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <div class="input-group">
-                            <select name="status" class="form-control" >
+                            <select name="status" class="form-control" required>
                                 <option value="Lunas">Lunas</option>
                                 <option value="DP">DP</option>
                                 <option value="Process" selected>Process</option>
@@ -246,7 +246,7 @@
                     <div class="mb-3">
                         <label class="form-label">Status Check-In</label>
                         <div class="input-group">
-                            <select name="status_check_in" class="form-control" >
+                            <select name="status_check_in" class="form-control" required>
                                 <option value="Sudah">Sudah</option>
                                 <option value="Belum" selected>Belum</option>
                             </select>

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\QueryException;
-use App\Http\Requests\RTransaksi;
-use App\Models\MTransaksi;
-use App\Models\MUser;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Models\MUser;
 use GuzzleHttp\Client;
+use App\Models\MTransaksi;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Requests\RTransaksi;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CTransaksi extends Controller
@@ -28,7 +29,7 @@ class CTransaksi extends Controller
         if ($user != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
                 ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_transaksi.status_check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama', 'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_transaksi.status_check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
                 ->where('tb_user.id_user', $user)
                 ->get();
 
@@ -43,7 +44,7 @@ class CTransaksi extends Controller
         if ($id != null) {
             $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
                 ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-                ->select('tb_transaksi.id_transaksi', 'tb_user.nama',  'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_transaksi.status_check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
+                ->select('tb_transaksi.id_transaksi', 'tb_user.nama',  'tb_user.email', 'tb_user.no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.code_invoice', 'tb_transaksi.bukti_pembayaran', 'tb_transaksi.check_in', 'tb_transaksi.status_check_in', 'tb_jenis_booking.harga', 'tb_transaksi.dibayarkan', 'tb_transaksi.status', 'created_at')
                 ->where('tb_transaksi.id_transaksi', $id)
                 ->first();
             return $dataWId;
@@ -51,14 +52,14 @@ class CTransaksi extends Controller
 
         $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
             ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-            ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'dibayarkan', 'status', 'created_at')
+            ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'dibayarkan', 'status', 'created_at')
             ->get();
 
         $arr['Data'] = $data;
         return $arr;
     }
 
-    public function add(RTransaksi $request)
+    public function add(Request $request)
     {
         try {
             // Validasi Bukti Pembayaran
@@ -79,7 +80,7 @@ class CTransaksi extends Controller
                 'id_jenis' => $request->input('id_jenis'),
                 'code_invoice' => $invoice,
                 'bukti_pembayaran' => $path_bukti,
-                'status_check_in' => $request->input('status_check_in'),
+                'status_check_in' => 'Belum',
                 'check_in' => $request->input('check_in'),
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
@@ -90,31 +91,15 @@ class CTransaksi extends Controller
         }
     }
 
-    public function edit(RTransaksi $request)
+    public function edit(Request $request, $id)
     {
         try {
             // Temukan data transaksi berdasarkan ID
-            $transaksi = MTransaksi::findOrFail($request->id);
-
-            // Validasi Bukti Pembayaran
-            $file = $request->file('bukti_pembayaran');
-            if (!$this->isImage($file)) {
-                return response()->json([
-                    'Status' => 'Error',
-                    'Message' => 'File yang anda kirimkan bukan sebuah gambar'
-                ], 400, [], JSON_PRETTY_PRINT);
-            }
-            $uniq = uniqid();
-            $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-            $file->move('uploads/bukti_pembayaran/', $fileName);
-            $path_bukti = 'uploads/bukti_pembayaran/' . $fileName;
+            $transaksi = MTransaksi::findOrFail($id);
 
             // Update data transaksi
             $transaksi->update([
-                'id_user' => $request->input('id_user'),
                 'id_jenis' => $request->input('id_jenis'),
-                'bukti_pembayaran' => $path_bukti,
-                'status_check_in' => $request->input('status_check_in'),
                 'check_in' => $request->input('check_in'),
                 'dibayarkan' => $request->input('dibayarkan'),
                 'status' => $request->input('status'),
@@ -123,8 +108,6 @@ class CTransaksi extends Controller
             return redirect()->back()->with('success', 'Berhasil mengedit transaksi');
         } catch (ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Transaksi tidak ditemukan.');
-        } catch (QueryException $e) {
-            return redirect()->back()->with('error', 'Gagal mengedit Transaksi. Error: ' . $e->getMessage());
         }
     }
 
@@ -222,7 +205,7 @@ class CTransaksi extends Controller
 
 
 
-    public function api(Request $request, $method = null)
+    public function api(Request $request, $method = null, $id = null)
     {
 
         if ($method != null) {
@@ -248,6 +231,15 @@ class CTransaksi extends Controller
                     }
                     return response()->json($this->sendMessage($request->input('no_telp'), $request->input('message')), 200, [], JSON_PRETTY_PRINT);
                     break;
+                case 'jenis-booking':
+                    if ($id) {
+                        return response()->json(DB::table('tb_jenis_booking')->where('id_jenis', $id)->first(), 200, [], JSON_PRETTY_PRINT);
+                    }
+                    return response()->json([
+                        'status' => 'Success',
+                        'jenis' => DB::table('tb_jenis_booking')
+                            ->get()
+                    ], 200, [], JSON_PRETTY_PRINT);
             }
         }
     }

@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('test', [CHomestay::class, 'index'])->name('a');
 
 
-Route::get('transaksi/{method}', [CTransaksi::class, 'api'])->name('transaksi');
+Route::get('transaksi/{method}/{id?}', [CTransaksi::class, 'api'])->name('transaksi');
 Route::get('profile', [CProfile::class, 'index'])->name('profile');
 Route::get('kegiatan/{id?}', [CKegiatan::class, 'index'])->name('kegiatan');
 Route::get('artikel/{id?}', [CArtikel::class, 'index'])->name('artikel');

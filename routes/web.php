@@ -60,6 +60,10 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     // Promo
     Route::post('/promo/tambah', [CPromo::class, 'store'])->name('promo.tambah');
     Route::post('/promo/hapus/{id}', [CPromo::class, 'destroy'])->name('promo.hapus');
+
+    // Transaksi
+    Route::post('/transaksi/edit/{id}', [CTransaksi::class, 'edit'])->name('transaksi.edit');
+    Route::post('/transaksi/tambah', [CTransaksi::class, 'add'])->name('transaksi.tambah');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

@@ -179,6 +179,8 @@
                 // Menggabungkan array elemen fasilitas menjadi satu string
                 var fasilitasString = elementFasilitas.join('\n');
 
+                var hargaFormatted = paket.harga.toLocaleString('id-ID');
+
                 var card = `
                 <div class="col-3">
                     <div class="card border-0 mb-3 bg-light shadow">

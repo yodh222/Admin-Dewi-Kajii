@@ -4,6 +4,7 @@ use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
 use App\Http\Controllers\CHiburan;
 use App\Http\Controllers\CKegiatan;
+use App\Http\Controllers\CPaket;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CPromo;
 use App\Http\Controllers\CTransaksi;
@@ -74,8 +75,13 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
 
     // Hiburan
     Route::post('/hiburan/tambah', [CHiburan::class, 'store'])->name('hiburan.tambah');
-    Route::post('/hiburan/edit/{id}', [CHiburan::class, 'update'])->name('hiburan.tambah');
-    Route::post('/hiburan/hapus/{id}', [CHiburan::class, 'destroy'])->name('hiburan.tambah');
+    Route::post('/hiburan/edit/{id}', [CHiburan::class, 'update'])->name('hiburan.edit');
+    Route::post('/hiburan/hapus/{id}', [CHiburan::class, 'destroy'])->name('hiburan.hapus');
+
+    // Paket Wisata
+    Route::post('/paket/tambah', [CPaket::class, 'store'])->name('paket.tambah');
+    Route::post('/paket/edit/{id}', [CPaket::class, 'update'])->name('paket.edit');
+    Route::post('/paket/hapus/{id}', [CPaket::class, 'destroy'])->name('paket.hapus');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

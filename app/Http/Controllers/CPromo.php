@@ -41,11 +41,6 @@ class CPromo extends Controller
             return redirect()->back()->with('imageError', 'File yang anda kirimkan bukan sebuah gambar');
         }
 
-        $uniq = uniqid();
-        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-        $file->move('uploads/promo/', $fileName);
-        $path_file = '/uploads/promo/' . $fileName;
-
         $validator = Validator::make($request->all(), [
             'judul' => 'required|string',
         ]);
@@ -53,6 +48,12 @@ class CPromo extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
         }
+
+        $uniq = uniqid();
+        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+        $file->move('uploads/promo/', $fileName);
+        $path_file = '/uploads/promo/' . $fileName;
+
 
         MPromo::create([
             'judul' => $request->judul,

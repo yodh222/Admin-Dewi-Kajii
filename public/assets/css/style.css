@@ -152,10 +152,6 @@ a.sidebar-link {
     overflow: hidden;
 }
 
-.card {
-    border-radius: 12px;
-}
-
 .card-img {
     width: 100%;
     height: auto;

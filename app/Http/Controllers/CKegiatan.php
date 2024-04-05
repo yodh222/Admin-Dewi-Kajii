@@ -34,30 +34,31 @@ class CKegiatan extends Controller
         if (!$this->isImage($file)) {
             return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
+
+        $validation = Validator::make($request->all(), [
+            'nama' => 'required|string|max:150|unique:tb_jenis_booking,nama',
+            'harga' => 'required|numeric',
+        ]);
+
+        if ($validation->fails()) {
+            $errorMess = $validation->errors()->has('nama') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
+            return redirect()->back()->with('error', $errorMess);
+        }
+
         $uniq = uniqid();
         $fileName = $uniq . '.' . $file->getClientOriginalExtension();
         $file->move('uploads/kegiatan/', $fileName);
         $path_file = 'uploads/kegiatan/' . $fileName;
 
-        $validation = Validator::make($request->all(), [
-            'judul' => 'required|string|max:150|unique:tb_kegiatan,judul',
-            'harga' => 'required|numeric',
-        ]);
-
-        if ($validation->fails()) {
-            $errorMess = $validation->errors()->has('judul') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
-            return redirect()->back()->with('error', $errorMess);
-        }
-
         MKegiatan::create([
-            'judul' => $request->input('judul'),
+            'judul' => $request->input('nama'),
             'gambar' => $path_file,
             'harga' => $request->input('harga')
         ]);
 
         DB::table('tb_jenis_booking')
             ->insert([
-                'nama' => $request->input('judul'),
+                'nama' => $request->input('nama'),
                 'harga' => $request->input('harga')
             ]);
 
@@ -85,36 +86,35 @@ class CKegiatan extends Controller
             return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
 
-        // $fileName = end(explode('/', $data->gambar));
-        $fileName = explode('/', $data->gambar);
-        $file->move('uploads/kegiatan/', end($fileName));
-        $path_file = 'uploads/kegiatan/' . end($fileName);
-
         $validation = Validator::make($request->all(), [
-            'judul' => [
+            'nama' => [
                 'required',
                 'string',
                 'max:150',
-                Rule::unique('tb_kegiatan')->ignore($id, 'id_kegiatan')
+                Rule::unique('tb_jenis_booking')->ignore($data->judul, 'nama')
             ],
             'harga' => 'required|numeric',
         ]);
 
         if ($validation->fails()) {
-            $errorMess = $validation->errors()->has('judul') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
+            $errorMess = $validation->errors()->has('nama') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
             return redirect()->back()->with('error', $errorMess);
         }
+
+        $fileName = explode('/', $data->gambar);
+        $file->move('uploads/kegiatan/', end($fileName));
+        $path_file = 'uploads/kegiatan/' . end($fileName);
 
 
         DB::table('tb_jenis_booking')
             ->where('nama', $data->judul)
             ->update([
-                'nama' => $request->input('judul'),
+                'nama' => $request->input('nama'),
                 'harga' => $request->input('harga')
             ]);
 
         $data->update([
-            'judul' => $request->input('judul'),
+            'judul' => $request->input('judulnama'),
             'gambar' => $path_file,
             'harga' => $request->input('harga')
         ]);

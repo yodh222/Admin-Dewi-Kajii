@@ -31,10 +31,6 @@ class CArtikel extends Controller
         if (!$this->isImage($file)) {
             return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
-        $uniq = uniqid();
-        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-        $file->move('uploads/artikel/', $fileName);
-        $path_file = '/uploads/artikel/' . $fileName;
 
         $validator = Validator::make($request->all(), [
             'judul' => 'required|string',
@@ -45,6 +41,11 @@ class CArtikel extends Controller
         if ($validator->fails()) {
             return redirect()->route('Login')->with('error', 'Data yang anda kirimkan tidak valid');
         }
+
+        $uniq = uniqid();
+        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+        $file->move('uploads/artikel/', $fileName);
+        $path_file = '/uploads/artikel/' . $fileName;
 
         MArtikel::create([
             'judul' => $request->judul,

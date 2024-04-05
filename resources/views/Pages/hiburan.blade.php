@@ -36,7 +36,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Hiburan</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="judul" id="judul" required>
+                            <input type="text" class="form-control" name="nama" id="judul" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -76,7 +76,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Hiburan</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="judul" required>
+                            <input type="text" class="form-control" name="nama" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -109,12 +109,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="hapusDataLabel">Tambah Hiburan</h1>
+                <h1 class="modal-title fs-5" id="hapusDataLabel">Hapus Hiburan</h1>
             </div>
             <div class="modal-body">
                 Apakah anda yakin ingin menghapus data ini?
             </div>
-            <form action="/hiburan/tambah" method="post" id="form-delete">
+            <form action="" method="post" id="form-delete">
                 <div class="modal-footer">
                     @csrf
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -131,7 +131,7 @@
             $.each(data.hiburan,function(index, hiburan){
                 var card = `
                 <div class="col-3">
-                    <div class="card mb-3 bg-light">
+                    <div class="card border-0 mb-3 bg-light">
                         <div class="image-container">
                             <img src="${hiburan.gambar}" class="card-img" width="300" height="300">
                             <div class="overlay">

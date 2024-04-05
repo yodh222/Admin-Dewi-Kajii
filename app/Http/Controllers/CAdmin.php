@@ -19,19 +19,19 @@ class CAdmin extends Controller
 
     public function login(Request $request)
     {
-
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             $user = Auth::guard('admin')->user();
             $request->session()->put([
                 'Auth' => $this->encrypt($user, 'DewiiKajiiSecret')
             ]);
-            return redirect('dashboard')->with('Success', 'Anda berhasil login');
+            return redirect('dashboard')->with('success', 'Anda berhasil login');
         }
 
-        return redirect('Login')->with('Error', 'Anda gagal login');
+        return redirect('Login')->with('error', 'Anda gagal login');
     }
+
     public function register(Request $request)
     {
 
@@ -43,7 +43,7 @@ class CAdmin extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Error',
+                'message' => 'error',
                 'info' => 'Data yang anda masukkan tidak valid',
             ], 400, [], JSON_PRETTY_PRINT);
         }
@@ -66,7 +66,7 @@ class CAdmin extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Error',
+                'message' => 'error',
                 'info' => 'Data yang anda masukkan tidak valid',
             ], 400, [], JSON_PRETTY_PRINT);
         }
@@ -88,9 +88,10 @@ class CAdmin extends Controller
     }
     public function logout(Request $request)
     {
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('Login')->with('Success', 'Anda berhasil logout');
+        return redirect('Login')->with('success', 'Anda berhasil logout');
     }
 
 
@@ -99,7 +100,7 @@ class CAdmin extends Controller
     // {
     //     $cookieValue = cookie('Auth', "Ambatudin", $minutes = 60);
     //     return response()
-    //         ->json(['Status' => 'Success', 'Cookie' => strval($request->cookie('Auth')), 'Aas'], 200, [], JSON_PRETTY_PRINT)
+    //         ->json(['Status' => 'success', 'Cookie' => strval($request->cookie('Auth')), 'Aas'], 200, [], JSON_PRETTY_PRINT)
     //         ->withCookie($cookieValue);
     // }
     private function encrypt($value, $key)

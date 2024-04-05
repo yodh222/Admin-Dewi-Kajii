@@ -133,7 +133,7 @@
                 <div class="col-3">
                     <div class="card mb-3 bg-light">
                         <div class="image-container">
-                            <img src="${kegiatan.gambar}" class="card-img" alt="kegiatan1" width="300" height="300">
+                            <img src="${kegiatan.gambar}" class="card-img" width="300" height="300">
                             <div class="overlay">
                                 <h5 class="card-title">${kegiatan.judul}</h5>
                                 <p class="card-title">Rp. ${kegiatan.harga}</p>

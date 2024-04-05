@@ -40,12 +40,13 @@ class CKegiatan extends Controller
         $path_file = 'uploads/kegiatan/' . $fileName;
 
         $validation = Validator::make($request->all(), [
-            'judul' => 'required|string|max:150',
+            'judul' => 'required|string|max:150|unique:tb_kegiatan,judul',
             'harga' => 'required|numeric',
         ]);
 
         if ($validation->fails()) {
-            return redirect()->back()->with('error', 'Input yang anda masukkan tidak sesuai');
+            $errorMess = $validation->errors()->has('judul') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
+            return redirect()->back()->with('error', $errorMess);
         }
 
         MKegiatan::create([
@@ -100,7 +101,8 @@ class CKegiatan extends Controller
         ]);
 
         if ($validation->fails()) {
-            return redirect()->back()->with('error', 'Input yang anda masukkan tidak sesuai');
+            $errorMess = $validation->errors()->has('judul') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
+            return redirect()->back()->with('error', $errorMess);
         }
 
 
@@ -123,10 +125,15 @@ class CKegiatan extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         try {
             $data = MKegiatan::findOrFail($id);
+
+            DB::table('tb_jenis_booking')
+                ->where('nama', $data->judul)
+                ->delete();
+
             $file_path = public_path($data->gambar);
             unlink($file_path);
             $data->delete();

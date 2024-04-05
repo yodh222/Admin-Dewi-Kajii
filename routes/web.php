@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
+use App\Http\Controllers\CHiburan;
 use App\Http\Controllers\CKegiatan;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CPromo;
@@ -70,6 +71,11 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::post('/kegiatan/tambah', [CKegiatan::class, 'store'])->name('kegiatan.tambah');
     Route::post('/kegiatan/edit/{id}', [CKegiatan::class, 'update'])->name('kegiatan.edit');
     Route::post('/kegiatan/hapus/{id}', [CKegiatan::class, 'destroy'])->name('kegiatan.hapus');
+
+    // Hiburan
+    Route::post('/hiburan/tambah', [CHiburan::class, 'store'])->name('hiburan.tambah');
+    Route::post('/hiburan/edit/{id}', [CHiburan::class, 'update'])->name('hiburan.tambah');
+    Route::post('/hiburan/hapus/{id}', [CHiburan::class, 'destroy'])->name('hiburan.tambah');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

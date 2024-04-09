@@ -5,7 +5,7 @@
 <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah
     Homestay</button>
 
-<div id="articleContainer">
+<div id="homestayContainer">
 </div>
 
 <div data-bs-theme="light" class="modal fade" id="ModalTambah" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -103,4 +103,13 @@
         ?>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $.getJSON('/api/homestay', function(data){
+            
+        })
+    });
+
+</script>
 @endsection

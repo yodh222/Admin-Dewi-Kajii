@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Apr 2024 pada 05.55
+-- Waktu pembuatan: 09 Apr 2024 pada 07.38
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -33,15 +33,16 @@ CREATE TABLE `tb_admin` (
   `no_telp` char(15) NOT NULL,
   `email` varchar(50) NOT NULL,
   `alamat` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `remember_token` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_admin`
 --
 
-INSERT INTO `tb_admin` (`id_admin`, `nama`, `no_telp`, `email`, `alamat`, `password`) VALUES
-(8, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodj', '$2y$12$fkyJDWk8EY9Z8TSEFJNjHeXkaygBMPSchAJ8XqN28MP/hgcMi7ZlG');
+INSERT INTO `tb_admin` (`id_admin`, `nama`, `no_telp`, `email`, `alamat`, `password`, `remember_token`) VALUES
+(8, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodj', '$2y$12$fkyJDWk8EY9Z8TSEFJNjHeXkaygBMPSchAJ8XqN28MP/hgcMi7ZlG', 'GvdjAdNJE6ebkvoaoV83UquA9HBpV9tGhYTPd7eJdpy24sZ0ITGYZSC2Rzzb');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,9 @@ CREATE TABLE `tb_hiburan` (
 --
 
 INSERT INTO `tb_hiburan` (`id_hiburan`, `judul`, `gambar`, `harga`) VALUES
-(1, 'adsad', '', 0);
+(2, 'adasdas', 'uploads/hiburan/660ed5b92580c.jpg', 112222),
+(4, 'Ambatron1', 'uploads/hiburan/660f65f6804ee.jpg', 111),
+(7, 'adsasdasda', 'uploads/hiburan/660f6e2b4a161.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -113,16 +116,15 @@ CREATE TABLE `tb_homestay` (
   `fasilitas` text NOT NULL,
   `deskripsi` text NOT NULL,
   `peraturan` text NOT NULL,
-  `harga` int(11) NOT NULL,
-  `promo` int(11) NOT NULL
+  `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_homestay`
 --
 
-INSERT INTO `tb_homestay` (`id_homestay`, `nama`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`, `promo`) VALUES
-(1, 'Homestay 1', 'https://www.yogyes.com/id/yogyakarta-hotel/guest-house/athaya-homestay/1.jpg,https://www.yogyes.com/id/yogyakarta-hotel/guest-house/athaya-homestay/12.jpg,https://www.yogyes.com/id/yogyakarta-hotel/guest-house/handida-homestay/1.jpg,https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.brighton.co.id%2Fabout%2Farticles-all%2Finspirasi-desain-homestay-minimalis-untuk-ide-bisnis&psig=AOvVaw0a1Vro3OMlqzTLF9fgMAgM&ust=1710176507682000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCVt5KW6oQDFQAAAAAdAAAAABAS', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 10000, 1000000);
+INSERT INTO `tb_homestay` (`id_homestay`, `nama`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`) VALUES
+(1, 'Homestay 1', 'https://www.yogyes.com/id/yogyakarta-hotel/guest-house/athaya-homestay/1.jpg,https://www.yogyes.com/id/yogyakarta-hotel/guest-house/athaya-homestay/12.jpg,https://www.yogyes.com/id/yogyakarta-hotel/guest-house/handida-homestay/1.jpg,https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.brighton.co.id%2Fabout%2Farticles-all%2Finspirasi-desain-homestay-minimalis-untuk-ide-bisnis&psig=AOvVaw0a1Vro3OMlqzTLF9fgMAgM&ust=1710176507682000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCVt5KW6oQDFQAAAAAdAAAAABAS', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, officiis perspiciatis. Quae excepturi vero perferendis, vitae perspiciatis quam est deleniti ex voluptas debitis, quod recusandae omnis cum iure dolores esse suscipit! Minima maiores id et nobis? Quo quod quidem nisi, laborum sunt nesciunt! Autem eius dicta labore voluptates asperiores tempore laborum similique, magni inventore ipsam cum mollitia. Repellat sapiente cupiditate magni cumque vero iure, mollitia maxime fugiat nam tempore praesentium sequi itaque sed repellendus odit accusamus laboriosam atque. Alias dolore placeat provident. Quasi a animi eligendi minima enim ex dolore adipisci! Dolorem officia esse sint quidem! Sequi totam molestiae distinctio?', 10000);
 
 -- --------------------------------------------------------
 
@@ -155,7 +157,12 @@ CREATE TABLE `tb_jenis_booking` (
 --
 
 INSERT INTO `tb_jenis_booking` (`id_jenis`, `nama`, `harga`) VALUES
-(1, 'a', 11);
+(1, 'a', 11),
+(2, 'Test', 111),
+(7, 'adasdas', 112222),
+(9, 'Ambatron1', 111),
+(11, 'adsasdasda', 1),
+(16, 'Paket Wisata ++', 1000000);
 
 -- --------------------------------------------------------
 
@@ -175,9 +182,8 @@ CREATE TABLE `tb_kegiatan` (
 --
 
 INSERT INTO `tb_kegiatan` (`id_kegiatan`, `judul`, `gambar`, `harga`) VALUES
-(1, 'Lorem Ipsum Ambatron', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 20000),
-(2, 'adasdadadasdadadasdads', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 30000),
-(3, 'dasdasdasd', 'https://dlh.banyuasinkab.go.id/wp-content/uploads/sites/120/2020/10/WhatsApp-Image-2020-10-02-at-14.00.12-3.jpeg', 40000);
+(4, 'Test', 'uploads/kegiatan/660ec24a4d92a.jpg', 111),
+(6, 'Lorem Ipsum Ambatron 2', 'uploads/kegiatan/660eccef3f4aa.jpg', 100000);
 
 -- --------------------------------------------------------
 
@@ -214,7 +220,7 @@ CREATE TABLE `tb_paket_wisata` (
 --
 
 INSERT INTO `tb_paket_wisata` (`id_paket_wisata`, `judul`, `fasilitas`, `waktu`, `harga`, `gambar`, `promo`) VALUES
-(1, 'asd', 'asd', 'asaqwwqwqeqweqwweqweqeqwe', 1111, '', 0);
+(6, 'Paket Wisata ++', 'Wedokan', '2 hari 1 malam', 1000000, 'uploads/paket-wisata/660f7839b5d8d.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -300,10 +306,11 @@ CREATE TABLE `tb_transaksi` (
 --
 
 INSERT INTO `tb_transaksi` (`id_transaksi`, `id_user`, `id_jenis`, `code_invoice`, `bukti_pembayaran`, `status_check_in`, `check_in`, `dibayarkan`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '', 'aaaaa', 'Sudah', '2024-03-12', 1, 'Process', '2024-03-09', '0000-00-00'),
+(1, 1, 1, '', 'aaaaa', 'Sudah', '2024-03-21', 1000000, 'Lunas', '2024-03-09', '2024-04-04'),
 (2, 1, 1, 'test', 'asd', 'Sudah', '2024-03-12', 0, 'Process', '2024-03-09', '0000-00-00'),
 (3, 1, 1, 'asgh', 'sadfdg', 'Sudah', '2024-03-21', 111, 'Process', '2024-03-12', '0000-00-00'),
-(4, 1, 1, 'INV/01042024/660a15281d725', '/uploads/bukti_pembayaran/660a15281d725.png', 'Belum', '2024-03-04', 111, 'Batal', '2024-04-01', '2024-04-01');
+(4, 3, 1, 'INV/01042024/660a15281d725', '/uploads/bukti_pembayaran/660a15281d725.png', 'Belum', '2024-03-04', 111, 'Batal', '2024-04-01', '2024-04-01'),
+(5, 2, 1, 'INV/04042024/660e98057dbf9', 'uploads/bukti_pembayaran/660e98057dbf9.png', 'Belum', '2024-04-27', 0, 'Process', '2024-04-04', '2024-04-04');
 
 -- --------------------------------------------------------
 
@@ -327,7 +334,7 @@ CREATE TABLE `tb_user` (
   `id_user` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `no_telp` char(11) NOT NULL,
+  `no_telp` char(15) NOT NULL,
   `password` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -337,8 +344,9 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`) VALUES
-(1, 'aaa', 'a@gmail.com', '1111', 'aaa', 'a'),
-(2, 'asd', 'aa@gmail.com', '123456', '$2y$12$cQzRKtQm7rxss2pnU8mKlOhcLI7d.oFicl.vOUSxDM8253Ea/y4u.', 'asdasd');
+(1, 'aaa', 'a@gmail.com', '082133753551', 'aaa', 'a'),
+(2, 'asd', 'aa@gmail.com', '123456', '$2y$12$cQzRKtQm7rxss2pnU8mKlOhcLI7d.oFicl.vOUSxDM8253Ea/y4u.', 'asdasd'),
+(3, 'asd', 'aaa@gmail.com', '088221629812', '$2y$12$/JgwFctEDHCOUufGi9DymODr9HpbFmXPzNbVLeefR2Jc3HbkXTjoC', 'asdasd');
 
 --
 -- Indexes for dumped tables
@@ -469,7 +477,7 @@ ALTER TABLE `tb_faq`
 -- AUTO_INCREMENT untuk tabel `tb_hiburan`
 --
 ALTER TABLE `tb_hiburan`
-  MODIFY `id_hiburan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_hiburan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_homestay`
@@ -487,13 +495,13 @@ ALTER TABLE `tb_ikan_hias`
 -- AUTO_INCREMENT untuk tabel `tb_jenis_booking`
 --
 ALTER TABLE `tb_jenis_booking`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kolam_ikan`
@@ -505,7 +513,7 @@ ALTER TABLE `tb_kolam_ikan`
 -- AUTO_INCREMENT untuk tabel `tb_paket_wisata`
 --
 ALTER TABLE `tb_paket_wisata`
-  MODIFY `id_paket_wisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_paket_wisata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_promo`
@@ -529,7 +537,7 @@ ALTER TABLE `tb_timeline`
 -- AUTO_INCREMENT untuk tabel `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_ulasan`
@@ -541,7 +549,7 @@ ALTER TABLE `tb_ulasan`
 -- AUTO_INCREMENT untuk tabel `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

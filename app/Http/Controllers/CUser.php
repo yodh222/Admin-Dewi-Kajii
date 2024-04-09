@@ -156,7 +156,35 @@ class CUser extends Controller
         $user = MUser::where('email', $request->input('email'))->first();
 
         if ($user->password && Hash::check($request->input('password'), $user->password)) {
-            return response()->json([]);
+            return response()->json([
+                'message' => 'Success',
+                'user' => $this->encrypt($user, "DewiiKajiiSecret"),
+                'raw' => $user,
+            ]);
         }
+    }
+
+    private function encrypt($value, $key)
+    {
+        // Konversi array menjadi string JSON
+        $jsonValue = json_encode($value);
+        $cipher = "AES-256-CBC";
+        $options = 0;
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $iv = openssl_random_pseudo_bytes($iv_length);
+        $encrypted = openssl_encrypt($jsonValue, $cipher, $key, $options, $iv);
+        return base64_encode($iv . $encrypted);
+    }
+
+    private function decrypt($value, $key)
+    {
+        $cipher = "AES-256-CBC";
+        $options = 0;
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $decodedValue = base64_decode($value);
+        $iv = substr($decodedValue, 0, $iv_length);
+        $encrypted = substr($decodedValue, $iv_length);
+        $decrypted = openssl_decrypt($encrypted, $cipher, $key, $options, $iv);
+        return json_decode($decrypted, true);
     }
 }

@@ -5,7 +5,7 @@
 <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah
     Homestay</button>
 
-<div id="homestayContainer">
+<div id="homestayContainer" class="row mt-5">
 </div>
 
 <div data-bs-theme="light" class="modal fade" id="ModalTambah" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -64,50 +64,45 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
             </form>
         </div>
-    </div>
-</div>
-</div>
-<div class="container">
-    <div class="row mt-5">
-        <?php
-        $homestays = [
-            ["title" => "Homestay 1", "description" => "Rp. 100.000", "image" => "assets/image/contoh.jpg"],
-            ["title" => "Homestay 2", "description" => "Rp. 200.000", "image" => "assets/image/contoh.jpg"],
-            ["title" => "Homestay 3", "description" => "Rp. 300.000", "image" => "assets/image/contoh.jpg"]
-        ];
-
-        foreach ($homestays as $homestay) {
-        ?>
-        <div class="col-sm-4">
-            <div class="card mb-3 bg-light">
-                <div class="text-black">
-                    <div class="col-md-12">
-                        <img src="<?php echo $homestay['image']; ?>" class="card-img" alt="Homestay"
-                            style="width: 100%; height: 150px; object-fit: cover;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $homestay['title']; ?></h5>
-                            <p class="card-text"><?php echo $homestay['description']; ?></p>
-                            <i class="fas fa-edit btn btn-primary btn-sm"></i>
-                            <i class="fas fa-trash-alt btn btn-danger btn-sm"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php
-        }
-        ?>
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
         $.getJSON('/api/homestay', function(data){
-            
+            $.each(data.homestay,function(index, homestay){
+                console.log(homestay);
+
+                var str = homestay.image
+                var image = str.split(",");
+                console.log(image)
+
+                var card = `
+                <div class="col-sm-4">
+                    <div class="card mb-3 bg-light">
+                        <div class="text-black">
+                            <div class="col-md-12">
+                                <img src="${homestay.image}" class="card-img" alt="Homestay"
+                                    style="width: 100%; height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">${image[0]}</h5>
+                                    <p class="card-text">${homestay.harga}</p>
+                                    <i class="fas fa-edit btn btn-primary btn-sm"></i>
+                                    <i class="fas fa-trash-alt btn btn-danger btn-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+
+                $('#homestayContainer').append(card);
+            })
         })
     });
 

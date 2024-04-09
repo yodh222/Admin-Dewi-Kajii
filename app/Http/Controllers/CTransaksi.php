@@ -61,34 +61,34 @@ class CTransaksi extends Controller
 
     public function add(Request $request)
     {
-        try {
-            // Validasi Bukti Pembayaran
-            $file = $request->file('bukti_pembayaran');
-            if (!$this->isImage($file)) {
-                return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
-            }
-            $uniq = uniqid();
-            $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-            $file->move('uploads/bukti_pembayaran/', $fileName);
-            $path_bukti = 'uploads/bukti_pembayaran/' . $fileName;
-
-            // Generate Invoice
-            $invoice = "INV/" . date('dmY') . "/" . $uniq;
-
-            MTransaksi::create([
-                'id_user' => $request->input('id_user'),
-                'id_jenis' => $request->input('id_jenis'),
-                'code_invoice' => $invoice,
-                'bukti_pembayaran' => $path_bukti,
-                'status_check_in' => 'Belum',
-                'check_in' => $request->input('check_in'),
-                'dibayarkan' => $request->input('dibayarkan'),
-                'status' => $request->input('status'),
-            ]);
-            return redirect()->back()->with('success', 'Berhasil menambahkan transaksi');
-        } catch (QueryException $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan Transaksi');
+        // try {
+        // Validasi Bukti Pembayaran
+        $file = $request->file('bukti_pembayaran');
+        if (!$this->isImage($file)) {
+            return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
+        $uniq = uniqid();
+        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+        $file->move('uploads/bukti_pembayaran/', $fileName);
+        $path_bukti = 'uploads/bukti_pembayaran/' . $fileName;
+
+        // Generate Invoice
+        $invoice = "INV/" . date('dmY') . "/" . $uniq;
+
+        MTransaksi::create([
+            'id_user' => $request->input('id_user'),
+            'id_jenis' => $request->input('id_jenis'),
+            'code_invoice' => $invoice,
+            'bukti_pembayaran' => $path_bukti,
+            'status_check_in' => 'Belum',
+            'check_in' => $request->input('check_in'),
+            'dibayarkan' => $request->input('dibayarkan'),
+            'status' => $request->input('status'),
+        ]);
+        return redirect()->back()->with('success', 'Berhasil menambahkan transaksi');
+        // } catch (QueryException $e) {
+        //     return redirect()->back()->with('error', 'Gagal menambahkan Transaksi');
+        // }
     }
 
     public function edit(Request $request, $id)

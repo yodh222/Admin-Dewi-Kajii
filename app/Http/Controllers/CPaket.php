@@ -89,7 +89,6 @@ class CPaket extends Controller
         }
 
         $validation = Validator::make($request->all(), [
-            // 'nama' => 'required|string|max:150|unique:tb_jenis_booking,nama',
             'nama' => [
                 'required',
                 'string',

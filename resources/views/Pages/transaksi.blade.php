@@ -278,6 +278,7 @@
                 }, {
                     data: 'no_telp',
                     orderable:false,
+                    searchable: false,
                     render: function(data,type,row){
                         return '<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sendMessage" onclick="message(\''+data+'\')"><i class="fa-brands fa-whatsapp"></i></button>';
                     }
@@ -294,6 +295,7 @@
                 }, {
                     data: 'bukti_pembayaran',
                     orderable: false,
+                    searchable: false,
                     render: function(data, type, row) {
                         return '<a class="btn btn-secondary" href="' + data + '" data-lightbox="Bukti Pembayaran" data-title="Bukti Pembayaran"><i class="fas fa-image"></i> Bukti</a>';
                     }

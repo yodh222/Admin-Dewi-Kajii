@@ -48,16 +48,11 @@ class CUser extends Controller
             'password' => 'required|string|max:255',
         ]);
 
-        if ($validation->fails() && $validation->errors()->has('email')) {
-            return response()->json([
-                'message' => 'Error',
-                'info' => 'Email yang anda masukkan sudah ada',
-            ], 400, [], JSON_PRETTY_PRINT);
-        }
         if ($validation->fails()) {
+            $info = $validation->errors()->has('email') ? 'Email yang anda masukkan sudah ada' : 'Data yang anda masukkan tidak valid';
             return response()->json([
                 'message' => 'Error',
-                'info' => 'Data yang anda masukkan tidak valid',
+                'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
 
@@ -103,16 +98,11 @@ class CUser extends Controller
             'password' => 'required|string|max:255',
         ]);
 
-        if ($validation->fails() && $validation->errors()->has('email')) {
-            return response()->json([
-                'message' => 'Error',
-                'info' => 'Email yang anda masukkan sudah ada',
-            ], 400, [], JSON_PRETTY_PRINT);
-        }
         if ($validation->fails()) {
+            $info = $validation->errors()->has('email') ? 'Email yang anda masukkan sudah ada' : 'Data yang anda masukkan tidak valid';
             return response()->json([
                 'message' => 'Error',
-                'info' => 'Data yang anda masukkan tidak valid',
+                'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
 

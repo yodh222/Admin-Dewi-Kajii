@@ -114,7 +114,7 @@ class CKegiatan extends Controller
             ]);
 
         $data->update([
-            'judul' => $request->input('judulnama'),
+            'judul' => $request->input('nama'),
             'gambar' => $path_file,
             'harga' => $request->input('harga')
         ]);

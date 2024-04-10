@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Kegiatan</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="judul" id="judul" required>
+                            <input type="text" class="form-control" name="nama" id="judul" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -77,7 +77,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Kegiatan</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="judul" required>
+                            <input type="text" class="form-control" name="nama" required>
                         </div>
                     </div>
                     <div class="mb-3">

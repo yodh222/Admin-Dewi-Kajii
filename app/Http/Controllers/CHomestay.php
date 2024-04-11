@@ -174,9 +174,9 @@ class CHomestay extends Controller
             $file_path = public_path($data->gambar);
             unlink($file_path);
             $data->delete();
-            return redirect()->back()->with('success', 'Berhasil menghapus Paket Wisata');
+            return redirect()->back()->with('success', 'Berhasil menghapus Homestay');
         } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'Paket Wisata tidak ditemukan.');
+            return redirect()->back()->with('error', 'Homestay tidak ditemukan.');
         }
     }
 

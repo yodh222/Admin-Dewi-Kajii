@@ -122,14 +122,14 @@
                         <label class="form-label">Harga Paket Wisata</label>
                         <div class="input-group">
                             <span class="input-group-text">Rp.</span>
-                            <input type="text" class="form-control" name="harga" required>
+                            <input type="number" class="form-control" name="harga" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Promo Paket Wisata</label>
                         <div class="input-group">
                             <span class="input-group-text">Rp.</span>
-                            <input type="text" class="form-control" name="promo" required>
+                            <input type="number" class="form-control" name="promo" required>
                         </div>
                     </div>
                 </div>

@@ -4,11 +4,14 @@ use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
 use App\Http\Controllers\CHiburan;
 use App\Http\Controllers\CHomestay;
+use App\Http\Controllers\CIkanHias;
 use App\Http\Controllers\CKegiatan;
+use App\Http\Controllers\CKolam;
 use App\Http\Controllers\CPaket;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CPromo;
 use App\Http\Controllers\CTransaksi;
+use App\Http\Controllers\CUlasan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,7 +63,11 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     });
     Route::get('', [CTransaksi::class, 'index']);
 
-    Route::post('/artikel/add', [CArtikel::class, 'store'])->name('artikel.tambah');
+    // Artikel
+    Route::post('/artikel/tambah', [CArtikel::class, 'store'])->name('artikel.tambah');
+    Route::post('/artikel/edit/{id}', [CArtikel::class, 'update'])->name('artikel.edit');
+    Route::post('/artikel/hapus/{id}', [CArtikel::class, 'destroy'])->name('artikel.hapus');
+
     // Promo
     Route::post('/promo/tambah', [CPromo::class, 'store'])->name('promo.tambah');
     Route::post('/promo/hapus/{id}', [CPromo::class, 'destroy'])->name('promo.hapus');
@@ -88,6 +95,21 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::post('/homestay/tambah', [CHomestay::class, 'store'])->name('homestay.tambah');
     Route::post('/homestay/edit/{id}', [CHomestay::class, 'update'])->name('homestay.edit');
     Route::post('/homestay/hapus/{id}', [CHomestay::class, 'destroy'])->name('homestay.hapus');
+
+    // Ikan Hias
+    Route::post('/katalog/ikan-hias/tambah', [CIkanHias::class, 'store'])->name('ikanhias.tambah');
+    Route::post('/katalog/ikan-hias/edit/{id}', [CIkanHias::class, 'update'])->name('ikanhias.edit');
+    Route::post('/katalog/ikan-hias/hapus/{id}', [CIkanHias::class, 'destroy'])->name('ikanhias.hapus');
+
+    // Kolam Ikan
+    Route::post('/katalog/kolam-ikan/tambah', [CKolam::class, 'store'])->name('kolam.tambah');
+    Route::post('/katalog/kolam-ikan/edit/{id}', [CKolam::class, 'update'])->name('kolam.edit');
+    Route::post('/katalog/kolam-ikan/hapus/{id}', [CKolam::class, 'destroy'])->name('kolam.hapus');
+
+    // Ulasan
+    Route::post('/ulasan/tambah', [CUlasan::class, 'store'])->name('ulasan.tambah');
+    Route::post('/ulasan/edit/{id}', [CUlasan::class, 'update'])->name('ulasan.edit');
+    Route::post('/ulasan/hapus/{id}', [CUlasan::class, 'destroy'])->name('ulasan.hapus');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

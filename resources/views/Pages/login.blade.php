@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Admin Login Test</title>
 
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css">
@@ -45,10 +46,6 @@
                                 <i class="fa-solid fa-eye"></i>
                             </span>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <input type="checkbox" class="form-check-input" name="remember" id="remember">
-                        <label for="remember" class="form-label">Remember me</label>
                     </div>
 
                     <input type="submit" class="form-control btn btn-success mt-4" value="Log In">

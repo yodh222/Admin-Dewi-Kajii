@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -17,7 +18,7 @@
     <script src="/vendor/datatable/js/dataTables.bootstrap5.min.js"></script>
     <script src="/vendor/lightbox/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
 </head>
 
 <body data-bs-theme="light">
@@ -40,7 +41,7 @@
                         foreach($values as $value) {
                             $link = $links[$i];
                             $icon = $icons[$i];
-                            echo '<a href="' . $link . '" class="sidebar-link text-black">';
+                            echo '<a href="' . $link . '" class="sidebar-link">';
                             echo '<i class="' . $icon . ' pe-2"></i>';
                             echo $value;
                             echo '</a>';

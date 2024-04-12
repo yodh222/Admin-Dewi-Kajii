@@ -2,90 +2,174 @@
 @section('title','Ulasan')
 @section('content')
 <h1 class="fw-bold mt-4">Ulasan & FAQ</h1>
-<h3 class="fw-bold mt-5">Ulasan Konsumen</h3>
-<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah
-    Ulasan</button>
 
-<div id="articleContainer">
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{session('success')}}
+    <button type="button" class="btn-close" style="color: black" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{session('error')}}
+    <button type="button" class="btn-close" style="color: black" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+<h3 class="fw-bold mt-5">Ulasan Konsumen</h3>
+<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#tambahData">Tambah Ulasan</button>
+
+<div id="ulasanContainer" class="row mt-5">
 </div>
 
-<div data-bs-theme="light" class="modal fade" id="ModalTambah" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="ModalTambahLabel" aria-hidden="true">
+{{-- Modal --}}
+{{-- Modal Edit --}}
+<div data-bs-theme="light" class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="ModalTambahLabel">Tambah Ulasan</h1>
+                <h1 class="modal-title fs-5" id="editDataLabel">Edit Ulasan</h1>
             </div>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="/ulasan/tambah" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Nama Pengunjung</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="" aria-describedby="basic-addon3 basic-addon4"
-                                required>
+                            <select class="form-control id_user" name="id_user" id="user" required>
+                                <option selected>Pilih Pengunjung</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Ulasan Pengunjung</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="" aria-describedby="basic-addon3 basic-addon4"
+                            <input type="text" class="form-control" name="ulasan"  id="ulasan"
                                 required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Image Ulasan</label>
-                        <div class="input-group">
-                            <input type="file" class="form-control" name="" accept="image/png, image/jpeg"
-                                aria-describedby="basic-addon3 basic-addon4" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
-</div>
-<div class="container">
-    <div class="row mt-5">
-        <?php
-        $articles = [
-            ["title" => "Nama User", "description" => "Ulasan", "image" => "assets\image\contoh.jpg"],
-            ["title" => "Nama User", "description" => "Ulasan", "image" => "assets\image\contoh.jpg"],
-            ["title" => "Nama User", "description" => "Ulasan", "image" => "assets\image\contoh.jpg"] 
-        ];
-
-        foreach ($articles as $article) {
-            ?>
-        <div class="col-sm-3">
-            <div class="card mb-3 bg-light">
-                <div class="row no-gutters text-black">
-                    <div class="row-md-8 align-self-center">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><?php echo $article['title']; ?></h5>
-                            <p class="card-text"><?php echo $article['description']; ?></p>
+{{-- Modal Tambah --}}
+<div data-bs-theme="light" class="modal fade" id="tambahData" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="tambahDataLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="tambahDataLabel">Tambah Ulasan</h1>
+            </div>
+            <form action="/ulasan/tambah" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Nama Pengunjung</label>
+                        <div class="input-group">
+                            <select class="form-control id_user" name="id_user" id="user" required>
+                                <option selected>Pilih Pengunjung</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="row-md-4 align-self-center text-center">
-                        <div class="rounded-circle overflow-hidden mx-auto" style="width: 100px; height: 100px;">
-                            <img src="<?php echo $article['image']; ?>" class="card-img mb-2" alt="Penulis"
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="mb-3">
+                        <label class="form-label">Ulasan Pengunjung</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="ulasan"
+                                required>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
         </div>
-
-        <?php
-        }
-        ?>
+    </div>
+</div>
+{{-- Modal Hapus --}}
+<div data-bs-theme="light" class="modal fade" id="hapusData" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="hapusabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="hapusabel">Hapus Ulasan</h1>
+            </div>
+            <div class="modal-body">
+                Apakah anda yakin ingin menghapus data ini?
+            </div>
+            <form action="" id="form-hapus" method="post">
+                <div class="modal-footer">
+                    @csrf
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+        $.getJSON('/api/ulasan/', function(data){
+            $.each(data.ulasan, function(index, ulasan){
 
+                var card = `
+                <div class="col-sm-3">
+                    <div class="card mb-3 bg-light">
+                        <div class="row no-gutters text-black">
+                            <div class="row-md-8 align-self-center">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${ulasan.nama}</h5>
+                                    <p class="card-text">${ulasan.ulasan}</p>
+                                    <div class="rounded-circle overflow-hidden mx-auto" style="width: 100px; height: 100px;">
+                                        <img src="${ulasan.profil}" class="card-img mb-2" alt="Penulis"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <button class="btn btn-primary me-2" data-bs-target="#editData" data-bs-toggle="modal" onclick="editData('${ulasan.id_ulasan}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger" data-bs-target="#hapusData" data-bs-toggle="modal" onclick="deleteData('${ulasan.id_ulasan}')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
 
+                $('#ulasanContainer').append(card)
+            })
+        })
+
+        $.getJSON('/api/user', function(data){
+            $.each(data.users, function(index, user){
+                var user = `<option value="${user.id_user}">${user.nama}</option>`
+
+                $('.id_user').append(user)
+            })
+        })
+    })
+
+    function editData(id){
+        $('#form-edit').attr('action','/ulasan/edit/'+id)
+
+        $.getJSON('/api/ulasan/'+id, function(data){
+            $('#user').val(data.id_user)
+            $('#ulasan').val(data.ulasan)
+        })
+    }
+
+    function deleteData(id){
+        $('#form-hapus').attr('action', '/ulasan/hapus/'+id)
+    }
+</script>
 
 @endsection

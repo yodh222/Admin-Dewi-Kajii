@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\MArtikel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CArtikel extends Controller
 {
@@ -28,8 +30,15 @@ class CArtikel extends Controller
     public function store(Request $request)
     {
         $file = $request->file('gambar');
-        if (!$this->isImage($file)) {
-            return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
+        if (count($file) < 3) {
+            return redirect()->back()->with('error', 'Gambar yang dikirimkan minimal 3 file');
+        } else if (count($file) > 10) {
+            return redirect()->back()->with('error', 'Gambar yang dikirimkan maksimal 10 file');
+        }
+        foreach ($request->file('gambar') as $Imagefile) {
+            if (!$this->isImage($Imagefile)) {
+                return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
+            }
         }
 
         $validator = Validator::make($request->all(), [
@@ -39,13 +48,21 @@ class CArtikel extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('Login')->with('error', 'Data yang anda kirimkan tidak valid');
+            return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
         }
 
-        $uniq = uniqid();
-        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-        $file->move('uploads/artikel/', $fileName);
-        $path_file = '/uploads/artikel/' . $fileName;
+        $path_file = '';
+        $c = 0;
+        foreach ($file as $Imagefile) {
+            $fileName = uniqid() . '.' . $Imagefile->getClientOriginalExtension();
+            $Imagefile->move('uploads/artikel/', $fileName);
+            if ($c > 0) {
+                $path_file .= ',uploads/artikel/' . $fileName;
+            } else {
+                $path_file .= 'uploads/artikel/' . $fileName;
+            }
+            $c += 1;
+        }
 
         MArtikel::create([
             'judul' => $request->judul,
@@ -54,7 +71,7 @@ class CArtikel extends Controller
             'gambar' => $path_file,
         ]);
 
-        return redirect()->back()->with('success', 'Berhasil menambahkan timeline');
+        return redirect()->back()->with('success', 'Berhasil menambahkan Artikel');
     }
 
     /**
@@ -68,17 +85,41 @@ class CArtikel extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MArtikel $mArtikel)
+    public function update(Request $request, $id)
     {
-        //
+        $data = MArtikel::findOrFail($id);
+        $file = $request->file('gambar');
+        if (count($file) < 3) {
+            return redirect()->back()->with('error', 'Gambar yang dikirimkan minimal 3 file');
+        } else if (count($file) > 10) {
+            return redirect()->back()->with('error', 'Gambar yang dikirimkan maksimal 10 file');
+        }
+        foreach ($request->file('gambar') as $Imagefile) {
+            if (!$this->isImage($Imagefile)) {
+                return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MArtikel $mArtikel)
+    public function destroy($id)
     {
-        //
+        try {
+            $data = MArtikel::findOrFail($id);
+
+            $image = explode(',', $data->gambar);
+
+            foreach ($image as $gambar) {
+                $file_path = public_path($gambar);
+                unlink($file_path);
+            }
+            $data->delete();
+            return redirect()->back()->with('success', 'Berhasil menghapus Artikel');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Artikel tidak ditemukan.');
+        }
     }
 
     private function isImage($file)

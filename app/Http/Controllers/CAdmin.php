@@ -21,7 +21,7 @@ class CAdmin extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
+        if (Auth::guard('admin')->attempt($credentials)) {
             $user = Auth::guard('admin')->user();
             $request->session()->put([
                 'Auth' => $this->encrypt($user, 'DewiiKajiiSecret')

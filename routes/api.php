@@ -4,11 +4,14 @@ use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
 use App\Http\Controllers\CHiburan;
 use App\Http\Controllers\CHomestay;
+use App\Http\Controllers\CIkanHias;
 use App\Http\Controllers\CKegiatan;
+use App\Http\Controllers\CKolam;
 use App\Http\Controllers\CPaket;
 use App\Http\Controllers\CProfile;
 use App\Http\Controllers\CPromo;
 use App\Http\Controllers\CTransaksi;
+use App\Http\Controllers\CUlasan;
 use App\Http\Controllers\CUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +41,9 @@ Route::get('promo/{id?}', [CPromo::class, 'index'])->name('promo');
 Route::get('hiburan/{id?}', [CHiburan::class, 'index'])->name('hiburan');
 Route::get('paket-wisata/{id?}', [CPaket::class, 'index'])->name('paket-wisata');
 Route::get('homestay/{id?}', [CHomestay::class, 'index'])->name('homstay');
+Route::get('katalog/ikan-hias{id?}', [CIkanHias::class, 'index'])->name('ikan-hias');
+Route::get('katalog/kolam{id?}', [CKolam::class, 'index'])->name('kolam-ikan');
+Route::get('ulasan/{id?}', [CUlasan::class, 'index'])->name('ulasan');
 Route::get('user/{id?}', [CUser::class, 'index'])->name('user');
 
 // User

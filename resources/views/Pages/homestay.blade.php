@@ -56,7 +56,7 @@
                     <div class="mb-3">
                         <label class="form-label">Image Homestay</label>
                         <div class="input-group">
-                            <input type="file" class="form-control" name="gambar[]" multiple accept="image/png, image/jpeg">
+                            <input type="file" class="form-control" name="gambar[]" multiple accept="image/png, image/jpeg" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -69,6 +69,7 @@
                     <div class="mb-3">
                         <label class="form-label">Harga Homestay</label>
                         <div class="input-group">
+                            <span class="input-group-text">Rp.</span>
                             <input type="number" class="form-control" name="harga" id="harga" required>
                         </div>
                     </div>
@@ -127,6 +128,7 @@
                     <div class="mb-3">
                         <label class="form-label">Harga Homestay</label>
                         <div class="input-group">
+                            <span class="input-group-text">Rp.</span>
                             <input type="number" class="form-control" name="harga" required>
                         </div>
                     </div>
@@ -145,7 +147,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="hapusabel">Hapus Hoemstay</h1>
+                <h1 class="modal-title fs-5" id="hapusabel">Hapus Homestay</h1>
             </div>
             <div class="modal-body">
                 Apakah anda yakin ingin menghapus data ini?

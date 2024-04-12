@@ -82,14 +82,17 @@ h4 {
 
 a.sidebar-link {
     padding: 0.625rem 1.625rem;
-    color: #e9ecef;
+    color: #000000;
     position: relative;
     display: block;
     font-size: 0.875rem;
+    transition: 0.5s ease;
 }
 
 a.sidebar-link:hover {
-    background-color: #00cf07;
+    color: white;
+    transition: 0.5s ease;
+    background-color: #008000;
     cursor: pointer;
 }
 

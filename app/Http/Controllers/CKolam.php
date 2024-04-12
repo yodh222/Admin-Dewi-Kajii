@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MHomestay;
+use App\Models\MKolam;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CHomestay extends Controller
+class CKolam extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +16,12 @@ class CHomestay extends Controller
     public function index($id = null)
     {
         if ($id != null) {
-            return response()->json(MHomestay::find($id), 200, [], JSON_PRETTY_PRINT);
+            return response()->json(MKolam::find($id), 200, [], JSON_PRETTY_PRINT);
         }
 
         return response()->json([
             'message' => 'success',
-            'homestay' => MHomestay::all(),
+            'kolam' => MKolam::all(),
         ], 200, [], JSON_PRETTY_PRINT);
     }
 
@@ -44,54 +43,42 @@ class CHomestay extends Controller
         }
 
         $validation = Validator::make($request->all(), [
-            'nama' => 'required|string|max:150|unique:tb_jenis_booking,nama',
-            'harga' => 'required|numeric',
-            'fasilitas' => 'required|string',
+            'nama' => 'required|string|max:150',
             'deskripsi' => 'required|string',
-            'peraturan' => 'required|string',
+            'jenis' => 'required|string',
         ]);
 
         if ($validation->fails()) {
-            $errorMess = $validation->errors()->has('nama') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
-            return redirect()->back()->with('error', $errorMess);
+            return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
         }
 
         $path_file = '';
         $c = 0;
         foreach ($file as $Imagefile) {
             $fileName = uniqid() . '.' . $Imagefile->getClientOriginalExtension();
-            $Imagefile->move('uploads/homestay/', $fileName);
+            $Imagefile->move('uploads/kolam-ikan/', $fileName);
             if ($c > 0) {
-                $path_file .= ',uploads/homestay/' . $fileName;
+                $path_file .= ',uploads/kolam-ikan/' . $fileName;
             } else {
-                $path_file .= 'uploads/homestay/' . $fileName;
+                $path_file .= 'uploads/kolam-ikan/' . $fileName;
             }
             $c += 1;
         }
 
-        MHomestay::create([
-            'nama' => $request->input('nama'),
+        MKolam::create([
+            'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
+            'jenis_ikan' => $request->jenis,
             'gambar' => $path_file,
-            'harga' => $request->input('harga'),
-            'fasilitas' => $request->input('fasilitas'),
-            'deskripsi' => $request->input('deskripsi'),
-            'peraturan' => $request->input('peraturan'),
         ]);
 
-        DB::table('tb_jenis_booking')
-            ->insert([
-                'nama' => $request->input('nama'),
-                'harga' => $request->input('harga') - $request->input('promo'),
-            ]);
-
-        return redirect()->back()->with('success', 'Homestay berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Berhasil menambahkan Kolam Ikan');
     }
-
 
     /**
      * Display the specified resource.
      */
-    public function show(MHomestay $mHomestay)
+    public function show(MKolam $mKolam)
     {
         //
     }
@@ -101,32 +88,7 @@ class CHomestay extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = MHomestay::findOrFail($id);
-
-        $validation = Validator::make($request->all(), [
-            'nama' => [
-                'required',
-                'string',
-                'max:150',
-                Rule::unique('tb_jenis_booking')->ignore($data->nama, 'nama')
-            ],
-            'harga' => 'required|numeric',
-            'fasilitas' => 'required|string',
-            'deskripsi' => 'required|string',
-            'peraturan' => 'required|string',
-        ]);
-
-        if ($validation->fails()) {
-            $errorMess = $validation->errors()->has('nama') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
-            return redirect()->back()->with('error', $errorMess);
-        }
-
-        DB::table('tb_jenis_booking')
-            ->where('nama', $data->nama)
-            ->update([
-                'nama' => $request->input('nama'),
-                'harga' => $request->input('harga'),
-            ]);
+        $data = MKolam::findOrFail($id);
 
         $file = $request->file('gambar');
         if (count($file) < 3) {
@@ -140,6 +102,16 @@ class CHomestay extends Controller
             }
         }
 
+        $validation = Validator::make($request->all(), [
+            'nama' => 'required|string|max:150',
+            'deskripsi' => 'required|string',
+            'jenis' => 'required|string',
+        ]);
+
+        if ($validation->fails()) {
+            return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
+        }
+
         $image_path = explode(',', $data->gambar);
         $path_file = '';
         $c = 0;
@@ -147,7 +119,7 @@ class CHomestay extends Controller
             if (isset($image_path[$c])) {
                 $image_name = explode('/', $image_path[$c]);
                 $image_name = end($image_name);
-                $Imagefile->move('uploads/homestay/', $image_name);
+                $Imagefile->move('uploads/kolam-ikan/', $image_name);
                 if ($c > 0) {
                     $path_file .= ',';
                 }
@@ -155,11 +127,11 @@ class CHomestay extends Controller
                 $c += 1;
             } else {
                 $newFileName = uniqid() . '.' . $Imagefile->getClientOriginalExtension();
-                $Imagefile->move('uploads/homestay/', $newFileName);
+                $Imagefile->move('uploads/kolam-ikan/', $newFileName);
                 if ($c > 0) {
                     $path_file .= ',';
                 }
-                $path_file .= 'uploads/homestay/' . $newFileName;
+                $path_file .= 'uploads/kolam-ikan/' . $newFileName;
                 $c += 1;
             }
         }
@@ -170,18 +142,15 @@ class CHomestay extends Controller
         }
 
         $data->update([
-            'nama' => $request->input('nama'),
+            'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
+            'jenis_ikan' => $request->jenis,
             'gambar' => $path_file,
-            'harga' => $request->input('harga'),
-            'fasilitas' => $request->input('fasilitas'),
-            'deskripsi' => $request->input('deskripsi'),
-            'peraturan' => $request->input('peraturan'),
         ]);
 
 
-        return redirect()->back()->with('success', 'Homestay berhasil diedit');
+        return redirect()->back()->with('success', 'Berhasil mengedit Ikan Hias');
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -189,7 +158,7 @@ class CHomestay extends Controller
     public function destroy($id)
     {
         try {
-            $data = MHomestay::findOrFail($id);
+            $data = MKolam::findOrFail($id);
 
             DB::table('tb_jenis_booking')
                 ->where('nama', $data->nama)
@@ -202,9 +171,9 @@ class CHomestay extends Controller
                 unlink($file_path);
             }
             $data->delete();
-            return redirect()->back()->with('success', 'Berhasil menghapus Homestay');
+            return redirect()->back()->with('success', 'Berhasil menghapus Ikan Hias');
         } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'Homestay tidak ditemukan.');
+            return redirect()->back()->with('error', 'Ikan Hias tidak ditemukan.');
         }
     }
 

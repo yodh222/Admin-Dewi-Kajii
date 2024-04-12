@@ -17,6 +17,7 @@
     <script src="/vendor/datatable/js/dataTables.bootstrap5.min.js"></script>
     <script src="/vendor/lightbox/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 
 <body data-bs-theme="light">

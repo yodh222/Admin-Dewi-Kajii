@@ -88,6 +88,11 @@ a.sidebar-link {
     font-size: 0.875rem;
 }
 
+a.sidebar-link:hover {
+    background-color: #00cf07;
+    cursor: pointer;
+}
+
 .sidebar-link[data-bs-toggle='collapse']::after {
     border: solid;
     border-width: 0 0.075rem 0.075rem 0;

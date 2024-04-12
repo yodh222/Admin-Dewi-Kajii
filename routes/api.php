@@ -40,9 +40,13 @@ Route::get('paket-wisata/{id?}', [CPaket::class, 'index'])->name('paket-wisata')
 Route::get('homestay/{id?}', [CHomestay::class, 'index'])->name('homstay');
 Route::get('user/{id?}', [CUser::class, 'index'])->name('user');
 
-
+// User
 Route::post('user/register', [CUser::class, 'store'])->name('user.register');
 Route::post('user/update/{id}', [CUser::class, 'update'])->name('user.register');
+Route::post('user/login', [CUser::class, 'login'])->name('user.login');
+
+
+
 Route::post('transaksi/post', [CTransaksi::class, 'postData'])->name('transaksi.post');
 Route::post('transaksi/post/{id}', [CTransaksi::class, 'postDataPembayaran'])->name('transaksi.update');
 

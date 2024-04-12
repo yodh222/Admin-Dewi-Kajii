@@ -34,10 +34,6 @@ class CPaket extends Controller
         if (!$this->isImage($file)) {
             return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
-        $uniq = uniqid();
-        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-        $file->move('uploads/paket-wisata/', $fileName);
-        $path_file = 'uploads/paket-wisata/' . $fileName;
 
         $validation = Validator::make($request->all(), [
             'nama' => 'required|string|max:150|unique:tb_jenis_booking,nama',
@@ -48,6 +44,11 @@ class CPaket extends Controller
             $errorMess = $validation->errors()->has('nama') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
             return redirect()->back()->with('error', $errorMess);
         }
+
+        $uniq = uniqid();
+        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
+        $file->move('uploads/paket-wisata/', $fileName);
+        $path_file = 'uploads/paket-wisata/' . $fileName;
 
         MPaket::create([
             'judul' => $request->input('nama'),
@@ -88,7 +89,6 @@ class CPaket extends Controller
         }
 
         $validation = Validator::make($request->all(), [
-            // 'nama' => 'required|string|max:150|unique:tb_jenis_booking,nama',
             'nama' => [
                 'required',
                 'string',

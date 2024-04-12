@@ -278,6 +278,7 @@
                 }, {
                     data: 'no_telp',
                     orderable:false,
+                    searchable: false,
                     render: function(data,type,row){
                         return '<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sendMessage" onclick="message(\''+data+'\')"><i class="fa-brands fa-whatsapp"></i></button>';
                     }
@@ -294,6 +295,7 @@
                 }, {
                     data: 'bukti_pembayaran',
                     orderable: false,
+                    searchable: false,
                     render: function(data, type, row) {
                         return '<a class="btn btn-secondary" href="' + data + '" data-lightbox="Bukti Pembayaran" data-title="Bukti Pembayaran"><i class="fas fa-image"></i> Bukti</a>';
                     }
@@ -373,7 +375,7 @@
         // Set Option for select Jenis Pemesanan
         $.getJSON('/api/transaksi/jenis-booking', function(data){
             $.each(data.jenis, function(index, jenis){
-                var cardHtml = `<option value="${jenis.nama}">${jenis.nama}</option>`;
+                var cardHtml = `<option value="${jenis.id_jenis}">${jenis.nama}</option>`;
                 $('.selectJenis').append(cardHtml);
                 $('#filter-jenis-order').append(cardHtml);
             });

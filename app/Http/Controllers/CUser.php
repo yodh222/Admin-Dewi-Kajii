@@ -48,16 +48,11 @@ class CUser extends Controller
             'password' => 'required|string|max:255',
         ]);
 
-        if ($validation->fails() && $validation->errors()->has('email')) {
-            return response()->json([
-                'message' => 'Error',
-                'info' => 'Email yang anda masukkan sudah ada',
-            ], 400, [], JSON_PRETTY_PRINT);
-        }
         if ($validation->fails()) {
+            $info = $validation->errors()->has('email') ? 'Email yang anda masukkan sudah ada' : 'Data yang anda masukkan tidak valid';
             return response()->json([
                 'message' => 'Error',
-                'info' => 'Data yang anda masukkan tidak valid',
+                'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
 
@@ -103,16 +98,11 @@ class CUser extends Controller
             'password' => 'required|string|max:255',
         ]);
 
-        if ($validation->fails() && $validation->errors()->has('email')) {
-            return response()->json([
-                'message' => 'Error',
-                'info' => 'Email yang anda masukkan sudah ada',
-            ], 400, [], JSON_PRETTY_PRINT);
-        }
         if ($validation->fails()) {
+            $info = $validation->errors()->has('email') ? 'Email yang anda masukkan sudah ada' : 'Data yang anda masukkan tidak valid';
             return response()->json([
                 'message' => 'Error',
-                'info' => 'Data yang anda masukkan tidak valid',
+                'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
 
@@ -156,7 +146,35 @@ class CUser extends Controller
         $user = MUser::where('email', $request->input('email'))->first();
 
         if ($user->password && Hash::check($request->input('password'), $user->password)) {
-            return response()->json([]);
+            return response()->json([
+                'message' => 'Success',
+                'user' => $this->encrypt($user, "DewiiKajiiSecret"),
+                'raw' => $user,
+            ]);
         }
+    }
+
+    private function encrypt($value, $key)
+    {
+        // Konversi array menjadi string JSON
+        $jsonValue = json_encode($value);
+        $cipher = "AES-256-CBC";
+        $options = 0;
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $iv = openssl_random_pseudo_bytes($iv_length);
+        $encrypted = openssl_encrypt($jsonValue, $cipher, $key, $options, $iv);
+        return base64_encode($iv . $encrypted);
+    }
+
+    private function decrypt($value, $key)
+    {
+        $cipher = "AES-256-CBC";
+        $options = 0;
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $decodedValue = base64_decode($value);
+        $iv = substr($decodedValue, 0, $iv_length);
+        $encrypted = substr($decodedValue, $iv_length);
+        $decrypted = openssl_decrypt($encrypted, $cipher, $key, $options, $iv);
+        return json_decode($decrypted, true);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
 use App\Http\Controllers\CHiburan;
+use App\Http\Controllers\CHomestay;
 use App\Http\Controllers\CKegiatan;
 use App\Http\Controllers\CPaket;
 use App\Http\Controllers\CProfile;
@@ -82,6 +83,11 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::post('/paket/tambah', [CPaket::class, 'store'])->name('paket.tambah');
     Route::post('/paket/edit/{id}', [CPaket::class, 'update'])->name('paket.edit');
     Route::post('/paket/hapus/{id}', [CPaket::class, 'destroy'])->name('paket.hapus');
+
+    // Homestay
+    Route::post('/homestay/tambah', [CHomestay::class, 'store'])->name('homestay.tambah');
+    Route::post('/homestay/edit/{id}', [CHomestay::class, 'update'])->name('homestay.edit');
+    Route::post('/homestay/hapus/{id}', [CHomestay::class, 'destroy'])->name('homestay.hapus');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

@@ -40,11 +40,6 @@ class CUser extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('profil');
-        if (!$this->isImage($file)) {
-            return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
-        }
-
         $validation = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255',
@@ -60,11 +55,6 @@ class CUser extends Controller
                 'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
-
-        $uniq = uniqid();
-        $fileName = $uniq . '.' . $file->getClientOriginalExtension();
-        $file->move('uploads/user-profile/', $fileName);
-        $path_file = 'uploads/user-profile/' . $fileName;
 
         MUser::create([
             'nama' => $request->input('nama'),
@@ -187,15 +177,5 @@ class CUser extends Controller
         $encrypted = substr($decodedValue, $iv_length);
         $decrypted = openssl_decrypt($encrypted, $cipher, $key, $options, $iv);
         return json_decode($decrypted, true);
-    }
-
-    private function isImage($file)
-    {
-        if ($file !== null && $file instanceof \SplFileInfo) {
-            $extension = strtolower($file->getClientOriginalExtension());
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file gambar yang diizinkan
-            return in_array($extension, $allowedExtensions);
-        }
-        return false;
     }
 }

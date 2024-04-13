@@ -27,12 +27,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-// Route::get('test', [CHomestay::class, 'index'])->name('a');
-
-
 Route::get('transaksi/{method}/{id?}', [CTransaksi::class, 'api'])->name('transaksi');
 Route::get('profile', [CProfile::class, 'index'])->name('profile');
 Route::get('kegiatan/{id?}', [CKegiatan::class, 'index'])->name('kegiatan');
@@ -51,9 +45,5 @@ Route::post('user/register', [CUser::class, 'store'])->name('user.register');
 Route::post('user/update/{id}', [CUser::class, 'update'])->name('user.register');
 Route::post('user/login', [CUser::class, 'login'])->name('user.login');
 
-
-
 Route::post('transaksi/post', [CTransaksi::class, 'postData'])->name('transaksi.post');
 Route::post('transaksi/post/{id}', [CTransaksi::class, 'postDataPembayaran'])->name('transaksi.update');
-
-// Route::get('/test', [CAdmin::class, 'cookie'])->name('test');

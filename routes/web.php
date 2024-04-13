@@ -25,11 +25,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('Test/test');
-// })->name('dashboard');
-
-
 Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], function () {
     Route::get('/dashboard', function () {
         return view('Pages.dashboard');
@@ -117,9 +112,3 @@ Route::get('Logout', [CAdmin::class, 'logout'])->name('logout');
 Route::post('Register', [CAdmin::class, 'register'])->name('register');
 
 Route::post('admin-login', [CAdmin::class, 'login'])->name('admin-login');
-
-Route::get('test', function () {
-    return view('Test.test');
-});
-
-// Route::get('check', [CProfile::class, 'index'])->name('test');

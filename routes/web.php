@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
+use App\Http\Controllers\CFaq;
 use App\Http\Controllers\CHiburan;
 use App\Http\Controllers\CHomestay;
 use App\Http\Controllers\CIkanHias;
@@ -105,6 +106,11 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::post('/ulasan/tambah', [CUlasan::class, 'store'])->name('ulasan.tambah');
     Route::post('/ulasan/edit/{id}', [CUlasan::class, 'update'])->name('ulasan.edit');
     Route::post('/ulasan/hapus/{id}', [CUlasan::class, 'destroy'])->name('ulasan.hapus');
+
+    // FAQ
+    Route::post('/faq/tambah', [CFaq::class, 'store'])->name('faq.tambah');
+    Route::post('/faq/edit/{id}', [CFaq::class, 'update'])->name('faq.edit');
+    Route::post('/faq/hapus/{id}', [CFaq::class, 'destroy'])->name('faq.hapus');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

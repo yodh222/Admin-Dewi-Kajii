@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CAdmin;
 use App\Http\Controllers\CArtikel;
+use App\Http\Controllers\CFaq;
 use App\Http\Controllers\CHiburan;
 use App\Http\Controllers\CHomestay;
 use App\Http\Controllers\CIkanHias;
@@ -38,7 +39,8 @@ Route::get('homestay/{id?}', [CHomestay::class, 'index'])->name('homstay');
 Route::get('katalog/ikan-hias{id?}', [CIkanHias::class, 'index'])->name('ikan-hias');
 Route::get('katalog/kolam{id?}', [CKolam::class, 'index'])->name('kolam-ikan');
 Route::get('ulasan/{id?}', [CUlasan::class, 'index'])->name('ulasan');
-Route::get('user/{id?}', [CUser::class, 'index'])->name('user');
+Route::get('faq/{id?}', [CFaq::class, 'index'])->name('faq');
+Route::get('user/{id?}', [CUser::class, 'index']);
 
 // User
 Route::post('user/register', [CUser::class, 'store'])->name('user.register');

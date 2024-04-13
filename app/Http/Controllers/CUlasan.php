@@ -62,9 +62,24 @@ class CUlasan extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MUlasan $mUlasan)
+    public function update(Request $request, $id)
     {
-        //
+        $data = MUlasan::findOrFail($id);
+        $validation = Validator::make($request->all(), [
+            'id_user' => 'required|int',
+            'ulasan' => 'required|string',
+        ]);
+
+        if ($validation->fails()) {
+            return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
+        }
+
+        $data->update([
+            'id_user' => $request->id_user,
+            'ulasan' => $request->ulasan
+        ]);
+
+        return redirect()->back()->with('success', "Berhasil mengedit Ulasan");
     }
 
     /**

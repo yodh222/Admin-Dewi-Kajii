@@ -17,6 +17,11 @@ class CAdmin extends Controller
         return view('Pages.login');
     }
 
+    public function profile()
+    {
+        return view('AdminProfile.profile');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -94,15 +99,6 @@ class CAdmin extends Controller
         return redirect('Login')->with('success', 'Anda berhasil logout');
     }
 
-
-    // How to set Cookie
-    // public function cookie(Request $request)
-    // {
-    //     $cookieValue = cookie('Auth', "Ambatudin", $minutes = 60);
-    //     return response()
-    //         ->json(['Status' => 'success', 'Cookie' => strval($request->cookie('Auth')), 'Aas'], 200, [], JSON_PRETTY_PRINT)
-    //         ->withCookie($cookieValue);
-    // }
     private function encrypt($value, $key)
     {
         // Konversi array menjadi string JSON

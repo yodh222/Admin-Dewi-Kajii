@@ -64,6 +64,14 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::post('/artikel/edit/{id}', [CArtikel::class, 'update'])->name('artikel.edit');
     Route::post('/artikel/hapus/{id}', [CArtikel::class, 'destroy'])->name('artikel.hapus');
 
+    // Profile
+    Route::post('/profile/edit/{id}', [CProfile::class, 'editProfile'])->name('profile.edit');
+
+    // Timeline
+    Route::post('/timeline/tambah', [CProfile::class, 'addTimeline'])->name('timeline.tambah');
+    Route::post('/timeline/edit/{id}', [CProfile::class, 'update'])->name('timeline.edit');
+    Route::post('/timeline/hapus/{id}', [CProfile::class, 'destroy'])->name('timeline.hapus');
+
     // Promo
     Route::post('/promo/tambah', [CPromo::class, 'store'])->name('promo.tambah');
     Route::post('/promo/hapus/{id}', [CPromo::class, 'destroy'])->name('promo.hapus');
@@ -111,10 +119,13 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
     Route::post('/faq/tambah', [CFaq::class, 'store'])->name('faq.tambah');
     Route::post('/faq/edit/{id}', [CFaq::class, 'update'])->name('faq.edit');
     Route::post('/faq/hapus/{id}', [CFaq::class, 'destroy'])->name('faq.hapus');
+
+    // Admin Profiles
+    Route::get('/profile', [CAdmin::class, 'profile'])->name('admin.profile');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');
 Route::get('Logout', [CAdmin::class, 'logout'])->name('logout');
-Route::post('Register', [CAdmin::class, 'register'])->name('register');
+// Route::post('Register', [CAdmin::class, 'register'])->name('register');
 
 Route::post('admin-login', [CAdmin::class, 'login'])->name('admin-login');

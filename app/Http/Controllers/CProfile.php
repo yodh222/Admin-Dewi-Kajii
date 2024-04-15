@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CProfile extends Controller
 {
-    public function index()
+    public function index($id = null)
     {
+        if ($id != null) {
+            return response()->json(MTimeline::find($id), 200, [], JSON_PRETTY_PRINT);
+        }
         return response()->json([
             'message' => 'success',
             'profile' => MProfile::find(1),
@@ -20,7 +23,7 @@ class CProfile extends Controller
     }
 
     // CRUD
-    public function editProfile(Request $request)
+    public function editProfile(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'deskripsi' => 'required|string',
@@ -29,17 +32,19 @@ class CProfile extends Controller
             return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
         }
 
-        $profile = MProfile::find('1');
+        $profile = MProfile::find($id);
         $profile->update([
             'deskripsi' => $request->deskripsi
         ]);
+
+        return redirect()->back()->with('success', 'Berhasil mengedit profile');
     }
 
     public  function addTimeline(Request $request)
     {
         $file = $request->file('gambar');
         if (!$this->isImage($file)) {
-            return redirect()->back()->with('imageError', 'File yang anda kirimkan bukan sebuah gambar');
+            return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
         }
         $uniq = uniqid();
         $fileName = $uniq . '.' . $file->getClientOriginalExtension();
@@ -50,7 +55,6 @@ class CProfile extends Controller
             'judul' => 'required|string',
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
-            'gambar' => 'required|string',
         ]);
 
         if ($validator->fails()) {

@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('transaksi/{method}/{id?}', [CTransaksi::class, 'api'])->name('transaksi');
-Route::get('profile', [CProfile::class, 'index'])->name('profile');
+Route::get('profile/{id?}', [CProfile::class, 'index'])->name('profile');
 Route::get('kegiatan/{id?}', [CKegiatan::class, 'index'])->name('kegiatan');
 Route::get('artikel/{id?}', [CArtikel::class, 'index'])->name('artikel');
 Route::get('promo/{id?}', [CPromo::class, 'index'])->name('promo');

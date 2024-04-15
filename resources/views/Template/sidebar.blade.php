@@ -65,8 +65,7 @@
                                     style="border-radius:50%; width: 55px; height: 55px;">
                             </a>
                             <div class=" dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Profile</a>
-                                <a href="#" class="dropdown-item">Setting</a>
+                                <a href="/profile" class="dropdown-item">Profile</a>
                                 <a href="/Logout" class="dropdown-item">Logout</a>
                             </div>
                         </li>

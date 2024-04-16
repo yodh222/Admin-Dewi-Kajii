@@ -9,4 +9,7 @@ class MProfile extends Model
 {
     use HasFactory;
     protected $table = 'tb_tentang_kami';
+    protected $guarded = ['id'];
+
+    public $timestamps = false;
 }

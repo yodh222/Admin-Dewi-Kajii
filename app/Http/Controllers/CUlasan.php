@@ -15,6 +15,7 @@ class CUlasan extends Controller
     public function index($id = null)
     {
         if ($id != null) {
+            MUlasan::findOrFail($id);
             return response()->json(MUlasan::leftJoin('tb_user', 'tb_user.id_user', 'tb_ulasan.id_user')
                 ->select('id_ulasan', 'tb_ulasan.id_user', 'nama', 'profil', 'ulasan')
                 ->where('id_ulasan', $id)

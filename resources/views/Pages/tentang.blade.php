@@ -58,14 +58,14 @@
 
 {{-- Modal --}}
 {{-- Modal Edit --}}
-<div data-bs-theme="light" class="modal fade" id="editDataUlasan" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="editDataUlasanLabel" aria-hidden="true">
+<div data-bs-theme="light" class="modal fade" id="editDataTimeline" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="editDataTimelineLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editDataUlasanLabel">Edit Ulasan</h1>
+                <h1 class="modal-title fs-5" id="editDataTimelineLabel">Edit Timeline</h1>
             </div>
-            <form action="" id="form-edit-ulasan" method="post" enctype="multipart/form-data">
+            <form action="" id="form-edit-timeline" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
                     <div class="mb-3">
@@ -93,14 +93,14 @@
     </div>
 </div>
 {{-- Modal Tambah --}}
-<div data-bs-theme="light" class="modal fade" id="tambahDataUlasan" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="tambahDataUlasanLabel" aria-hidden="true">
+<div data-bs-theme="light" class="modal fade" id="tambahDataTimeline" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="tambahDataTimelineLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="tambahDataUlasanLabel">Tambah Ulasan</h1>
+                <h1 class="modal-title fs-5" id="tambahDataTimelineLabel">Tambah timeline</h1>
             </div>
-            <form action="/ulasan/tambah" method="post" enctype="multipart/form-data">
+            <form action="/timeline/tambah" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
                     <div class="mb-3">
@@ -128,17 +128,17 @@
     </div>
 </div>
 {{-- Modal Hapus --}}
-<div data-bs-theme="light" class="modal fade" id="hapusDataUlasan" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="hapusDataUlasan" aria-hidden="true">
+<div data-bs-theme="light" class="modal fade" id="hapusDataTimeline" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="hapusDataTimeline" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="hapusDataUlasan">Hapus Ulasan</h1>
+                <h1 class="modal-title fs-5" id="hapusDataTimeline">Hapus Timeline</h1>
             </div>
             <div class="modal-body">
                 Apakah anda yakin ingin menghapus data ini?
             </div>
-            <form action="" id="form-hapus-ulasan" method="post">
+            <form action="" id="form-hapus-timeline" method="post">
                 <div class="modal-footer">
                     @csrf
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -16,7 +16,15 @@ class CArtikel extends Controller
     public function index($id = null)
     {
         if ($id !== null) {
-            return response()->json(MArtikel::find($id), 200, [], JSON_PRETTY_PRINT);
+            try {
+                $data = MArtikel::findOrFail($id);
+                return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+            } catch (ModelNotFoundException $e) {
+                return response()->json([
+                    'message' => 'error',
+                    'info' => 'Data tidak ditemukan'
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
         }
         return response()->json([
             'message' => 'success',

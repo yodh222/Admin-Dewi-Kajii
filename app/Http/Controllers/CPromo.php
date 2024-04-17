@@ -6,6 +6,7 @@ use App\Models\MPromo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CPromo extends Controller
 {
@@ -15,11 +16,18 @@ class CPromo extends Controller
     public function index($id = null)
     {
         if ($id != null) {
-            return response()->json([
-                'message' => 'success',
-                'promo' => MPromo::where('id_promo', $id)->first(),
-
-            ], 200, [], JSON_PRETTY_PRINT);
+            try {
+                $data = MPromo::fondOrFail($id);
+                return response()->json([
+                    'message' => 'success',
+                    'promo' => $data
+                ], 200, [], JSON_PRETTY_PRINT);
+            } catch (ModelNotFoundException $e) {
+                return response()->json([
+                    'message' => 'error',
+                    'info' => 'Data tidak ditemukan',
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
         }
 
         $data = MPromo::find(2);

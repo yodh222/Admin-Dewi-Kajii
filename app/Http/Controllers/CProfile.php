@@ -13,7 +13,15 @@ class CProfile extends Controller
     public function index($id = null)
     {
         if ($id != null) {
-            return response()->json(MTimeline::find($id), 200, [], JSON_PRETTY_PRINT);
+            try {
+                $data = MTimeline::findOrFail($id);
+                return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+            } catch (ModelNotFoundException $th) {
+                return response()->json([
+                    'message' => 'error',
+                    'info' => 'Data tidak ditemukan'
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
         }
         return response()->json([
             'message' => 'success',

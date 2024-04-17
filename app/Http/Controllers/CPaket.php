@@ -17,7 +17,12 @@ class CPaket extends Controller
     public function index($id = null)
     {
         if ($id != null) {
-            return response()->json(MPaket::find($id), 200, [], JSON_PRETTY_PRINT);
+            try {
+                $data  = MPaket::findOrFail($id);
+                return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+            } catch (ModelNotFoundException $th) {
+                return response()->json(['message' => 'error', 'info' => 'Data tidak ditemukan'], 400, [], JSON_PRETTY_PRINT);
+            }
         }
         return response()->json([
             'message' => 'success',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
@@ -19,7 +20,8 @@ class CAdmin extends Controller
 
     public function profile()
     {
-        return view('AdminProfile.profile');
+        $user = Auth::guard('admin')->user();
+        return view('AdminProfile.profile', ['user' => $user]);
     }
 
     public function login(Request $request)
@@ -37,49 +39,57 @@ class CAdmin extends Controller
         return redirect('Login')->with('error', 'Anda gagal login');
     }
 
-    public function register(Request $request)
-    {
+    // public function register(Request $request)
+    // {
 
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:tb_admin',
-            'password' => 'required|string|',
-        ]);
+    //     $validator = Validator::make($request->all(), [
+    //         'nama' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:tb_admin',
+    //         'password' => 'required|string|',
+    //     ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'error',
-                'info' => 'Data yang anda masukkan tidak valid',
-            ], 400, [], JSON_PRETTY_PRINT);
-        }
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'message' => 'error',
+    //             'info' => 'Data yang anda masukkan tidak valid',
+    //         ], 400, [], JSON_PRETTY_PRINT);
+    //     }
 
-        $admin = MAdmin::create([
-            'nama' => $request->get('nama'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'no_telp' => $request->get('no_telp'),
-            'alamat' => $request->get('alamat'),
-        ]);
-    }
+    //     MAdmin::create([
+    //         'nama' => $request->get('nama'),
+    //         'email' => $request->get('email'),
+    //         'password' => Hash::make($request->get('password')),
+    //         'no_telp' => $request->get('no_telp'),
+    //         'alamat' => $request->get('alamat'),
+    //     ]);
+    // }
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:tb_admin',
-            'password' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'error',
-                'info' => 'Data yang anda masukkan tidak valid',
-            ], 400, [], JSON_PRETTY_PRINT);
-        }
-
         $admin = MAdmin::where('id_admin', $this->decrypt(Session::get('Auth'), 'DewiiKajiiSecret')['id_admin'])->first();
         if (!$admin) {
             return redirect()->back()->with('srror', 'Admin tidak ditemukan');
         }
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('tb_admin')->ignore($admin->email, 'email')
+            ],
+            'password' => 'required|string',
+            'no_telp' => 'required|string',
+            'alamat' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'info' => 'Data yang anda masukkan tidak valid',
+            ], 400, [], JSON_PRETTY_PRINT);
+        }
+
 
         $admin->update([
             'nama' => $request->nama,
@@ -111,8 +121,9 @@ class CAdmin extends Controller
         return base64_encode($iv . $encrypted);
     }
 
-    private function decrypt($value, $key)
+    public function decrypt(Request $request, $key = 'DewiiKajiiSecret')
     {
+        $value = $request->cipher;
         $cipher = "AES-256-CBC";
         $options = 0;
         $iv_length = openssl_cipher_iv_length($cipher);

@@ -346,11 +346,10 @@
         // Set filtering table
         $('#filter-tanggal-pesanan').change(function(){
             var tanggalPesanan = $('#filter-tanggal-pesanan').val();
-            table.columns(7).search(tanggalPesanan).draw();
+            table.columns(9).search(tanggalPesanan).draw();
         })
         $('#filter-jenis-order').change(function(){
             var jenisOrder = $('#filter-jenis-order').val();
-            console.log(jenisOrder)
             table.columns(3).search(jenisOrder).draw();
         })
 
@@ -375,7 +374,7 @@
         // Set Option for select Jenis Pemesanan
         $.getJSON('/api/transaksi/jenis-booking', function(data){
             $.each(data.jenis, function(index, jenis){
-                var cardHtml = `<option value="${jenis.id_jenis}">${jenis.nama}</option>`;
+                var cardHtml = `<option value="${jenis.nama}">${jenis.nama}</option>`;
                 $('.selectJenis').append(cardHtml);
                 $('#filter-jenis-order').append(cardHtml);
             });

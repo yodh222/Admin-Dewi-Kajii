@@ -56,6 +56,8 @@ class CUser extends Controller
             ], 400, [], JSON_PRETTY_PRINT);
         }
 
+        $path_file = 'assets/image/avatar-1.png';
+
         MUser::create([
             'nama' => $request->input('nama'),
             'username' => $request->input('username'),

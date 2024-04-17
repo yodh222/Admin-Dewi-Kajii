@@ -122,6 +122,7 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
 
     // Admin Profiles
     Route::get('/profile', [CAdmin::class, 'profile'])->name('admin.profile');
+    Route::post('/profile/edit', [CAdmin::class, 'update'])->name('admin.profile');
 });
 
 Route::get('Login', [CAdmin::class, 'index'])->name('login');

@@ -61,7 +61,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <img src="/assets/image/kadal.jpg" class="avatar img-fluid" alt=""
+                                <img src="/assets/image/default-profile.jpg" class="avatar img-fluid" alt=""
                                     style="border-radius:50%; width: 55px; height: 55px;">
                             </a>
                             <div class=" dropdown-menu dropdown-menu-end">

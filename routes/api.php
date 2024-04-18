@@ -40,12 +40,14 @@ Route::get('katalog/ikan-hias{id?}', [CIkanHias::class, 'index'])->name('ikan-hi
 Route::get('katalog/kolam{id?}', [CKolam::class, 'index'])->name('kolam-ikan');
 Route::get('ulasan/{id?}', [CUlasan::class, 'index'])->name('ulasan');
 Route::get('faq/{id?}', [CFaq::class, 'index'])->name('faq');
-Route::get('user/{id?}', [CUser::class, 'index']);
+Route::get('user/{id?}', [CUser::class, 'index'])->where('id', '[0-9]+');
 
 // User
 Route::post('user/register', [CUser::class, 'store'])->name('user.register');
 Route::post('user/update/{id}', [CUser::class, 'update'])->name('user.register');
 Route::post('user/login', [CUser::class, 'login'])->name('user.login');
+Route::get('user/logout', [CUser::class, 'logout'])->name('user.logout');
+Route::get('user/check', [CUser::class, 'checkToken'])->name('user.check');
 
 Route::post('transaksi/post', [CTransaksi::class, 'postData'])->name('transaksi.post');
 Route::post('transaksi/post/{id}', [CTransaksi::class, 'postDataPembayaran'])->name('transaksi.update');

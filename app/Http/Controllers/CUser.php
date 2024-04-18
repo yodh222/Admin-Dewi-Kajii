@@ -6,6 +6,7 @@ use App\Models\MUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class CUser extends Controller
@@ -21,14 +22,14 @@ class CUser extends Controller
                 return response()->json($user, 200, [], JSON_PRETTY_PRINT);
             } else {
                 return response()->json([
-                    'message' => 'Error',
+                    'message' => 'error',
                     'info' => 'User tidak ditemukan'
                 ], 404, [], JSON_PRETTY_PRINT);
             }
         } else {
             $users = MUser::all();
             return response()->json([
-                'message' => 'Success',
+                'message' => 'success',
                 'users' => $users
             ], 200, [], JSON_PRETTY_PRINT);
         }
@@ -51,7 +52,7 @@ class CUser extends Controller
         if ($validation->fails()) {
             $info = $validation->errors()->has('email') ? 'Email yang anda masukkan sudah ada' : 'Data yang anda masukkan tidak valid';
             return response()->json([
-                'message' => 'Error',
+                'message' => 'error',
                 'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
@@ -64,11 +65,12 @@ class CUser extends Controller
             'email' => $request->input('email'),
             'no_telp' => $request->input('no_telp'),
             'password' => Hash::make($request->input('password')),
-            'profil' => $path_file
+            'profil' => $path_file,
+            'token' => ''
         ]);
 
         return response()->json([
-            'message' => 'Success',
+            'message' => 'success',
             'info' => 'Data user berhasil ditambahkan',
         ]);
     }
@@ -104,7 +106,7 @@ class CUser extends Controller
         if ($validation->fails()) {
             $info = $validation->errors()->has('email') ? 'Email yang anda masukkan sudah ada' : 'Data yang anda masukkan tidak valid';
             return response()->json([
-                'message' => 'Error',
+                'message' => 'error',
                 'info' => $info,
             ], 400, [], JSON_PRETTY_PRINT);
         }
@@ -120,7 +122,7 @@ class CUser extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Success',
+            'message' => 'success',
             'info' => 'Data user berhasil diupdate',
         ]);
     }
@@ -141,19 +143,53 @@ class CUser extends Controller
         ]);
         if ($validation->fails()) {
             return response()->json([
-                'message' => 'Error',
+                'message' => 'error',
                 'info' => 'Data yang anda masukkan tidak valid',
             ], 200, [], JSON_PRETTY_PRINT);
         }
 
         $user = MUser::where('email', $request->input('email'))->first();
-
         if ($user->password && Hash::check($request->input('password'), $user->password)) {
+            $token = $user ? $this->encrypt([
+                'id_user' => $user->id_user,
+                'email' => $user->email,
+            ], 'DewiiKajiiSecret') : '';
+            $user->update(['token' => $token]);
             return response()->json([
-                'message' => 'Success',
-                'user' => $this->encrypt($user, "DewiiKajiiSecret"),
-                'raw' => $user,
+                'message' => 'success',
+                'token' => $token
             ]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $user = MUser::where('token', $request->token)->first();
+        if ($user) {
+            $user->update(['token' => '']);
+            return response()->json(['message' => 'success', 'info' => 'Logout Berhasil'], 200, [], JSON_PRETTY_PRINT);
+        } else {
+            return response()->json(['message' => 'error', 'info' => 'Logout Gagal'], 400, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function checkToken(Request $request)
+    {
+        $authorizationHeader = $request->header('Authorization');
+        if ($authorizationHeader) {
+            // Mengekstrak token dari header Authorization
+            $token = explode(' ', $authorizationHeader)[1];
+
+            // Memeriksa apakah token valid
+            $data = MUser::where('token', $token)->first();
+
+            return response()->json([
+                'message' =>  $data ? 'success' : 'error',
+                'info' => $data ? 'Token valid' : 'Token tidak valid'
+            ], $data ? 200 : 400);
+        } else {
+            // Jika header Authorization tidak ada atau tidak memiliki nilai
+            return response()->json(['message' => 'error', 'info' => 'Token kosong'], 400);
         }
     }
 
@@ -169,8 +205,9 @@ class CUser extends Controller
         return base64_encode($iv . $encrypted);
     }
 
-    private function decrypt($value, $key)
+    private function decrypt(Request $request, $key)
     {
+        $value = $request->cipher;
         $cipher = "AES-256-CBC";
         $options = 0;
         $iv_length = openssl_cipher_iv_length($cipher);

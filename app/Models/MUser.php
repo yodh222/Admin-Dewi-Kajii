@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\MTransaksi;
 
-class MUser extends Model
+
+class MUser extends Authenticatable
 {
     use HasFactory;
     protected $table = 'tb_user';

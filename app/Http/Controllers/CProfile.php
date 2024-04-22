@@ -79,7 +79,7 @@ class CProfile extends Controller
         return redirect()->back()->with('success', 'Berhasil menambahkan timeline');
     }
 
-    public function editTimeline(Request $request)
+    public function editTimeline(Request $request, $id)
     {
         $file = $request->file('gambar');
         if (!$this->isImage($file)) {
@@ -94,14 +94,13 @@ class CProfile extends Controller
             'judul' => 'required|string',
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
-            'gambar' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
         }
 
-        $timeline = MTimeline::find($request->id_timeline);
+        $timeline = MTimeline::find($id);
 
         $timeline->update([
             'judul' => $request->judul,
@@ -113,10 +112,10 @@ class CProfile extends Controller
         return redirect()->back()->with('success', 'Berhasil mengedit timeline');
     }
 
-    public function deleteTimeline(Request $request)
+    public function deleteTimeline($id)
     {
         try {
-            $timeline = MTimeline::findOrFail($request->id_timeline);
+            $timeline = MTimeline::findOrFail($id);
             $timeline->delete();
             return redirect()->back()->with('success', 'Berhasil menghapus timeline');
         } catch (ModelNotFoundException $e) {

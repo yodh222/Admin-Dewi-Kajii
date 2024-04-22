@@ -12,4 +12,6 @@ class MTimeline extends Model
     protected $table = 'tb_timeline';
     protected $primaryKey = 'id_timeline';
     protected $guarded = ['id_timeline'];
+
+    public $timestamps = false;
 }

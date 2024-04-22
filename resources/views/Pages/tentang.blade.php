@@ -36,7 +36,7 @@
                     <div class="mb-3">
                         <label class="form-label">Deskripsi Profile</label>
                         <div class="input-group">
-                            <textarea class="form-control" name="deskripsi" id="deskripsi" rows="10"></textarea>
+                            <textarea class="form-control" name="deskripsi" id="deskripsiProfile" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
 {{-- Timeline --}}
 
 <h3 class="fw-bold mt-5">Timeline</h3>
-<button type="button" class="mb-3 btn btn-success">Tambah Timeline</button>
+<button type="button" class="mb-3 btn btn-success" data-bs-target="#tambahDataTimeline" data-bs-toggle="modal">Tambah Timeline</button>
 
 <div id="timeline"></div>
 
@@ -69,18 +69,31 @@
                 <div class="modal-body">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Nama Pengunjung</label>
+                        <label class="form-label">Judul Timeline</label>
                         <div class="input-group">
-                            <select class="form-control id_user" name="id_user" id="user" required>
-                                <option selected>Pilih Pengunjung</option>
-                            </select>
+                            <input type="text" class="form-control" name="judul" id="judul"
+                                required>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Ulasan Pengunjung</label>
+                        <label class="form-label">Deskripsi Singkat</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="ulasan"  id="ulasan"
+                            <textarea type="text" class="form-control" name="deskripsi" id="deskripsiTimeline"
+                            required></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Kegiatan</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" name="tanggal" id="tanggal"
                                 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image Timeline</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="gambar"
+                                required accept="image/png, image/jpeg">
                         </div>
                     </div>
                 </div>
@@ -98,24 +111,37 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="tambahDataTimelineLabel">Tambah timeline</h1>
+                <h1 class="modal-title fs-5" id="tambahDataTimelineLabel">Tambah Timeline</h1>
             </div>
             <form action="/timeline/tambah" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Nama Pengunjung</label>
+                        <label class="form-label">Judul Timeline</label>
                         <div class="input-group">
-                            <select class="form-control id_user" name="id_user" id="user" required>
-                                <option selected>Pilih Pengunjung</option>
-                            </select>
+                            <input type="text" class="form-control" name="judul"
+                                required>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Ulasan Pengunjung</label>
+                        <label class="form-label">Deskripsi Singkat</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="ulasan"
+                            <textarea type="text" class="form-control" name="deskripsi"
+                            required></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Kegiatan</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" name="tanggal"
                                 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image Timeline</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="gambar"
+                                required accept="image/png, image/jpeg">
                         </div>
                     </div>
                 </div>
@@ -151,6 +177,14 @@
 
 <script>
     $(document).ready(function() {
+        $('#deskripsi').keydown(function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+
+            $(this).val($(this).val() + '<br>\n');
+            }
+        });
+
         $.getJSON('/api/profile/', function(data) {
             var card = `
             <div class="shadow-lg p-3 card">
@@ -175,7 +209,7 @@
                 var time = date[2] + ' ' + month[dateInt - 1] + ', ' + date[0]
 
                 var timeline = `
-                <div class="shadow p-3 card">
+                <div class="shadow p-3 mt-4 card">
                     <div class="card-body">
                         <div class="my-1 d-flex justify-content-end">
                             <button class="btn btn-primary me-2" data-bs-target="#editDataTimeline" data-bs-toggle="modal" onclick="editDataTimeline('${timeline.id_timeline}')">
@@ -186,7 +220,7 @@
                             </button>
                         </div>
                         <span class="fs-6">${time}</span><br>
-                        <span class="fw-bolder fs-4">Pembukaan Desa Wisata Kajii</span>
+                        <span class="fw-bolder fs-4">${timeline.judul}</span>
                         <p>${timeline.deskripsi}</p>
                         <img width="200" src="${timeline.gambar}" alt="">
                     </div>
@@ -200,9 +234,21 @@
 
     function editDataProfile(){
         $.getJSON('/api/profile', function(data){
-            console.log(data.profile)
+            $('#deskripsiProfile').val(data.profile.deskripsi)
+        })
+    }
+    function editDataTimeline(id){
+        $.getJSON('/api/profile/' + id, function(data){
+            $('#form-edit-timeline').attr('action', '/timeline/edit/' + id)
 
-            $('#deskripsi').val(data.profile.deskripsi)
+            $('#judul').val(data.judul)
+            $('#deskripsiTimeline').val(data.deskripsi)
+            $('#tanggal').val(data.tanggal)
+        })
+    }
+    function deleteDataTimeline(id){
+        $.getJSON('/api/profile/' + id, function(data){
+            $('#form-hapus-timeline').attr('action', '/timeline/hapus/' + id)
         })
     }
 </script>

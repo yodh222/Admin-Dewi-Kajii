@@ -69,8 +69,8 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
 
     // Timeline
     Route::post('/timeline/tambah', [CProfile::class, 'addTimeline'])->name('timeline.tambah');
-    Route::post('/timeline/edit/{id}', [CProfile::class, 'update'])->name('timeline.edit');
-    Route::post('/timeline/hapus/{id}', [CProfile::class, 'destroy'])->name('timeline.hapus');
+    Route::post('/timeline/edit/{id}', [CProfile::class, 'editTimeline'])->name('timeline.edit');
+    Route::post('/timeline/hapus/{id}', [CProfile::class, 'deleteTimeline'])->name('timeline.hapus');
 
     // Promo
     Route::post('/promo/tambah', [CPromo::class, 'store'])->name('promo.tambah');

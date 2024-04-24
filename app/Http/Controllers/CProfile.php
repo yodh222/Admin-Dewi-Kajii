@@ -116,6 +116,8 @@ class CProfile extends Controller
     {
         try {
             $timeline = MTimeline::findOrFail($id);
+            $file_path = public_path($timeline->gambar);
+            unlink($file_path);
             $timeline->delete();
             return redirect()->back()->with('success', 'Berhasil menghapus timeline');
         } catch (ModelNotFoundException $e) {

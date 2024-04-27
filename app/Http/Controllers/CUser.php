@@ -18,15 +18,14 @@ class CUser extends Controller
     {
         $authorizationHeader = $request->header('Authorization');
         if ($authorizationHeader) {
-            // Mengekstrak token dari header Authorization
             $token = explode(' ', $authorizationHeader)[1];
+            // base64_decode($token);
+            return base64_decode($token);
 
-            // Memeriksa apakah token valid
             $data = MUser::where('token', $token)->first();
             if ($data) {
                 return response()->json($data, 200, [], JSON_PRETTY_PRINT);
             } else {
-                // Jika user tidak ditemukan, kembalikan pesan error
                 return response()->json([
                     'message' => 'error',
                     'info' => 'User tidak ditemukan'
@@ -35,6 +34,15 @@ class CUser extends Controller
         } else {
             return response()->json(['message' => 'error', 'info' => 'Token kosong'], 400);
         }
+    }
+
+    public function adminGet($id = null)
+    {
+        if ($id != null) {
+            $data = MUser::where('id_user', $id)->first();
+            return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+        }
+        return response()->json(MUser::all(), 200, [], JSON_PRETTY_PRINT);
     }
 
 

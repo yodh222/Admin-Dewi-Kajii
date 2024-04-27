@@ -20,6 +20,16 @@ class CTransaksi extends Controller
     }
 
     // CRUD
+    public function adminGet()
+    {
+        $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
+            ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
+            ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'tb_jenis_booking.gambar', 'dibayarkan', 'status', 'created_at')
+            ->get();
+
+        $arr['Data'] = $data;
+        return $arr;
+    }
     public function get(Request $request, $user = null)
     {
         $authorizationHeader = $request->header('Authorization');

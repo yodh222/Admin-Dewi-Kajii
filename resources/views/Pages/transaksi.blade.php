@@ -267,7 +267,7 @@
         // Set Datatable
         var table = $('#tableTransaksi').DataTable({
             ajax: {
-            url: "{{ route('transaksi',['method' => 'get']) }}",
+            url: "/api/admin/transaksi/get",
             dataSrc: 'Data'
             },
             columns: [
@@ -387,7 +387,7 @@
         })
 
         // Set Option for select User
-        $.getJSON('/api/user', function(data){
+        $.getJSON('/api/admin/user', function(data){
             $.each(data.users, function(index, users){
                 var cardHtml = `<option value="${users.id_user}">${users.nama}</option>`;
                 $('#id_user').append(cardHtml);
@@ -396,7 +396,7 @@
         // Auto set value on field email and nomor telepon
         $('#id_user').change(function() {
             var idUser = $(this).val();
-            $.getJSON('/api/user/'+idUser, function(data){
+            $.getJSON('/api/admin/user/'+idUser, function(data){
                 $('#email_pemesan').val(data.email);
                 $('#nomor_telepon').val(data.no_telp);
             })

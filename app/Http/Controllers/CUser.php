@@ -14,26 +14,29 @@ class CUser extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id = null)
+    public function index(Request $request)
     {
-        if ($id != null) {
-            $user = MUser::find($id);
-            if ($user) {
-                return response()->json($user, 200, [], JSON_PRETTY_PRINT);
+        $authorizationHeader = $request->header('Authorization');
+        if ($authorizationHeader) {
+            // Mengekstrak token dari header Authorization
+            $token = explode(' ', $authorizationHeader)[1];
+
+            // Memeriksa apakah token valid
+            $data = MUser::where('token', $token)->first();
+            if ($data) {
+                return response()->json($data, 200, [], JSON_PRETTY_PRINT);
             } else {
+                // Jika user tidak ditemukan, kembalikan pesan error
                 return response()->json([
                     'message' => 'error',
                     'info' => 'User tidak ditemukan'
                 ], 404, [], JSON_PRETTY_PRINT);
             }
         } else {
-            $users = MUser::all();
-            return response()->json([
-                'message' => 'success',
-                'users' => $users
-            ], 200, [], JSON_PRETTY_PRINT);
+            return response()->json(['message' => 'error', 'info' => 'Token kosong'], 400);
         }
     }
+
 
 
     /**

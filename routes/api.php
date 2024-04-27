@@ -40,7 +40,7 @@ Route::get('katalog/ikan-hias{id?}', [CIkanHias::class, 'index'])->name('ikan-hi
 Route::get('katalog/kolam{id?}', [CKolam::class, 'index'])->name('kolam-ikan');
 Route::get('ulasan/{id?}', [CUlasan::class, 'index'])->name('ulasan');
 Route::get('faq/{id?}', [CFaq::class, 'index'])->name('faq');
-Route::get('user/{id?}', [CUser::class, 'index'])->where('id', '[0-9]+');
+Route::get('user/', [CUser::class, 'index'])->where('id', '[0-9]+');
 
 // User
 Route::post('user/register', [CUser::class, 'store'])->name('user.register');

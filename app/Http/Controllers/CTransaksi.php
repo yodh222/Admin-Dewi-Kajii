@@ -124,7 +124,7 @@ class CTransaksi extends Controller
     public function postData(Request $request)
     {
         try {
-            if (!$request->input('id_user') || !$request->input('id_jenis') || !$request->input('check_in') || !$request->input('dibayarkan') || !$request->input('status')) {
+            if (!$request->input('id_user') || !$request->input('id_jenis') || !$request->input('check_in')) {
                 return response()->json([
                     'message' => 'Error',
                     'info' => 'Parameter yang anda berikan tidak lengkap'
@@ -140,8 +140,8 @@ class CTransaksi extends Controller
                 'bukti_pembayaran' => '',
                 'status_check_in' => 'Belum',
                 'check_in' => $request->input('check_in'),
-                'dibayarkan' => $request->input('dibayarkan'),
-                'status' => $request->input('status'),
+                'dibayarkan' => '0',
+                'status' => 'Process',
             ]);
 
             return response()->json([
@@ -203,7 +203,7 @@ class CTransaksi extends Controller
 
 
 
-    public function api(Request $request, $method = null, $id = null)
+    public function api(Request $request, $method = null)
     {
 
         if ($method != null) {
@@ -223,18 +223,18 @@ class CTransaksi extends Controller
                 case 'send':
                     if (!$request->has('no_telp') || !$request->has('message')) {
                         return response()->json([
-                            'status' => 'Error',
+                            'status' => 'error',
                             'info' => 'Parameter tidak lengkap'
                         ], 400, [], JSON_PRETTY_PRINT);
                     }
                     return response()->json($this->sendMessage($request->input('no_telp'), $request->input('message')), 200, [], JSON_PRETTY_PRINT);
                     break;
                 case 'jenis-booking':
-                    if ($id) {
-                        return response()->json(DB::table('tb_jenis_booking')->where('id_jenis', $id)->first(), 200, [], JSON_PRETTY_PRINT);
-                    }
+                    // if ($id) {
+                    //     return response()->json(DB::table('tb_jenis_booking')->where('id_jenis', $id)->first(), 200, [], JSON_PRETTY_PRINT);
+                    // }
                     return response()->json([
-                        'status' => 'Success',
+                        'status' => 'success',
                         'jenis' => DB::table('tb_jenis_booking')
                             ->get()
                     ], 200, [], JSON_PRETTY_PRINT);

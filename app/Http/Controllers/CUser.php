@@ -19,8 +19,6 @@ class CUser extends Controller
         $authorizationHeader = $request->header('Authorization');
         if ($authorizationHeader) {
             $token = explode(' ', $authorizationHeader)[1];
-            // base64_decode($token);
-            return base64_decode($token);
 
             $data = MUser::where('token', $token)->first();
             if ($data) {

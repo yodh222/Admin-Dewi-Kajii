@@ -68,6 +68,7 @@ class CPaket extends Controller
             ->insert([
                 'nama' => $request->input('nama'),
                 'harga' => $request->input('harga') - $request->input('promo'),
+                'gambar' => $path_file,
             ]);
 
         return redirect()->back()->with('success', 'Paket wisata berhasil ditambahkan');
@@ -119,6 +120,7 @@ class CPaket extends Controller
             ->update([
                 'nama' => $request->input('nama'),
                 'harga' => $request->input('harga') - $request->input('promo'),
+                'gambar' => $path_file,
             ]);
 
         $data->update([

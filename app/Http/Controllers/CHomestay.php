@@ -74,6 +74,14 @@ class CHomestay extends Controller
             } else {
                 $path_file .= 'uploads/homestay/' . $fileName;
             }
+            if ($c == 0) {
+                DB::table('tb_jenis_booking')
+                    ->insert([
+                        'nama' => $request->input('nama'),
+                        'harga' => $request->input('harga') - $request->input('promo'),
+                        'gambar' => $path_file,
+                    ]);
+            }
             $c += 1;
         }
 
@@ -86,11 +94,6 @@ class CHomestay extends Controller
             'peraturan' => $request->input('peraturan'),
         ]);
 
-        DB::table('tb_jenis_booking')
-            ->insert([
-                'nama' => $request->input('nama'),
-                'harga' => $request->input('harga') - $request->input('promo'),
-            ]);
 
         return redirect()->back()->with('success', 'Homestay berhasil ditambahkan');
     }
@@ -129,13 +132,6 @@ class CHomestay extends Controller
             return redirect()->back()->with('error', $errorMess);
         }
 
-        DB::table('tb_jenis_booking')
-            ->where('nama', $data->nama)
-            ->update([
-                'nama' => $request->input('nama'),
-                'harga' => $request->input('harga'),
-            ]);
-
         $file = $request->file('gambar');
         if (count($file) < 3) {
             return redirect()->back()->with('error', 'Gambar yang dikirimkan minimal 3 file');
@@ -160,7 +156,6 @@ class CHomestay extends Controller
                     $path_file .= ',';
                 }
                 $path_file .= $image_path[$c];
-                $c += 1;
             } else {
                 $newFileName = uniqid() . '.' . $Imagefile->getClientOriginalExtension();
                 $Imagefile->move('uploads/homestay/', $newFileName);
@@ -168,8 +163,17 @@ class CHomestay extends Controller
                     $path_file .= ',';
                 }
                 $path_file .= 'uploads/homestay/' . $newFileName;
-                $c += 1;
             }
+            if ($c == 0) {
+                DB::table('tb_jenis_booking')
+                    ->where('nama', $data->nama)
+                    ->update([
+                        'nama' => $request->input('nama'),
+                        'harga' => $request->input('harga'),
+                        'gambar' => $path_file,
+                    ]);
+            }
+            $c += 1;
         }
         if ($c < count($image_path)) {
             for ($c; $c < count($image_path); $c++) {

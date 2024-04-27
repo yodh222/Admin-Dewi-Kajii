@@ -67,7 +67,8 @@ class CKegiatan extends Controller
         DB::table('tb_jenis_booking')
             ->insert([
                 'nama' => $request->input('nama'),
-                'harga' => $request->input('harga')
+                'harga' => $request->input('harga'),
+                'gambar' => $path_file,
             ]);
 
         return redirect()->back()->with('succes', 'Kegiatan berhasil ditambahkan');
@@ -118,7 +119,8 @@ class CKegiatan extends Controller
             ->where('nama', $data->judul)
             ->update([
                 'nama' => $request->input('nama'),
-                'harga' => $request->input('harga')
+                'harga' => $request->input('harga'),
+                'gambar' => $path_file,
             ]);
 
         $data->update([

@@ -68,7 +68,8 @@ class CHiburan extends Controller
         DB::table('tb_jenis_booking')
             ->insert([
                 'nama' => $request->input('nama'),
-                'harga' => $request->input('harga')
+                'harga' => $request->input('harga'),
+                'gambar' => $path_file,
             ]);
 
         return redirect()->back()->with('success', 'Hiburan berhasil ditambahkan');
@@ -117,7 +118,8 @@ class CHiburan extends Controller
             ->where('nama', $data->judul)
             ->update([
                 'nama' => $request->input('nama'),
-                'harga' => $request->input('harga')
+                'harga' => $request->input('harga'),
+                'gambar' => $path_file,
             ]);
 
         $data->update([

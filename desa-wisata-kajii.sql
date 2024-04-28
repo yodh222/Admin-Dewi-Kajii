@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Apr 2024 pada 05.31
+-- Waktu pembuatan: 28 Apr 2024 pada 17.41
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -97,7 +97,7 @@ CREATE TABLE `tb_hiburan` (
 
 CREATE TABLE `tb_homestay` (
   `id_homestay` int(11) NOT NULL,
-  `nama` varchar(115) NOT NULL,
+  `judul` varchar(115) NOT NULL,
   `gambar` text NOT NULL,
   `fasilitas` text NOT NULL,
   `deskripsi` text NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `tb_homestay` (
 -- Dumping data untuk tabel `tb_homestay`
 --
 
-INSERT INTO `tb_homestay` (`id_homestay`, `nama`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`) VALUES
+INSERT INTO `tb_homestay` (`id_homestay`, `judul`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`) VALUES
 (15, 'Homestay 1', 'uploads/homestay/661e4bd6d24d3.jpg,uploads/homestay/661e4bd6d2b65.png,uploads/homestay/661e4bd6d3312.png', 'a,b,c,d', 'Lorem Ipsum', 'a,b,c,d,e', 3000000),
 (16, 'Homestay  2', 'uploads/homestay/661e4bef0b698.jpg,uploads/homestay/661e4bef0bb56.png,uploads/homestay/661e4bef0c5da.png', 'a,b,c,d', 'Lorem Ipsum', 'a,b,c,d', 2000000),
 (17, 'Homestay  3', 'uploads/homestay/661e4c081ca6d.jpg,uploads/homestay/661e4c081ce4e.png,uploads/homestay/661e4c081d98e.png', 'a,b,c,d,e', 'Lorem Ipsum', 'a,b,c,d,e', 1500000);
@@ -148,23 +148,24 @@ INSERT INTO `tb_ikan_hias` (`id_ikan_hias`, `nama`, `gambar`, `deskripsi`, `pera
 CREATE TABLE `tb_jenis_booking` (
   `id_jenis` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `harga` int(11) NOT NULL
+  `harga` int(11) NOT NULL,
+  `gambar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_jenis_booking`
 --
 
-INSERT INTO `tb_jenis_booking` (`id_jenis`, `nama`, `harga`) VALUES
-(33, 'Paket 1', 1500000),
-(34, 'Paket 2', 1000000),
-(35, 'Paket 3', 2000000),
-(36, 'Kegiatan 1', 30000),
-(37, 'Kegiatan 2', 20000),
-(38, 'Kegiatan 3', 25000),
-(39, 'Homestay 1', 3000000),
-(40, 'Homestay  2', 2000000),
-(41, 'Homestay  3', 1500000);
+INSERT INTO `tb_jenis_booking` (`id_jenis`, `nama`, `harga`, `gambar`) VALUES
+(33, 'Paket 1', 1500000, ''),
+(34, 'Paket 2', 1000000, ''),
+(35, 'Paket 3', 2000000, ''),
+(36, 'Kegiatan 1', 30000, ''),
+(37, 'Kegiatan 2', 20000, ''),
+(38, 'Kegiatan 3', 25000, ''),
+(39, 'Homestay 1', 3000000, ''),
+(40, 'Homestay  2', 2000000, ''),
+(41, 'Homestay  3', 1500000, '');
 
 -- --------------------------------------------------------
 
@@ -248,6 +249,13 @@ CREATE TABLE `tb_promo` (
   `gambar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `tb_promo`
+--
+
+INSERT INTO `tb_promo` (`id_promo`, `judul`, `gambar`) VALUES
+(10, 'awiowadawoda', '/uploads/promo/662e251e96838.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -300,6 +308,13 @@ CREATE TABLE `tb_transaksi` (
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id_transaksi`, `id_user`, `id_jenis`, `code_invoice`, `bukti_pembayaran`, `status_check_in`, `check_in`, `dibayarkan`, `status`, `created_at`, `updated_at`) VALUES
+(8, 6, 33, 'INV/27042024/662c80e628222', '', 'Belum', '2024-03-03', 1500000, 'Lunas', '2024-04-27', '2024-04-28');
+
 -- --------------------------------------------------------
 
 --
@@ -342,7 +357,7 @@ CREATE TABLE `tb_user` (
 
 INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`, `profil`, `token`) VALUES
 (3, 'asd', 'aaa@gmail.com', '088221629812', '$2y$12$/JgwFctEDHCOUufGi9DymODr9HpbFmXPzNbVLeefR2Jc3HbkXTjoC', 'asdasd', '', ''),
-(6, 'asdsdadasdasdasd', 'aabs@gmail.com', '123', '$2y$12$LqvFhMqvBVmqZKTaS89yb.jqjsYrj2d1rwhm46dvVEemUmNHW.wWy', 'asdasd', 'assets/image/avatar-1.png', 'jwgqENF74xtsmHQtZ5Uxe0w0SERiVVFsUkgydGpYWU1Mc0lmNC8yblRXZjZxcGRDVmVndUZ1cU5nclhWWUEvQVZ6elJuUC95amx1MmwxeWY='),
+(6, 'asdsdadasdasdasd', 'aabs@gmail.com', '123', '$2y$12$LqvFhMqvBVmqZKTaS89yb.jqjsYrj2d1rwhm46dvVEemUmNHW.wWy', 'asdasd', 'assets/image/avatar-1.png', 'tpcFWKYnAY02V1RD9KxSky9YL2p0QVJNTWdDQkN4WXE2aG1vcnpWVkJMNFRNblNNS0NGY2F6Ump3ZVNHUTE0UklmRHhSMmVQSEpmc0c5VU0='),
 (7, 'aaa', 'asdadasdadasda@gmail.com', '123456764323', '$2y$12$ibqro7oqnLIJRJdsi8B9Y.HENC0kU3wXqcgCdOq8Q9XZdoH.q6wdG', 'aaasdasd', 'assets/image/avatar-1.png', ''),
 (8, 'aaa', 'a@gmail.com', '1231232331', '$2y$12$GjjEUw04JxUyZKqioYVbs.aZynuwKrU2vhg4zJp30an6AGeYKNZ.a', 'aaaaaa', 'assets/image/avatar-1.png', ''),
 (9, 'aaa', 'aasdadad@gmail.com', '1231232331', '$2y$12$SG6bh/zN0.BfJ4qOyu8Wi.BUXQMAxunEupII5YKzH55Y5me36hiUW', 'aaaaaa', 'assets/image/avatar-1.png', '');
@@ -518,7 +533,7 @@ ALTER TABLE `tb_paket_wisata`
 -- AUTO_INCREMENT untuk tabel `tb_promo`
 --
 ALTER TABLE `tb_promo`
-  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_tentang_kami`
@@ -536,7 +551,7 @@ ALTER TABLE `tb_timeline`
 -- AUTO_INCREMENT untuk tabel `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_ulasan`

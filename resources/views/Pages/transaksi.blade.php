@@ -374,7 +374,7 @@
         // Set Option for select Jenis Pemesanan
         $.getJSON('/api/transaksi/jenis-booking', function(data){
             $.each(data.jenis, function(index, jenis){
-                var cardHtml = `<option value="${jenis.nama}">${jenis.nama}</option>`;
+                var cardHtml = `<option value="${jenis.id_jenis}">${jenis.nama}</option>`;
                 $('.selectJenis').append(cardHtml);
                 $('#filter-jenis-order').append(cardHtml);
             });
@@ -433,7 +433,7 @@
     function editData(id){
         $('#form-edit-data').attr('action', '/transaksi/edit/'+id);
         $.ajax({
-            url: '/api/transaksi/get?id='+id,
+            url: '/api/admin/transaksi/get/'+id,
             dataType: 'json',
             type: 'get',
             success: function(data){

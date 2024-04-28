@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('transaksi/{method}/{id?}', [CTransaksi::class, 'api'])->name('transaksi');
-Route::get('admin/transaksi/get', [CTransaksi::class, 'adminGet'])->name('transaksi');
+Route::get('admin/transaksi/get/{id?}', [CTransaksi::class, 'adminGet'])->name('transaksi');
 Route::get('profile/{id?}', [CProfile::class, 'index'])->name('profile');
 Route::get('kegiatan/{id?}', [CKegiatan::class, 'index'])->name('kegiatan');
 Route::get('artikel/{id?}', [CArtikel::class, 'index'])->name('artikel');
@@ -42,7 +42,7 @@ Route::get('katalog/kolam{id?}', [CKolam::class, 'index'])->name('kolam-ikan');
 Route::get('ulasan/{id?}', [CUlasan::class, 'index'])->name('ulasan');
 Route::get('faq/{id?}', [CFaq::class, 'index'])->name('faq');
 Route::get('user/', [CUser::class, 'index'])->where('id', '[0-9]+');
-Route::get('admin/user/{id?}', [CUser::class, 'index'])->where('id', '[0-9]+');
+Route::get('admin/user/{id?}', [CUser::class, 'adminGet'])->where('id', '[0-9]+');
 
 // User
 Route::post('user/register', [CUser::class, 'store'])->name('user.register');

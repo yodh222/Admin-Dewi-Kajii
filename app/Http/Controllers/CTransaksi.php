@@ -20,13 +20,21 @@ class CTransaksi extends Controller
     }
 
     // CRUD
-    public function adminGet()
+    public function adminGet($id = null)
     {
+        if ($id != null) {
+            $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
+                ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
+                ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'dibayarkan', 'status', 'created_at')
+                ->where('id_transaksi', $id)
+                ->first();
+
+            return $data;
+        }
         $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
             ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
             ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'tb_jenis_booking.gambar', 'dibayarkan', 'status', 'created_at')
             ->get();
-
         $arr['Data'] = $data;
         return $arr;
     }
@@ -54,7 +62,7 @@ class CTransaksi extends Controller
 
                     // return $dataWId;
                     return response()->json($dataWId, 200, [], JSON_PRETTY_PRINT);
-                } else if ($user != $data->id_user) {
+                } else {
                     return response()->json([
                         'message' => 'error',
                         'info' => 'User tidak ditemukan'

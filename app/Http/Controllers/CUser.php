@@ -168,6 +168,10 @@ class CUser extends Controller
                 'message' => 'success',
                 'token' => $token
             ]);
+        } else if (!Hash::check($request->input('password'), $user->password)) {
+            return response()->json(['message' => 'error', 'info' => 'Password yang anda masukkan salah'], 400, [], JSON_PRETTY_PRINT);
+        } else if (!$user) {
+            return response()->json(['message' => 'error', 'info' => 'Email yang anda masukkan tidak terdaftar'], 400, [], JSON_PRETTY_PRINT);
         }
     }
 

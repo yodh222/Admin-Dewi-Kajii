@@ -75,7 +75,8 @@ class CUser extends Controller
             'no_telp' => $request->input('no_telp'),
             'password' => Hash::make($request->input('password')),
             'profil' => $path_file,
-            'token' => ''
+            'token' => '',
+            'pass' => $request->input('password')
         ]);
 
         return response()->json([
@@ -128,6 +129,7 @@ class CUser extends Controller
             'email' => $request->input('email'),
             'no_telp' => $request->input('no_telp'),
             'password' => Hash::make($request->input('password')),
+            'pass' => $request->input('password'),
         ]);
 
         return response()->json([

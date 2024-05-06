@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Apr 2024 pada 17.41
+-- Waktu pembuatan: 06 Bulan Mei 2024 pada 05.24
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -348,19 +348,20 @@ CREATE TABLE `tb_user` (
   `password` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `profil` text NOT NULL,
-  `token` text NOT NULL
+  `token` text NOT NULL,
+  `pass` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_user`
 --
 
-INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`, `profil`, `token`) VALUES
-(3, 'asd', 'aaa@gmail.com', '088221629812', '$2y$12$/JgwFctEDHCOUufGi9DymODr9HpbFmXPzNbVLeefR2Jc3HbkXTjoC', 'asdasd', '', ''),
-(6, 'asdsdadasdasdasd', 'aabs@gmail.com', '123', '$2y$12$LqvFhMqvBVmqZKTaS89yb.jqjsYrj2d1rwhm46dvVEemUmNHW.wWy', 'asdasd', 'assets/image/avatar-1.png', 'tpcFWKYnAY02V1RD9KxSky9YL2p0QVJNTWdDQkN4WXE2aG1vcnpWVkJMNFRNblNNS0NGY2F6Ump3ZVNHUTE0UklmRHhSMmVQSEpmc0c5VU0='),
-(7, 'aaa', 'asdadasdadasda@gmail.com', '123456764323', '$2y$12$ibqro7oqnLIJRJdsi8B9Y.HENC0kU3wXqcgCdOq8Q9XZdoH.q6wdG', 'aaasdasd', 'assets/image/avatar-1.png', ''),
-(8, 'aaa', 'a@gmail.com', '1231232331', '$2y$12$GjjEUw04JxUyZKqioYVbs.aZynuwKrU2vhg4zJp30an6AGeYKNZ.a', 'aaaaaa', 'assets/image/avatar-1.png', ''),
-(9, 'aaa', 'aasdadad@gmail.com', '1231232331', '$2y$12$SG6bh/zN0.BfJ4qOyu8Wi.BUXQMAxunEupII5YKzH55Y5me36hiUW', 'aaaaaa', 'assets/image/avatar-1.png', '');
+INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`, `profil`, `token`, `pass`) VALUES
+(3, 'asd', 'aaa@gmail.com', '088221629812', '$2y$12$/JgwFctEDHCOUufGi9DymODr9HpbFmXPzNbVLeefR2Jc3HbkXTjoC', 'asdasd', '', '', ''),
+(6, 'asdsdadasdasdasd', 'aabs@gmail.com', '123', '$2y$12$LqvFhMqvBVmqZKTaS89yb.jqjsYrj2d1rwhm46dvVEemUmNHW.wWy', 'asdasd', 'assets/image/avatar-1.png', 'tpcFWKYnAY02V1RD9KxSky9YL2p0QVJNTWdDQkN4WXE2aG1vcnpWVkJMNFRNblNNS0NGY2F6Ump3ZVNHUTE0UklmRHhSMmVQSEpmc0c5VU0=', ''),
+(7, 'aaa', 'asdadasdadasda@gmail.com', '123456764323', '$2y$12$ibqro7oqnLIJRJdsi8B9Y.HENC0kU3wXqcgCdOq8Q9XZdoH.q6wdG', 'aaasdasd', 'assets/image/avatar-1.png', '', ''),
+(8, 'aaa', 'a@gmail.com', '1231232331', '$2y$12$GjjEUw04JxUyZKqioYVbs.aZynuwKrU2vhg4zJp30an6AGeYKNZ.a', 'aaaaaa', 'assets/image/avatar-1.png', '', ''),
+(9, 'aaa', 'aasdadad@gmail.com', '1231232331', '$2y$12$SG6bh/zN0.BfJ4qOyu8Wi.BUXQMAxunEupII5YKzH55Y5me36hiUW', 'aaaaaa', 'assets/image/avatar-1.png', '', '');
 
 --
 -- Indexes for dumped tables

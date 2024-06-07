@@ -35,8 +35,7 @@ class CAdmin extends Controller
             ]);
             return redirect('dashboard')->with('success', 'Anda berhasil login');
         }
-
-        return redirect('Login')->with('error', 'Anda gagal login');
+        return redirect('Login')->with('error', 'Username atau Password salah');
     }
 
     // public function register(Request $request)

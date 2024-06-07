@@ -168,8 +168,6 @@
         $.getJSON('/api/homestay', function(data){
             $.each(data.homestay,function(index, homestay){
                 var images = homestay.gambar.split(',');
-                console.log(images)
-
                 var card = `
                 <div class="col-sm-4">
                     <div class="card mb-3 bg-light">
@@ -180,7 +178,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">${homestay.nama}</h5>
+                                    <h5 class="card-title">${homestay.judul}</h5>
                                     <p class="card-text">${homestay.harga}</p>
                                     <div class="d-flex justify-content-start">
                                         <button class="btn btn-primary me-2" data-bs-target="#editData" data-bs-toggle="modal" onclick="editData('${homestay.id_homestay}')">

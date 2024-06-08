@@ -160,7 +160,9 @@ class CUser extends Controller
         }
 
         $user = MUser::where('email', $request->input('email'))->first();
-        if ($user->password && Hash::check($request->input('password'), $user->password)) {
+        if (!$user) {
+            return response()->json(['message' => 'error', 'info' => 'Email yang anda masukkan tidak terdaftar'], 400, [], JSON_PRETTY_PRINT);
+        } else if ($user->password && Hash::check($request->input('password'), $user->password)) {
             $token = $user ? $this->encrypt([
                 'id_user' => $user->id_user,
                 'email' => $user->email,
@@ -172,8 +174,6 @@ class CUser extends Controller
             ]);
         } else if (!Hash::check($request->input('password'), $user->password)) {
             return response()->json(['message' => 'error', 'info' => 'Password yang anda masukkan salah'], 400, [], JSON_PRETTY_PRINT);
-        } else if (!$user) {
-            return response()->json(['message' => 'error', 'info' => 'Email yang anda masukkan tidak terdaftar'], 400, [], JSON_PRETTY_PRINT);
         }
     }
 

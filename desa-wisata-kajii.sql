@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Bulan Mei 2024 pada 05.24
+-- Waktu pembuatan: 08 Jun 2024 pada 17.50
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `tb_admin` (
 --
 
 INSERT INTO `tb_admin` (`id_admin`, `nama`, `no_telp`, `email`, `alamat`, `password`) VALUES
-(8, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodjasdads', '$2y$12$exMM4KUDU7NfSsrDT/3pre20o5JnFFZiZSWp1PzGMobn4fKvimlN6');
+(8, 'Administrator', '0888888888', 'admin@gmail.com', 'asdasdnadisadaiodjasdads', '$2y$12$5FeAq3tgqGsoMFKsGIyRwOGnJSO/5eQdfouuqu1CU.V1mXcCy3m02');
 
 -- --------------------------------------------------------
 
@@ -308,13 +308,6 @@ CREATE TABLE `tb_transaksi` (
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `tb_transaksi`
---
-
-INSERT INTO `tb_transaksi` (`id_transaksi`, `id_user`, `id_jenis`, `code_invoice`, `bukti_pembayaran`, `status_check_in`, `check_in`, `dibayarkan`, `status`, `created_at`, `updated_at`) VALUES
-(8, 6, 33, 'INV/27042024/662c80e628222', '', 'Belum', '2024-03-03', 1500000, 'Lunas', '2024-04-27', '2024-04-28');
-
 -- --------------------------------------------------------
 
 --
@@ -326,13 +319,6 @@ CREATE TABLE `tb_ulasan` (
   `id_user` int(11) NOT NULL,
   `ulasan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `tb_ulasan`
---
-
-INSERT INTO `tb_ulasan` (`id_ulasan`, `id_user`, `ulasan`) VALUES
-(5, 3, 'asdasdasdd');
 
 -- --------------------------------------------------------
 
@@ -357,11 +343,7 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`, `profil`, `token`, `pass`) VALUES
-(3, 'asd', 'aaa@gmail.com', '088221629812', '$2y$12$/JgwFctEDHCOUufGi9DymODr9HpbFmXPzNbVLeefR2Jc3HbkXTjoC', 'asdasd', '', '', ''),
-(6, 'asdsdadasdasdasd', 'aabs@gmail.com', '123', '$2y$12$LqvFhMqvBVmqZKTaS89yb.jqjsYrj2d1rwhm46dvVEemUmNHW.wWy', 'asdasd', 'assets/image/avatar-1.png', 'tpcFWKYnAY02V1RD9KxSky9YL2p0QVJNTWdDQkN4WXE2aG1vcnpWVkJMNFRNblNNS0NGY2F6Ump3ZVNHUTE0UklmRHhSMmVQSEpmc0c5VU0=', ''),
-(7, 'aaa', 'asdadasdadasda@gmail.com', '123456764323', '$2y$12$ibqro7oqnLIJRJdsi8B9Y.HENC0kU3wXqcgCdOq8Q9XZdoH.q6wdG', 'aaasdasd', 'assets/image/avatar-1.png', '', ''),
-(8, 'aaa', 'a@gmail.com', '1231232331', '$2y$12$GjjEUw04JxUyZKqioYVbs.aZynuwKrU2vhg4zJp30an6AGeYKNZ.a', 'aaaaaa', 'assets/image/avatar-1.png', '', ''),
-(9, 'aaa', 'aasdadad@gmail.com', '1231232331', '$2y$12$SG6bh/zN0.BfJ4qOyu8Wi.BUXQMAxunEupII5YKzH55Y5me36hiUW', 'aaaaaa', 'assets/image/avatar-1.png', '', '');
+(10, 'Parman', 'test@gmail.com', '087387312983', '$2y$12$Ji8nxvzXaZzVkqbbe6VLTO3FMCArgRXe5398pRic8aVA.EVSH/Gyy', 'Testing', 'assets/image/avatar-1.png', '7Ed2lPyA0otsOvpEvOah5TFhT2MyWHY0c3NQcmZRZzZ6US9EZWhnV0x4d1JvclNXdE8yeGxESXdlS2ttVUY5cnAydnJsRmRaRnlWVWVSWWU=', 'ASDASDASD@123');
 
 --
 -- Indexes for dumped tables
@@ -534,7 +516,7 @@ ALTER TABLE `tb_paket_wisata`
 -- AUTO_INCREMENT untuk tabel `tb_promo`
 --
 ALTER TABLE `tb_promo`
-  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_tentang_kami`
@@ -564,7 +546,7 @@ ALTER TABLE `tb_ulasan`
 -- AUTO_INCREMENT untuk tabel `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

@@ -178,7 +178,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">${homestay.judul}</h5>
+                                    <h5 class="card-title">${homestay.nama}</h5>
                                     <p class="card-text">${homestay.harga}</p>
                                     <div class="d-flex justify-content-start">
                                         <button class="btn btn-primary me-2" data-bs-target="#editData" data-bs-toggle="modal" onclick="editData('${homestay.id_homestay}')">

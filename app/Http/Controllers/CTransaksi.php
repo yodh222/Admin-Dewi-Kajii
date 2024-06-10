@@ -46,7 +46,6 @@ class CTransaksi extends Controller
 
             $data = MUser::where('token', $token)->first();
             if ($data) {
-                $arr = [];
 
                 if ($user != null && $user == $data->id_user) {
                     $dataWId = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
@@ -65,21 +64,22 @@ class CTransaksi extends Controller
                 } else {
                     return response()->json([
                         'message' => 'error',
-                        'info' => 'User tidak ditemukan'
+                        'info' => 'User tidak ditemukan',
                     ], 400, [], JSON_PRETTY_PRINT);
                 }
 
-                $data = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
-                    ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
-                    ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'tb_jenis_booking.gambar', 'dibayarkan', 'status', 'created_at')
-                    ->get();
+                // $arr = [];
+                // $data1 = MTransaksi::leftJoin('tb_user', 'tb_user.id_user', 'tb_transaksi.id_user')
+                //     ->leftJoin('tb_jenis_booking', 'tb_jenis_booking.id_jenis', 'tb_transaksi.id_jenis')
+                //     ->select('id_transaksi', 'tb_user.nama', 'tb_user.email', 'no_telp', 'tb_jenis_booking.nama as jenis_booking', 'tb_jenis_booking.id_jenis', 'code_invoice', 'bukti_pembayaran', 'check_in', 'status_check_in', 'harga', 'tb_jenis_booking.gambar', 'dibayarkan', 'status', 'created_at')
+                //     ->get();
 
-                $arr['Data'] = $data;
-                return $arr;
+                // $arr['Data'] = $data1;
+                // return response()->json($arr, 200, [], JSON_PRETTY_PRINT);
             } else {
                 return response()->json([
                     'message' => 'error',
-                    'info' => 'User tidak ditemukan'
+                    'info' => 'User tidak ditemukan',
                 ], 404, [], JSON_PRETTY_PRINT);
             }
         } else {

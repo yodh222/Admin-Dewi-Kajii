@@ -57,7 +57,7 @@ class CProfile extends Controller
         $uniq = uniqid();
         $fileName = $uniq . '.' . $file->getClientOriginalExtension();
         $file->move('uploads/timeline/', $fileName);
-        $path_file = asset('uploads/timeline/' . $fileName);
+        $path_file = 'uploads/timeline/' . $fileName;
 
         $validator = Validator::make($request->all(), [
             'judul' => 'required|string',

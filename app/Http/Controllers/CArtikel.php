@@ -107,6 +107,62 @@ class CArtikel extends Controller
                 return redirect()->back()->with('error', 'File yang anda kirimkan bukan sebuah gambar');
             }
         }
+
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required|string',
+            'tanggal' => 'required|date',
+            'deskripsi' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
+        }
+
+        $image_path = explode(',', $data->gambar);
+        $path_file = '';
+        $c = 0;
+        foreach ($file as $Imagefile) {
+            if (isset($image_path[$c])) {
+                $image_name = explode('/', $image_path[$c]);
+                $image_name = end($image_name);
+                $Imagefile->move('uploads/artikel/', $image_name);
+                if ($c > 0) {
+                    $path_file .= ',';
+                }
+                $path_file .= $image_path[$c];
+            } else {
+                $newFileName = uniqid() . '.' . $Imagefile->getClientOriginalExtension();
+                $Imagefile->move('uploads/artikel/', $newFileName);
+                if ($c > 0) {
+                    $path_file .= ',';
+                }
+                $path_file .= 'uploads/artikel/' . $newFileName;
+            }
+            if ($c == 0) {
+                DB::table('tb_jenis_booking')
+                    ->where('nama', $data->nama)
+                    ->update([
+                        'nama' => $request->input('nama'),
+                        'harga' => $request->input('harga'),
+                        'gambar' => $path_file,
+                    ]);
+            }
+            $c += 1;
+        }
+        if ($c < count($image_path)) {
+            for ($c; $c < count($image_path); $c++) {
+                unlink(public_path($image_path[$c]));
+            }
+        }
+
+        $data->update([
+            'judul' => $request->judul,
+            'dibuat' => $request->tanggal,
+            'deskripsi' => $request->deskripsi,
+            'gambar' => $path_file,
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil mengedit Artikel');
     }
 
     /**

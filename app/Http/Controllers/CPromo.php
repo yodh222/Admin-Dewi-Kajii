@@ -100,7 +100,7 @@ class CPromo extends Controller
 
         $fileName = explode('/', $data->gambar);
         $file->move('uploads/promo/', end($fileName));
-        $path_file = 'uploads/promo/' . end($fileName);
+        $path_file = '/uploads/promo/' . end($fileName);
 
         $data->update([
             'judul' => $request->judul,

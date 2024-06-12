@@ -19,13 +19,11 @@ class CUlasan extends Controller
                 $ulasan = MUlasan::leftJoin('tb_user', 'tb_user.id_user', 'tb_ulasan.id_user')
                     ->select('tb_ulasan.id_ulasan', 'tb_ulasan.id_user', 'tb_user.nama', 'tb_user.profil', 'tb_ulasan.ulasan')
                     ->findOrFail($id);
-                // Jika ditemukan, kembalikan respons dengan data ulasan
                 return response()->json([
                     'message' => 'success',
                     'ulasan' => $ulasan
                 ], 200, [], JSON_PRETTY_PRINT);
             } catch (ModelNotFoundException $e) {
-                // Jika tidak ditemukan, kirimkan respons dengan pesan kesalahan
                 return response()->json([
                     'message' => 'error',
                     'info' => 'Data tidak ditemukan',

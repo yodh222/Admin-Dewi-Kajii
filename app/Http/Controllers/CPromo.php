@@ -17,7 +17,7 @@ class CPromo extends Controller
     {
         if ($id != null) {
             try {
-                $data = MPromo::fondOrFail($id);
+                $data = MPromo::findOrFail($id);
                 return response()->json([
                     'message' => 'success',
                     'promo' => $data
@@ -81,9 +81,32 @@ class CPromo extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        //
+        $data = MPromo::find($id);
+
+        $file = $request->file('gambar');
+        if (!$this->isImage($file)) {
+            return redirect()->back()->with('imageError', 'File yang anda kirimkan bukan sebuah gambar');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'Data yang anda kirimkan tidak valid');
+        }
+
+        $fileName = explode('/', $data->gambar);
+        $file->move('uploads/promo/', end($fileName));
+        $path_file = 'uploads/promo/' . end($fileName);
+
+        $data->update([
+            'judul' => $request->judul,
+            'gambar' => $path_file,
+        ]);
+        return redirect()->back()->with('success', 'Berhasil mengedit banner promo');
     }
 
     /**

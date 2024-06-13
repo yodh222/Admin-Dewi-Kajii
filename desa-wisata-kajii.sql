@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jun 2024 pada 02.36
+-- Waktu pembuatan: 13 Jun 2024 pada 06.14
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -104,7 +104,7 @@ INSERT INTO `tb_hiburan` (`id_hiburan`, `judul`, `gambar`, `harga`) VALUES
 
 CREATE TABLE `tb_homestay` (
   `id_homestay` int(11) NOT NULL,
-  `nama` varchar(115) NOT NULL,
+  `judul` varchar(115) NOT NULL,
   `gambar` text NOT NULL,
   `fasilitas` text NOT NULL,
   `deskripsi` text NOT NULL,
@@ -116,11 +116,11 @@ CREATE TABLE `tb_homestay` (
 -- Dumping data untuk tabel `tb_homestay`
 --
 
-INSERT INTO `tb_homestay` (`id_homestay`, `nama`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`) VALUES
+INSERT INTO `tb_homestay` (`id_homestay`, `judul`, `gambar`, `fasilitas`, `deskripsi`, `peraturan`, `harga`) VALUES
 (15, 'Homestay 1', 'uploads/homestay/661e4bd6d24d3.jpg,uploads/homestay/661e4bd6d2b65.png,uploads/homestay/661e4bd6d3312.png', 'a,b,c,d', 'Lorem Ipsum', 'a,b,c,d,e', 3000000),
 (16, 'Homestay  2', 'uploads/homestay/661e4bef0b698.jpg,uploads/homestay/661e4bef0bb56.png,uploads/homestay/661e4bef0c5da.png', 'a,b,c,d', 'Lorem Ipsum', 'a,b,c,d', 2000000),
 (17, 'Homestay  3', 'uploads/homestay/661e4c081ca6d.jpg,uploads/homestay/661e4c081ce4e.png,uploads/homestay/661e4c081d98e.png', 'a,b,c,d,e', 'Lorem Ipsum', 'a,b,c,d,e', 1500000),
-(19, 'a', 'uploads/homestay/66677af4bdc22.png,uploads/homestay/66677af4bf0eb.jpg,uploads/homestay/66677af4bf5ff.jpg', 'a', 'a', 'q', 11);
+(20, 'adadada', 'uploads/homestay/6669b8022e629.png,uploads/homestay/6669b8022f94c.jpg,uploads/homestay/6669b8022fe1d.jpg', 'asdadadasd', 'asdasda', 'asdasd', 11111);
 
 -- --------------------------------------------------------
 
@@ -175,7 +175,8 @@ INSERT INTO `tb_jenis_booking` (`id_jenis`, `nama`, `harga`, `gambar`) VALUES
 (40, 'Homestay  2', 2000000, ''),
 (41, 'Homestay  3', 1500000, ''),
 (42, 'Hiburan 1', 1111, 'uploads/hiburan/66671ef21f069.jpg'),
-(46, 'a', 11, 'uploads/homestay/66677af4bdc22.png');
+(46, 'a', 11, 'uploads/homestay/66677af4bdc22.png'),
+(48, 'adadada', 11111, 'uploads/homestay/6669b8022e629.png');
 
 -- --------------------------------------------------------
 
@@ -264,7 +265,8 @@ CREATE TABLE `tb_promo` (
 --
 
 INSERT INTO `tb_promo` (`id_promo`, `judul`, `gambar`) VALUES
-(10, 'awiowadawoda', '/uploads/promo/662e251e96838.jpg');
+(13, 'anjay', 'uploads/promo/6669a7d0a6a20.jpg'),
+(14, 'sadadadasdadsadasd', '/uploads/promo/6669adac3ce7d.jpg');
 
 -- --------------------------------------------------------
 
@@ -361,7 +363,7 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nama`, `email`, `no_telp`, `password`, `username`, `profil`, `token`, `pass`) VALUES
-(10, 'Parman', 'test@gmail.com', '087387312983', '$2y$12$Ji8nxvzXaZzVkqbbe6VLTO3FMCArgRXe5398pRic8aVA.EVSH/Gyy', 'Testing', 'assets/image/avatar-1.png', '9GbpT7cYBgZajcNntxPwgnZBbkxwbTlXK292bnZ2RUNQVllqVWtCS3lKSmNCNXRjOWdwS3FRRzN3aU8rb3ArVnRiT3FYUlhMQXU3d2t2WGQ=', 'ASDASDASD@123');
+(10, 'Parman', 'test@gmail.com', '087387312983', '$2y$12$Ji8nxvzXaZzVkqbbe6VLTO3FMCArgRXe5398pRic8aVA.EVSH/Gyy', 'Testing', 'assets/image/avatar-1.png', '', 'ASDASDASD@123');
 
 --
 -- Indexes for dumped tables
@@ -486,7 +488,7 @@ ALTER TABLE `tb_artikel`
 -- AUTO_INCREMENT untuk tabel `tb_faq`
 --
 ALTER TABLE `tb_faq`
-  MODIFY `id_faq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_faq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_hiburan`
@@ -498,7 +500,7 @@ ALTER TABLE `tb_hiburan`
 -- AUTO_INCREMENT untuk tabel `tb_homestay`
 --
 ALTER TABLE `tb_homestay`
-  MODIFY `id_homestay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_homestay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_ikan_hias`
@@ -510,7 +512,7 @@ ALTER TABLE `tb_ikan_hias`
 -- AUTO_INCREMENT untuk tabel `tb_jenis_booking`
 --
 ALTER TABLE `tb_jenis_booking`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kegiatan`
@@ -534,7 +536,7 @@ ALTER TABLE `tb_paket_wisata`
 -- AUTO_INCREMENT untuk tabel `tb_promo`
 --
 ALTER TABLE `tb_promo`
-  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_promo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_tentang_kami`
@@ -546,7 +548,7 @@ ALTER TABLE `tb_tentang_kami`
 -- AUTO_INCREMENT untuk tabel `tb_timeline`
 --
 ALTER TABLE `tb_timeline`
-  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_timeline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_transaksi`
@@ -558,7 +560,7 @@ ALTER TABLE `tb_transaksi`
 -- AUTO_INCREMENT untuk tabel `tb_ulasan`
 --
 ALTER TABLE `tb_ulasan`
-  MODIFY `id_ulasan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_ulasan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_user`

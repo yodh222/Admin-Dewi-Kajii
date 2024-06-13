@@ -288,10 +288,17 @@
     }
     function editDataUlasan(id){
         $('#form-edit-ulasan').attr('action','/ulasan/edit/'+id)
+        $.getJSON('/api/admin/user', function(data){
+            $.each(data, function(index, user){
+                var user = `<option value="${user.id_user}">${user.nama}</option>`
+
+                $('.id_user').append(user)
+            })
+        })
 
         $.getJSON('/api/ulasan/'+id, function(data){
             $('#user').val(data.id_user)
-            $('#ulasan').val(data.ulasan)
+            $('#ulasan').val(data.ulasan.ulasan)
         })
     }
 

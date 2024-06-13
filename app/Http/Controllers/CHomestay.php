@@ -52,7 +52,7 @@ class CHomestay extends Controller
         }
 
         $validation = Validator::make($request->all(), [
-            'nama' => 'required|string|max:150|unique:tb_jenis_booking,nama',
+            'judul' => 'required|string|max:150|unique:tb_jenis_booking,nama',
             'harga' => 'required|numeric',
             'fasilitas' => 'required|string',
             'deskripsi' => 'required|string',
@@ -60,7 +60,7 @@ class CHomestay extends Controller
         ]);
 
         if ($validation->fails()) {
-            $errorMess = $validation->errors()->has('nama') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
+            $errorMess = $validation->errors()->has('judul') ? 'Judul yang anda masukkan sudah tersedia' : 'Input yang anda masukkan tidak sesuai';
             return redirect()->back()->with('error', $errorMess);
         }
 
@@ -77,7 +77,7 @@ class CHomestay extends Controller
             if ($c == 0) {
                 DB::table('tb_jenis_booking')
                     ->insert([
-                        'nama' => $request->input('nama'),
+                        'nama' => $request->input('judul'),
                         'harga' => $request->input('harga') - $request->input('promo'),
                         'gambar' => $path_file,
                     ]);
@@ -86,7 +86,7 @@ class CHomestay extends Controller
         }
 
         MHomestay::create([
-            'nama' => $request->input('nama'),
+            'judul' => $request->input('judul'),
             'gambar' => $path_file,
             'harga' => $request->input('harga'),
             'fasilitas' => $request->input('fasilitas'),
@@ -115,7 +115,7 @@ class CHomestay extends Controller
         $data = MHomestay::findOrFail($id);
 
         $validation = Validator::make($request->all(), [
-            'nama' => [
+            'judul' => [
                 'required',
                 'string',
                 'max:150',
@@ -168,7 +168,7 @@ class CHomestay extends Controller
                 DB::table('tb_jenis_booking')
                     ->where('nama', $data->nama)
                     ->update([
-                        'nama' => $request->input('nama'),
+                        'nama' => $request->input('judul'),
                         'harga' => $request->input('harga'),
                         'gambar' => $path_file,
                     ]);
@@ -182,7 +182,7 @@ class CHomestay extends Controller
         }
 
         $data->update([
-            'nama' => $request->input('nama'),
+            'judul' => $request->input('judul'),
             'gambar' => $path_file,
             'harga' => $request->input('harga'),
             'fasilitas' => $request->input('fasilitas'),

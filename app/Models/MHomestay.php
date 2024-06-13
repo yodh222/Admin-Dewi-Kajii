@@ -12,7 +12,6 @@ class MHomestay extends Model
     protected $table = 'tb_homestay';
     protected $primaryKey = 'id_homestay';
     protected $guarded = ['id_homestay'];
-    protected $fillable = ['nama', 'gambar', 'harga', 'fasilitas', 'deskripsi', 'peraturan'];
 
     public $timestamps = false;
 }

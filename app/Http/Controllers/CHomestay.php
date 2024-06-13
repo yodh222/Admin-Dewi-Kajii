@@ -86,6 +86,7 @@ class CHomestay extends Controller
         }
 
         MHomestay::create([
+
             'judul' => $request->input('judul'),
             'gambar' => $path_file,
             'harga' => $request->input('harga'),

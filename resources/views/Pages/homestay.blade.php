@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Homestay</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="nama" id="nama" required>
+                            <input type="text" class="form-control" name="judul" id="nama" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -96,7 +96,7 @@
                     <div class="mb-3">
                         <label class="form-label">Nama Homestay</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="nama" required>
+                            <input type="text" class="form-control" name="judul" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -178,7 +178,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">${homestay.nama}</h5>
+                                    <h5 class="card-title">${homestay.judul}</h5>
                                     <p class="card-text">${homestay.harga}</p>
                                     <div class="d-flex justify-content-start">
                                         <button class="btn btn-primary me-2" data-bs-target="#editData" data-bs-toggle="modal" onclick="editData('${homestay.id_homestay}')">
@@ -202,7 +202,7 @@
     function editData(id){
         $('#form-edit').attr('action','/homestay/edit/'+id)
         $.getJSON('/api/homestay/'+id, function(data){
-            $('#nama').val(data.nama)
+            $('#nama').val(data.judul)
             $('#fasilitas').val(data.fasilitas)
             $('#deskripsi').val(data.deskripsi)
             $('#peraturan').val(data.peraturan)

@@ -125,7 +125,7 @@
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="ModalEditLabel">Tambah Artikel</h1>
             </div>
-            <form action="{{route('promo.tambah')}}" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" id="formEdit">
             <div class="modal-body">
                     @csrf
                     <div class="mb-3">
@@ -181,6 +181,7 @@
                 $('#judul').val(data.promo.judul)
             }
         })
+        $('#formEdit').attr('action', '/promo/edit/'+id);
     }
 
     function hapusData(id){

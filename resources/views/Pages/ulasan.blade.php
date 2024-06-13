@@ -18,7 +18,7 @@
 
 {{-- Ulasan --}}
 <h3 class="fw-bold mt-5">Ulasan Konsumen</h3>
-<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#tambahDataUlasan">Tambah Ulasan</button>
+<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#tambahDataUlasan" onclick="addDataUlasan()">Tambah Ulasan</button>
 
 <div id="ulasanContainer" class="row mt-5">
 </div>
@@ -273,17 +273,19 @@
                 $('#pertanyaanContainer').append(card)
             })
         })
+    })
 
-        $.getJSON('/api/user', function(data){
-            $.each(data.users, function(index, user){
+    // Ulasan
+    function addDataUlasan(){
+        $.getJSON('/api/admin/user', function(data){
+            $.each(data, function(index, user){
+                console.log(user.nama)
                 var user = `<option value="${user.id_user}">${user.nama}</option>`
 
                 $('.id_user').append(user)
             })
         })
-    })
-
-    // Ulasan
+    }
     function editDataUlasan(id){
         $('#form-edit-ulasan').attr('action','/ulasan/edit/'+id)
 

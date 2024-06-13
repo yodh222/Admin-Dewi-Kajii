@@ -74,6 +74,7 @@ Route::group(['middleware' => 'adminMiddleware', 'name' => 'Administrator'], fun
 
     // Promo
     Route::post('/promo/tambah', [CPromo::class, 'store'])->name('promo.tambah');
+    Route::post('/promo/edit/{id}', [CPromo::class, 'update'])->name('promo.edit');
     Route::post('/promo/hapus/{id}', [CPromo::class, 'destroy'])->name('promo.hapus');
 
     // Transaksi
